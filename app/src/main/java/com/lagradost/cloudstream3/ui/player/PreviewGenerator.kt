@@ -12,7 +12,6 @@ import androidx.preference.PreferenceManager
 import com.lagradost.cloudstream3.CloudStreamApp
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.mvvm.logError
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
 import com.lagradost.cloudstream3.utils.ExtractorLink
@@ -70,8 +69,7 @@ interface IPreviewGenerator {
                     ctx.getString(R.string.preview_seekbar_key), true
                 ) == false
             } ?: false
-            /** because TV has low ram + not show we disable this for now */
-            return if (isLayout(TV) || userDisabled) {
+            return if (userDisabled) {
                 empty()
             } else {
                 PreviewGenerator()

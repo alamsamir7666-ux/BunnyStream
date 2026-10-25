@@ -21,9 +21,7 @@ import com.lagradost.cloudstream3.syncproviders.AccountManager
 import com.lagradost.cloudstream3.syncproviders.AuthRepo
 import com.lagradost.cloudstream3.ui.BaseFragment
 import com.lagradost.cloudstream3.ui.home.HomeFragment.Companion.errorProfilePic
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.DataStoreHelper
@@ -56,74 +54,16 @@ class SettingsFragment : BaseFragment<MainSettingsBinding>(
             }
         }
 
-        /**
-         * Hide many Preferences on selected layouts.
-         **/
-        fun PreferenceFragmentCompat?.hidePrefs(ids: List<Int>, layoutFlags: Int) {
-            if (this == null) return
-
-            try {
-                ids.forEach {
-                    getPref(it)?.isVisible = !isLayout(layoutFlags)
-                }
-            } catch (e: Exception) {
-                logError(e)
-            }
-        }
-
-        /**
-         * Hide the [Preference] on selected layouts.
-         * @return [Preference] if visible otherwise null.
-         *
-         * [hideOn] is usually followed by some actions on the preference which are mostly
          * unnecessary when the preference is disabled for the said layout thus returning null.
-         **/
-        fun Preference?.hideOn(layoutFlags: Int): Preference? {
-            if (this == null) return null
-            this.isVisible = !isLayout(layoutFlags)
-            return if(this.isVisible) this else null
-        }
 
-        /**
-         * On TV you cannot properly scroll to the bottom of settings, this fixes that.
-         * */
-        fun PreferenceFragmentCompat.setPaddingBottom() {
-            if (isLayout(TV or EMULATOR)) {
-                listView?.setPadding(0, 0, 0, 100.toPx)
-            }
-        }
-
-        fun PreferenceFragmentCompat.setToolBarScrollFlags() {
-            if (isLayout(TV or EMULATOR)) {
-                val settingsAppbar = view?.findViewById<MaterialToolbar>(R.id.settings_toolbar)
-
-                settingsAppbar?.updateLayoutParams<AppBarLayout.LayoutParams> {
-                    scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
-                }
-            }
-        }
-
-        fun Fragment?.setToolBarScrollFlags() {
-            if (isLayout(TV or EMULATOR)) {
-                val settingsAppbar = this?.view?.findViewById<MaterialToolbar>(R.id.settings_toolbar)
-
-                settingsAppbar?.updateLayoutParams<AppBarLayout.LayoutParams> {
-                    scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
-                }
-            }
-        }
-
-        fun Fragment?.setUpToolbar(title: String) {
             if (this == null) return
             val settingsToolbar = view?.findViewById<MaterialToolbar>(R.id.settings_toolbar) ?: return
 
             settingsToolbar.apply {
                 setTitle(title)
-                if (isLayout(PHONE or EMULATOR)) {
-                    setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
-                    setNavigationOnClickListener {
-                        activity?.onBackPressedDispatcher?.onBackPressed()
-                    }
+                setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+                setNavigationOnClickListener {
+                    activity?.onBackPressedDispatcher?.onBackPressed()
                 }
             }
         }
@@ -134,12 +74,10 @@ class SettingsFragment : BaseFragment<MainSettingsBinding>(
 
             settingsToolbar.apply {
                 setTitle(title)
-                if (isLayout(PHONE or EMULATOR)) {
-                    setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
-                    children.firstOrNull { it is ImageView }?.tag = getString(R.string.tv_no_focus_tag)
-                    setNavigationOnClickListener {
-                        safe { activity?.onBackPressedDispatcher?.onBackPressed() }
-                    }
+                setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+                children.firstOrNull { it is ImageView }?.tag = getString(R.string.tv_no_focus_tag)
+                setNavigationOnClickListener {
+                    safe { activity?.onBackPressedDispatcher?.onBackPressed() }
                 }
             }
         }
@@ -148,7 +86,7 @@ class SettingsFragment : BaseFragment<MainSettingsBinding>(
             view?.let {
                 fixSystemBarsPadding(
                     it,
-                    padLeft = isLayout(TV or EMULATOR),
+                    padLeft = false,
                     padBottom = isLandscape()
                 )
             }
@@ -173,7 +111,7 @@ class SettingsFragment : BaseFragment<MainSettingsBinding>(
         fixSystemBarsPadding(
             view,
             padBottom = isLandscape(),
-            padLeft = isLayout(TV or EMULATOR)
+            padLeft = false
         )
     }
 
@@ -234,17 +172,9 @@ class SettingsFragment : BaseFragment<MainSettingsBinding>(
                     setOnClickListener {
                         navigate(navigationId)
                     }
-                    if (isLayout(TV)) {
-                        isFocusable = true
-                        isFocusableInTouchMode = true
-                    }
                 }
             }
 
-            // Default focus on TV
-            if (isLayout(TV)) {
-                settingsGeneral.requestFocus()
-            }
         }
 
         val appVersion = BuildConfig.VERSION_NAME

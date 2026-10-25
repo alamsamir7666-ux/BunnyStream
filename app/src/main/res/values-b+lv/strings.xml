@@ -257,9 +257,6 @@
     <string name="video_buffer_size_settings">Video buffer izmērs</string>
     <string name="video_buffer_length_settings">Video buffering garums</string>
     <string name="video_buffer_disk_settings">Video atkritne diskā</string>
-    <string name="android_tv_interface_on_seek_settings">Atskaņotājs rāda - seek smount</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Meklēšanas summa, kas tiek izmantota, kad spēlētājs ir redzams</string>
-    <string name="android_tv_interface_off_seek_settings">Atskaņotājs paslēpts — meklēšanas summa</string>
     <string name="video_ram_description">Izraisa avārijas, ja ierīcēs ar mazu atmiņu ir iestatīta pārāk augsta vērtība, piemēram, Android TV.</string>
     <string name="dns_pref_summary">Izdevīgs lai izlaistu ISO aizturi</string>
     <string name="jsdelivr_proxy">GitHub starpniekserveris</string>
@@ -279,7 +276,6 @@
     <string name="pref_category_extensions">Papildinājumi</string>
     <string name="pref_category_actions">Akcijas</string>
     <string name="pref_category_cache">Atkritne</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="pref_category_gestures">Žesti</string>
     <string name="pref_category_player_features">Atskaņošanas funkcijas</string>
     <string name="pref_category_subtitles">Subtitri</string>
@@ -291,7 +287,6 @@
     <string name="random_button_settings">Randomā poga</string>
     <string name="random_button_settings_desc">Rādīt izlases pogu Sākums un Bibliotēka sadaļās</string>
     <string name="provider_lang_settings">Papildinājuma valodas</string>
-    <string name="app_layout">Lietotnes izkārtojums</string>
     <string name="preferred_media_settings">Vēlamie multimediji</string>
     <string name="enable_nsfw_on_providers">Iespējot nepiedienīgu, izaicinošu saturu (NSFW) atbalstītajos papildinājumos</string>
     <string name="subtitles_encoding">Subtitru kodējums</string>
@@ -299,9 +294,6 @@
     <string name="category_provider_test">Pakalpojumu sniedzēja tests</string>
     <string name="category_ui">Izskats</string>
     <string name="automatic">Automātiski</string>
-    <string name="tv_layout">Televizora izskats</string>
-    <string name="phone_layout">Telefona izskats</string>
-    <string name="emulator_layout">Emulators izskats</string>
     <string name="bottom_title_settings">Plakāta virsraksta lokācija</string>
     <string name="example_password">Parole123</string>
     <string name="example_username">Lietotājvārds</string>
@@ -381,7 +373,6 @@
     <string name="provider_languages_tip">Skatīties video šajās valodās</string>
     <string name="previous">Iepriekšējais</string>
     <string name="skip_setup">Izlaist uzstādīšanu</string>
-    <string name="app_layout_subtext">Mainiet lietotnes izskatu, lai tā atbilstu savai ierīcei</string>
     <string name="preferred_media_subtext">Ko jūs vēlētos skatīt</string>
     <string name="setup_done">Pabeigts</string>
     <string name="extensions">Papildinājumi</string>
@@ -471,7 +462,6 @@
     <string name="video_buffer_clear_settings">Izdzēst video un bildes atkritne</string>
     <string name="watch_quality_pref_data">Izvēlētā skatīšanās kvalitāte (Mobilie Dati)</string>
     <string name="video_disk_description">Rada problēmas, ja ierīcēs ar maz vietas krātuvē ir iestatīts pārāk augsts, piemēram, Android TV.</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Meklēšanas summa, kas tiek izmantota, kad spēlētājs ir paslēpts</string>
     <string name="dns_pref">DNS virs HTTPS</string>
     <string name="resize_zoom">Tuvināt</string>
     <string name="jsdelivr_enabled">Neizdevās sasniegt GitHub. Pieslēdzas starpniekserverim caur jsDelivr…</string>

@@ -206,7 +206,6 @@
     <string name="add_site_summary">다른 URL을 사용하여 기존 사이트의 복제본을 추가합니다</string>
     <string name="download_path_pref">다운로드 경로</string>
     <string name="pref_category_cache">캐시</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="pref_category_gestures">제스처</string>
     <string name="pref_category_subtitles">자막</string>
     <string name="pref_category_player_layout">레이아웃</string>
@@ -215,7 +214,6 @@
     <string name="pref_category_player_features">플레이어 기능</string>
     <string name="pref_category_ui_features">기능</string>
     <string name="provider_lang_settings">확장프로그램 언어</string>
-    <string name="app_layout">앱 레이아웃</string>
     <string name="preferred_media_settings">선호하는 미디어</string>
     <string name="enable_nsfw_on_providers">확장프로그램에서 NSFW 활성화</string>
     <string name="subtitles_encoding">자막 인코딩</string>
@@ -223,9 +221,6 @@
     <string name="category_provider_test">소스 테스트</string>
     <string name="category_ui">레이아웃</string>
     <string name="automatic">자동</string>
-    <string name="tv_layout">TV 레이아웃</string>
-    <string name="phone_layout">휴대폰 레이아웃</string>
-    <string name="emulator_layout">에뮬레이터 레이아웃</string>
     <string name="primary_color_settings">기본 색상</string>
     <string name="app_theme_settings">앱 테마</string>
     <string name="bottom_title_settings">포스터 제목 위치</string>
@@ -280,7 +275,6 @@
     <string name="next">다음</string>
     <string name="previous">이전</string>
     <string name="skip_setup">설정 건너뛰기</string>
-    <string name="app_layout_subtext">기기에 맞게 앱 모양 변경하기</string>
     <string name="extensions">확장 기능</string>
     <string name="extension_version">버전</string>
     <string name="is_adult">18+</string>
@@ -481,10 +475,6 @@
     <string name="test_passed">통과</string>
     <string name="resume">계속</string>
     <string name="limit_title">플레이어 내 표시 제목의 최대 글자 수</string>
-    <string name="android_tv_interface_on_seek_settings">플레이어 표시 시 탐색 시간</string>
-    <string name="android_tv_interface_on_seek_settings_summary">플레이어 표시 중 탐색 간격</string>
-    <string name="android_tv_interface_off_seek_settings">플레이어 미표시 시 탐색 시간</string>
-    <string name="android_tv_interface_off_seek_settings_summary">플레이어 미표시 시 탐색 간격</string>
     <string name="pref_category_actions">동작</string>
     <string name="pref_category_looks">외형</string>
     <string name="random_button_settings">랜덤 버튼</string>
@@ -739,8 +729,6 @@
     <plurals name="links_hidden">
         <item quantity="other">숨겨진 링크 %d개</item>
     </plurals>
-    <string name="tv_layout_clock_settings">실시간 시계 표시</string>
-    <string name="tv_layout_clock_settings_des">화면 상단에 실시간 시계를 표시합니다. 홈페이지와 플레이어에 적용됩니다</string>
     <string name="log_cat">Logcat 🐈</string>
     <string name="start_paused_settings">동영상을 정지한 채 시작</string>
     <string name="start_paused_settings_des">소스를 선택할 때의 부하 줄이기</string>

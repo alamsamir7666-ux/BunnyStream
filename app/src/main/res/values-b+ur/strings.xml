@@ -284,16 +284,12 @@
     <string name="random_button_settings">بے ترتیب بٹن</string>
     <string name="random_button_settings_desc">ہوم پیج پر بے ترتیب بٹن نمایاں کریں</string>
     <string name="provider_lang_settings">ایکسٹینشن کی زبانیں</string>
-    <string name="app_layout">ایپ لے آؤٹ</string>
     <string name="preferred_media_settings">ترجیحی میڈیا</string>
     <string name="enable_nsfw_on_providers">سپورٹڈ ایکسٹینشن پر NSFW فعال کریں</string>
     <string name="subtitles_encoding">سب ٹائٹل انکوڈنگ</string>
     <string name="category_providers">فراہم کنندگان</string>
     <string name="category_ui">لے آؤٹ</string>
     <string name="automatic">خودکار</string>
-    <string name="tv_layout">ٹی وی لے آؤٹ</string>
-    <string name="phone_layout">فون لے آؤٹ</string>
-    <string name="emulator_layout">ایمولیٹر لے آؤٹ</string>
     <string name="primary_color_settings">بنیادی رنگ</string>
     <string name="app_theme_settings">ایپ تھیم</string>
     <string name="bottom_title_settings">پوسٹر کا عنوان محل وقوع</string>
@@ -353,7 +349,6 @@
     <string name="is_adult">18+</string>
     <string name="test_log">لاگ</string>
     <string name="network_adress_example">https://example.com/example.mp4</string>
-    <string name="pref_category_android_tv">اینڈرائیڈ ٹی وی</string>
     <string name="previous">پچھلا</string>
     <string name="trailer">ٹریلر</string>
     <string name="safe_mode_crash_info">حادثے کی معلومات دیکھیں</string>
@@ -435,9 +430,6 @@
     <string name="sort_alphabetical_a">حروف تہجی (A سے Z)</string>
     <string name="sort_alphabetical_z">حروف تہجی (Z سے A)</string>
     <string name="select_library">لائبریری کو منتخب کریں</string>
-    <string name="android_tv_interface_on_seek_settings">پلیئردکھایا گیا - Seek Amount</string>
-    <string name="android_tv_interface_on_seek_settings_summary">پلیئر کے نظر آنے پر استعمال کی جانے والی Seek Amount</string>
-    <string name="android_tv_interface_off_seek_settings_summary">پلیئر کے چھپنے پر استعمال ہونے والی seek amount</string>
     <string name="safe_mode_file">سیف موڈ فائل مل گئی! \nفائل کو ہٹانے تک اسٹارٹ اپ پر کوئی ایکسٹینشن لوڈ نہیں کرنا۔</string>
     <string name="start">شروع کریں</string>
     <string name="test_failed">ناکام</string>
@@ -472,7 +464,6 @@
     <string name="confirm_exit_dialog">کیا آپ کو یقین ہے کہ آپ ہیاں سے نکلنا چاہتے ہیں؟</string>
     <string name="quality_sd">ایس ڈی</string>
     <string name="all_languages_preference">تمام زبانیں</string>
-    <string name="android_tv_interface_off_seek_settings">پلیئر چھپا ہوا - Seek Amount</string>
     <string name="library">لائبریری</string>
     <string name="quality_blueray">بلو رے</string>
     <string name="revert">واپس لوٹنا</string>
@@ -497,7 +488,6 @@
     <string name="subtitles_example_text">تیز بھوری لومڑی سست کتے پر چھلانگ لگاتی ہے</string>
     <string name="coming_soon">جلد آرہا ہے…</string>
     <string name="subtitles_remove_captions">سب ٹائٹلز سے بند کیپشنز کو ہٹا دیں</string>
-    <string name="app_layout_subtext">اپنے آلے کے مطابق ایپ کی شکل تبدیل کریں</string>
     <string name="next">اگلے</string>
     <string name="blank_repo_message">CloudStream میں بذریعہ ڈیفالٹ کوئی سائٹ انسٹال نہیں ہے۔ آپ کو ریپوزٹری سے سائٹس انسٹال کرنے کی ضرورت ہے۔ \n \nہمارے Discord میں شامل ہوں یا آن لائن تلاش کریں۔</string>
     <string name="safe_mode_description">تمام ایکسٹینشنز کریش کی وجہ سے آف کر دی گئیں تاکہ آپ کو پریشانی کا باعث تلاش کرنے میں مدد مل سکے۔</string>

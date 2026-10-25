@@ -59,9 +59,7 @@ import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_PLAY_FILE
 import com.lagradost.cloudstream3.ui.search.SearchAdapter
 import com.lagradost.cloudstream3.ui.search.SearchHelper.handleSearchClickCallback
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterProviderByPreferredMedia
@@ -72,15 +70,10 @@ import com.lagradost.cloudstream3.utils.AppContextUtils.loadSearchResult
 import com.lagradost.cloudstream3.utils.AppContextUtils.openBrowser
 import com.lagradost.cloudstream3.utils.AppContextUtils.ownHide
 import com.lagradost.cloudstream3.utils.AppContextUtils.ownShow
-import com.lagradost.cloudstream3.utils.AppContextUtils.setDefaultFocus
-import com.lagradost.cloudstream3.utils.BackPressedCallbackHelper
-import com.lagradost.cloudstream3.utils.BackPressedCallbackHelper.attachBackPressedCallback
-import com.lagradost.cloudstream3.utils.BackPressedCallbackHelper.detachBackPressedCallback
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
 import com.lagradost.cloudstream3.utils.DataStoreHelper
 import com.lagradost.cloudstream3.utils.EmptyEvent
 import com.lagradost.cloudstream3.utils.SubtitleHelper.getFlagFromIso
-import com.lagradost.cloudstream3.utils.TvChannelUtils
 import com.lagradost.cloudstream3.utils.UIHelper.dismissSafe
 import com.lagradost.cloudstream3.utils.UIHelper.fixSystemBarsPadding
 import com.lagradost.cloudstream3.utils.UIHelper.getSpanCount
@@ -202,7 +195,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                             )
                             .setPositiveButton(R.string.delete, dialogClickListener)
                             .setNegativeButton(R.string.cancel, dialogClickListener)
-                            .show().setDefaultFocus()
+                            .show()
                     } catch (e: Exception) {
                         logError(e)
                         // ye you somehow fucked up formatting did you?
@@ -360,9 +353,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 button?.isVisible = isValid
                 button?.isChecked = isValid && selectedTypes.any { types.contains(it) }
                 button?.isFocusable = true
-                if (isLayout(TV)) {
-                    button?.isFocusableInTouchMode = true
-                }
 
                 if (nextFocusDown != null)
                     button?.nextFocusDownId = nextFocusDown
@@ -449,7 +439,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                         pinIcon.visibility = if (isPinned) View.VISIBLE else View.GONE
 
                         val pluginInstance = providerApi.sourcePlugin?.let { PluginManager.plugins[it] } as? Plugin
-                        val isDownloadedPluginWithSettings = pluginInstance?.openSettings != null && !isLayout(TV)
+                        val isDownloadedPluginWithSettings = pluginInstance?.openSettings != null
 
                         settingsIcon.visibility = if (isDownloadedPluginWithSettings) View.VISIBLE else View.GONE
                         if (isDownloadedPluginWithSettings) {
@@ -556,53 +546,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     private val homeViewModel: HomeViewModel by activityViewModels()
     private val accountViewModel: AccountViewModel by activityViewModels()
 
-    fun addMovies(cards: List<SearchResponse>) {
-        val ctx = context ?: run {
-            Log.e(TAG, "Context is null, aborting addMovies")
-            return
-        }
-
-        try {
-            val existingId = TvChannelUtils.getChannelId(ctx, getString(R.string.app_name))
-            if (existingId != null) {
-                Log.d(TAG, "Channel ID: $existingId")
-
-                val programCards = cards
-
-                TvChannelUtils.addPrograms(
-                    context = ctx,
-                    channelId = existingId,
-                    items = programCards
-                )
-            } else {
-                Log.d(TAG, "Channel does not exist")
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error adding movies: $e")
-        }
-    }
-
-    private fun deleteAll() {
-        val ctx = context ?: run {
-            Log.e(TAG, "Context is null, aborting deleteAll")
-            return
-        }
-
-        try {
-            val existingId = TvChannelUtils.getChannelId(ctx, getString(R.string.app_name))
-            if (existingId != null) {
-                Log.d(TAG, "Channel ID: $existingId")
-                TvChannelUtils.deleteStoredPrograms(ctx)
-            } else {
-                Log.d(TAG, "Channel does not exist")
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error deleting programs: ${e.message}")
-        }
-    }
-
-    override fun pickLayout(): Int? =
-        if (isLayout(PHONE)) R.layout.fragment_home else R.layout.fragment_home_tv
+    override fun pickLayout(): Int? = R.layout.fragment_home
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -614,7 +558,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     }
 
     override fun onDestroyView() {
-        (activity as? ComponentActivity)?.detachBackPressedCallback("HomeFragment_BackPress")
         bottomSheetDialog?.ownHide()
         super.onDestroyView()
     }
@@ -640,32 +583,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     var lastSavedHomepage: String? = null
 
-    fun saveHomepageToTV(page: Map<String, HomeViewModel.ExpandableHomepageList>) {
-        // No need to update for phone
-        if (isLayout(PHONE)) {
-            return
-        }
-        val (name, data) = page.entries.firstOrNull() ?: return
-        // Modifying homepage is an expensive operation, and therefore we avoid it at all cost
-        if (name == lastSavedHomepage) {
-            return
-        }
-        Log.i(TAG, "Adding programs $name to TV")
-        lastSavedHomepage = name
-        ioSafe {
-            // empty the channel
-            deleteAll()
-            // insert the program from first array
-            addMovies(data.list.list)
-        }
-    }
-
     override fun fixLayout(view: View) {
         fixSystemBarsPadding(
             view,
             padTop = false,
             padBottom = isLandscape(),
-            padLeft = isLayout(TV or EMULATOR)
+            padLeft = false
         )
 
         // Fix grid
@@ -675,9 +598,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     @SuppressLint("SetTextI18n")
     override fun onBindingCreated(binding: FragmentHomeBinding) {
         context?.let { HomeChildItemAdapter.updatePosterSize(it) }
-        (activity as? ComponentActivity)?.attachBackPressedCallback("HomeFragment_BackPress") {
-            handleTvBackPress(this)
-        }
         binding.apply {
             //homeChangeApiLoading.setOnClickListener(apiChangeClickListener)
             //homeChangeApiLoading.setOnClickListener(apiChangeClickListener)
@@ -730,81 +650,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
             }
 
-            // Load value for toggling Tv layout real time clock. Hide by default at startup
-            // set visibility first, to apply a scroll effect later
-            context?.let {
-                if (isLayout(TV)) {
-                    val settingsManager = PreferenceManager.getDefaultSharedPreferences(it)
-                    val toggleClock =
-                        settingsManager.getBoolean(
-                            getString(R.string.tv_layout_clock_key),
-                            false
-                        )
-                    binding.homeClock.isVisible = toggleClock
-                } else {
-                    binding.homeClock.isVisible = false
-                }
-            }
+            binding.homeClock.isVisible = false
 
 
             homeMasterRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (isLayout(PHONE)) {
-                        // Fab is only relevant to Phone
-                        if (dy > 0) { //check for scroll down
-                            homeApiFab.shrink() // hide
-                            homeRandom.shrink()
-                        } else if (dy < -5) {
-                            if (isLayout(PHONE)) {
-                                homeApiFab.extend() // show
-                                homeRandom.extend()
-                            }
-                        }
-                    } else {
-                        // Header scrolling is only relevant to TV/Emulator
-
-                        val view = recyclerView.findViewHolderForAdapterPosition(0)?.itemView
-                        val scrollParent = binding.homeApiHolder
-
-                        if (view == null) {
-                            // The first view is not visible, so we can assume we have scrolled past it
-                            scrollParent.isVisible = false
-                        } else {
-                            // A bit weird, but this is a major limitation we are working around here
-                            // 1. We cant have a real parent to the recyclerview as android cant layout that without lagging
-                            // 2. We cant put the view in the recyclerview, as it should always be shown
-                            // 3. We cant mirror the view in the recyclerview as then it causes focus issues when swaping out the mirror view
-                            //
-                            // This means that if we want to have a parent view to the recyclerview we are out of luck
-                            // Instead this uses getLocationInWindow to calculate how much the view should be scrolled
-                            // as recyclerView has no scrollY (always 0)
-                            //
-                            // Then it manually "scrolls" it to the correct position
-                            //
-                            // Hopefully getLocationInWindow acts correctly on all devices
-                            val rect = IntArray(2)
-                            view.getLocationInWindow(rect)
-                            scrollParent.isVisible = true
-                            scrollParent.translationY = rect[1].toFloat() - 60.toPx
-
-                            // Move the TV layout real time clock out of the way too
-                            // We check if we have the correct layout and if the clock is enabled
-                            if(isLayout(TV) && binding.homeClock.isVisible) {
-                                val scrollParent = binding.homeClock
-
-                                val rect = IntArray(2)
-                                view.getLocationInWindow(rect)
-                                scrollParent.isVisible = true
-                                scrollParent.translationY = rect[1].toFloat() - 60.toPx
-                            }
-                        }
+                    // Fab is only relevant to Phone
+                    if (dy > 0) { //check for scroll down
+                        homeApiFab.shrink() // hide
+                        homeRandom.shrink()
+                    } else if (dy < -5) {
+                        homeApiFab.extend() // show
+                        homeRandom.extend()
                     }
                     super.onScrolled(recyclerView, dx, dy)
-                    updateTvRailFocus()
                 }
             })
-
-            homeMasterRecycler.doOnLayout { updateTvRailFocus() }
 
         }
 
@@ -833,12 +694,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
         observe(homeViewModel.page) { data ->
             binding.apply {
-                if (isLayout(TV or EMULATOR)) {
-                    val plugin = APIHolder.getApiFromNameNull(homeViewModel.apiName.value)
-                        ?.sourcePlugin?.let { PluginManager.plugins[it] } as? Plugin
-                    homePreviewSettingsButton.isGone = plugin?.openSettings == null
-                }
-                
                 when (data) {
                     is Resource.Success -> {
                         val d = data.value
@@ -847,8 +702,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                                 list = it.list.copy(list = it.list.list.toMutableList())
                             )
                         })
-
-                        saveHomepageToTV(d)
 
                         homeLoading.isVisible = false
                         homeLoadingError.isVisible = false
@@ -977,68 +830,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 break
             }
         }*/
-    }
-
-    private fun updateTvRailFocus() {
-        if (!isLayout(TV or EMULATOR)) return
-        // home_api_holder is glued to the header row's top by the mirror logic in
-        // the scroll listener above. Only target the provider button while the
-        // holder is actually on screen; once the header scrolls off (y < 0) let
-        // the rail fall back to default focus search so RIGHT enters content rows
-        val holder = binding?.homeApiHolder
-        val target =
-            if (holder != null && holder.isVisible && holder.y >= 0f) R.id.home_change_api
-            else View.NO_ID
-        val rail = activity?.findViewById<View>(R.id.nav_rail_view) ?: return
-        rail.nextFocusRightId = target
-        for (focusView in arrayOf(
-            R.id.navigation_downloads,
-            R.id.navigation_home,
-            R.id.navigation_search,
-            R.id.navigation_library,
-            R.id.navigation_settings,
-        )) {
-            rail.findViewById<View>(focusView)?.nextFocusRightId = target
-        }
-    }
-
-    private fun handleTvBackPress(helper: BackPressedCallbackHelper.CallbackHelper) {
-        // Only apply custom behavior on TV interface
-        if (!isLayout(TV)) {
-            helper.runDefault()
-            return
-        }
-        val currentFocus = activity?.currentFocus ?: run {
-            helper.runDefault()
-            return
-        }
-        // isInsideRecycle is true when focus is inside home_master_recycler
-        var parent = currentFocus.parent
-        var isInsideRecycler = false
-        while (parent != null) {
-            if (parent is View && parent.id == R.id.home_master_recycler) {
-                isInsideRecycler = true
-                break
-            }
-            parent = parent.parent
-        }
-        when {
-            // Case 1: Focus is within plugin content -> Move to plugin selector
-            isInsideRecycler -> {
-                binding?.homeMasterRecycler?.scrollToPosition(0)
-                // Defer focus request until after scroll ends
-                binding?.homeChangeApi?.post {
-                    binding?.homeChangeApi?.requestFocus()
-                }
-            }
-            // Case 2: Focus is on plugin selector or nearby buttons -> Move to home navigation
-            currentFocus.id == R.id.home_change_api ||
-            currentFocus.id == R.id.home_preview_reload_provider ||
-            currentFocus.id == R.id.home_preview_search_button -> {
-                activity?.findViewById<View>(R.id.navigation_home)?.requestFocus()
-            }
-            // Case 3: Any other location -> Use default back behavior
-            else -> helper.runDefault()
-        }
     }
 }

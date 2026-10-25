@@ -177,11 +177,8 @@
     <string name="legal_notice">Disclaimer</string>
     <string name="category_general">Општи поставки</string>
     <string name="provider_lang_settings">Јазици на екстензиите</string>
-    <string name="app_layout">Распоред на апликацијата</string>
     <string name="preferred_media_settings">Претпочитани медиуми</string>
     <string name="automatic">Автоматски</string>
-    <string name="tv_layout">Изглед за гледање на телевизор</string>
-    <string name="phone_layout">Изглед за гледање на телефон</string>
     <string name="primary_color_settings">Примарна боја</string>
     <string name="app_theme_settings">Тема на апликацијата</string>
     <string name="login_format">%1$s %2$s</string>
@@ -225,7 +222,6 @@
     <string name="nginx_url_pref">Линк на серверот NGINX</string>
     <string name="stop">Стоп</string>
     <string name="show_sub">Подознака</string>
-    <string name="emulator_layout">Изглед на емулатор</string>
     <string name="other_singular">Видео</string>
     <string name="sort_clear">Исчисти</string>
     <string name="test_passed">Успешна верификација</string>
@@ -282,7 +278,6 @@
     <string name="extension_install_first">Прво инсталирај ја екстензијата</string>
     <string name="episode_sync_settings">Ажурирај го напредокот на гледање</string>
     <string name="library">Библиотека</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Износот на барањето што се користи кога плеерот е скриен</string>
     <string name="episode_action_download_subtitle">Преземи преводи</string>
     <string name="view_public_repositories_button_short">Јавна листа</string>
     <string name="apk_installer_package_installer">Инсталатор на пакети</string>
@@ -299,7 +294,6 @@
     <string name="safe_mode_crash_info">Прикажи информации за падот на апликацијата</string>
     <string name="extension_language">Јазик</string>
     <string name="torrent_singular">Торент</string>
-    <string name="android_tv_interface_off_seek_settings">Скриен плеер - Износ за пребарување</string>
     <string name="episode_sync_settings_des">Автоматски синхронизирај го напредокот на твојата тековна епизода</string>
     <string name="pref_category_bypass">Бајпас на интернет провајдерот</string>
     <string name="recommended">Препорачано</string>
@@ -346,7 +340,6 @@
     <string name="sort_by">Подреди по</string>
     <string name="empty_library_logged_in_message">Оваа листа е празна. Обиди се да преминеш на друга.</string>
     <string name="anime_singular">Аниме</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Износот на барањето што се користи кога плеерот е видлив</string>
     <string name="app_dubbed_text">Dub</string>
     <string name="automatic_plugin_download">Автоматско преземање приклучоци</string>
     <string name="actor_main">Главна</string>
@@ -391,8 +384,6 @@
     <string name="delete_repository_plugins">Ова исто така ќе ги избрише сите приклучоци</string>
     <string name="backup_settings">Направи резервна копија од податоците</string>
     <string name="show_dub">Етикета за Dub</string>
-    <string name="android_tv_interface_on_seek_settings">Прикажан плеер - Барај износ</string>
-    <string name="pref_category_android_tv">Андроид ТВ</string>
     <string name="restore_failed_format" formatted="true">Не успеа да ги врати податоците од датотеката %s</string>
     <string name="test_failed">Неуспешна верификација</string>
     <string name="documentaries_singular">Документарец</string>
@@ -457,7 +448,6 @@
     <string name="quality_4k">4K</string>
     <string name="previous">Претходно</string>
     <string name="skip_setup">Прескокни го поставувањето</string>
-    <string name="app_layout_subtext">Промени го изгледот на апликацијата за да одговара на твојот уред</string>
     <string name="preferred_media_subtext">Што сакате да видите</string>
     <string name="repository_name_hint">Име на изворот (Опционално)</string>
     <string name="plugin_downloaded">Приклучокот е преземен</string>
@@ -746,8 +736,6 @@
     <string name="subs_edge">Edge</string>
     <string name="log_cat">Logcat 🐈</string>
     <string name="start_paused_settings_des">Намалете го оптоварувањето при избирање извори</string>
-    <string name="tv_layout_clock_settings">Прикажи часовник во реално време</string>
-    <string name="tv_layout_clock_settings_des">Прикажи часовник во реално време на врвот на екранот. Се применува на почетната страница и плеерот</string>
     <plurals name="links_hidden">
         <item quantity="one">%d скриена врска</item>
         <item quantity="other">%d скриени врски</item>

@@ -34,8 +34,6 @@ import com.lagradost.cloudstream3.utils.BiometricAuthenticator.promptInfo
 import com.lagradost.cloudstream3.utils.BiometricAuthenticator.startBiometricAuthentication
 import com.lagradost.cloudstream3.utils.SingleSelectionHelper.showBottomDialogText
 import com.lagradost.cloudstream4.AppSettings
-import com.lagradost.cloudstream4.compose.PHONE
-import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.rememberAppSettings
 import com.mihon.presentation.settings.Preference
 import com.mihon.presentation.settings.SearchableSettings
@@ -117,7 +115,7 @@ object SettingsAccountScreen : SearchableSettings, BiometricAuthenticator.Biomet
                     icon = painterResource(R.drawable.ic_outline_account_circle_24)
                 ),
             ), Preference.PreferenceGroup(
-                enabled = hasSecurity && isLayout(PHONE),
+                enabled = hasSecurity,
                 title = stringResource(R.string.pref_category_security),
                 preferenceItems = persistentListOf(
                     Preference.PreferenceItem.SwitchPreference(

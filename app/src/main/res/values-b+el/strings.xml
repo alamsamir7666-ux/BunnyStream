@@ -224,16 +224,12 @@
     <string name="random_button_settings">Κουμπί τυχαίας δράσης</string>
     <string name="random_button_settings_desc">Εμφάνιση κουμπιού τυχαίας προβολής στην Αρχική Οθόνη</string>
     <string name="provider_lang_settings">Γλώσσες παρόχων</string>
-    <string name="app_layout">Διάταξη εφαρμογής</string>
     <string name="preferred_media_settings">Προτιμώμενα μέσα</string>
     <string name="enable_nsfw_on_providers">Ενεργοποίηση ακατάλληλου περιεχομένου σε υποστηριζόμενους παρόχους</string>
     <string name="subtitles_encoding">Κωδικοποίηση υποτίτλων</string>
     <string name="category_providers">Πάροχοι</string>
     <string name="category_ui">Διάταξη</string>
     <string name="automatic">Αυτόματο</string>
-    <string name="tv_layout">Διάταξη TV</string>
-    <string name="phone_layout">Διάταξη τηλεφώνου</string>
-    <string name="emulator_layout">Διάταξη emulator</string>
     <string name="primary_color_settings">Πρωτεύον χρώμα</string>
     <string name="app_theme_settings">Θέμα εφαρμογής</string>
     <string name="bottom_title_settings">Τοποθεσία τίτλου Poster</string>
@@ -297,7 +293,6 @@
     <string name="provider_languages_tip">Παρακολούθηση βίντεο σε αυτή την γλώσσα</string>
     <string name="previous">Προηγούμενο</string>
     <string name="skip_setup">Παράλειψη διαμόρφωσης της εφαρμογής</string>
-    <string name="app_layout_subtext">Αλλαγή της εμφάνισης της συσκευής για να ταιριάζει με την συσκευή σας</string>
     <string name="preferred_media_subtext">Τι θα θέλατε να δείτε</string>
     <string name="setup_done">Έγινε</string>
     <string name="extensions">Extensions</string>
@@ -494,7 +489,6 @@
     <string name="category_provider_test">Δοκιμή παρόχου</string>
     <string name="watch_quality_pref_data">Προτιμώμενη ποιότητας παρακολούθησης (Δεδομένα τηλεφώνου)</string>
     <string name="jsdelivr_proxy">Διακομιστής μεσολάβησης GitHub</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="subscription_in_progress_notification">Ενημέρωση εγγεγραμμένων εκπομπών</string>
     <string name="subscription_new">Έγινε εγγραφή σε %s</string>
     <string name="revert">Επαναφορά</string>
@@ -531,8 +525,6 @@
     <string name="duplicate_replace_all">Αντικατάσταση Όλων</string>
     <string name="use_default_account">Χρησιμοποίηση Βασικού λογαριασμού</string>
     <string name="action_remove_from_favorites">Αφαίρεση από τα Αγαπημένα</string>
-    <string name="android_tv_interface_off_seek_settings">Κρυμμένο Πλέιερ - Δευτερόλεπτα Σκιπ</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Δευτερόλεπτα Σκιπ όταν ο αναπαραγωγέας είναι κρυφός</string>
     <string name="ok">Εντάξει</string>
     <string name="battery_dialog_title">Απενεργοποιήση της εξοικονόμησης της μπαταρίας</string>
     <string name="already_voted">Έχετε ήδη ψηφίσει</string>
@@ -549,7 +541,6 @@
     <string name="auto_rotate_video_desc">Ενεργοποίηση αυτόματης περιστροφής οθόνης αναλόγως του βίντεο</string>
     <string name="auto_rotate_video">Αυτόματη περιστροφή</string>
     <string name="next_season_episode_format" formatted="true">Σεζόν %1$dΕπεισόδιο%2$d θα κυκλοφορήσει</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Δευτερόλεπτα Σκιπ όταν φαίνεται ο αναπαραγωγέας (πλειερ)</string>
     <string name="test_extensions">Δοκιμή όλων των παροχών</string>
     <string name="test_extensions_summary">Αυτό το τεστ προορίζεται μόνο για τους προγραμματιστές και δε επαληθείει ούτε απορρίπτει την λειτουργία οποιουδήποτε παρόχου.</string>
     <string name="player_settings_select_cast_device">Επιλογή συσκευής για αναμετάδοση</string>
@@ -572,7 +563,6 @@
     <string name="unfavorite">Αφαίρεση από αγαπημένα</string>
     <string name="biometric_setting">Κλείδωμα με βιομετρικά</string>
     <string name="episode_upcoming_format" formatted="true">Έρχεται σε %s</string>
-    <string name="android_tv_interface_on_seek_settings">Εμφάνιση Πλέιερ - Δευτερόλεπτα Σκιπ</string>
     <string name="jsdelivr_proxy_summary">Παράκαμψη απαγόρευσης από raw github URLs χρησιμοποιώντας jsDelivr. Μπορεί να καθυστερήσει τις ενημερώσεις για μερικές μέρες.</string>
     <string name="rotate_video_desc">Εμφάνιση κουμπιού για περιστροφή οθόνης</string>
     <string name="favorite">Αγαπημένο</string>

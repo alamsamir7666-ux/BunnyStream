@@ -182,7 +182,6 @@
     <string name="random_button_settings">Botó aleatori</string>
     <string name="random_button_settings_desc">Mostra el botó \'aleatori\' a l\'inici i a la llibreria</string>
     <string name="provider_lang_settings">Idiomes de la extensió</string>
-    <string name="app_layout">Disseny de l\'aplicació</string>
     <string name="preferred_media_settings">Mitjà preferit</string>
     <string name="enable_nsfw_on_providers">Permet contingut per adults (NSFW) a les extensions compatibles</string>
     <string name="subtitles_encoding">Codificació dels subtítols</string>
@@ -192,9 +191,6 @@
     <string name="test_extensions_summary">Aquesta prova està destinada als desenvolupadors, i no valida el funcionament de cap extensió.</string>
     <string name="category_ui">Disseny</string>
     <string name="automatic">Automàtic</string>
-    <string name="tv_layout">Disseny a la TV</string>
-    <string name="phone_layout">Disseny al telèfon</string>
-    <string name="emulator_layout">Disseny a l\'emulador</string>
     <string name="primary_color_settings">Color principal</string>
     <string name="app_theme_settings">aspecte de l\'aplicació</string>
     <string name="bottom_title_settings">Ubicació del títol al cartell</string>
@@ -288,7 +284,6 @@
     <string name="provider_languages_tip">Veure vídeos en aquests idiomes</string>
     <string name="previous">Anterior</string>
     <string name="skip_setup">Omet la configuració</string>
-    <string name="app_layout_subtext">Canvia l\'aspecte de la aplicació perquè s\'adapti al vostre dispositiu</string>
     <string name="preferred_media_subtext">Què vols veure</string>
     <string name="setup_done">Fet</string>
     <string name="extensions">Extensions</string>

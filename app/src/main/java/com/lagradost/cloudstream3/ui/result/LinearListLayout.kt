@@ -8,7 +8,6 @@ import com.lagradost.cloudstream3.CommonActivity
 import com.lagradost.cloudstream3.CommonActivity.activity
 import com.lagradost.cloudstream3.FocusDirection
 import com.lagradost.cloudstream3.mvvm.logError
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 
 const val FOCUS_SELF = View.NO_ID - 1
@@ -206,29 +205,13 @@ open class LinearListLayout(context: Context?) :
         immediate: Boolean,
         focusedChildVisible: Boolean
     ): Boolean {
-        if (isLayout(TV) && orientation == HORIZONTAL) {
-            val dx = when {
-                isLayoutRTL -> getDecoratedRight(child) - (parent.width - parent.paddingRight)
-                else -> getDecoratedLeft(child) - parent.paddingLeft
-            }
-            return if (dx != 0) {
-                when {
-                    immediate -> parent.scrollBy(dx, 0)
-                    else -> parent.smoothScrollBy(dx, 0)
-                }
-                true
-            } else {
-                false
-            }
-        } else {
-            return super.requestChildRectangleOnScreen(
-                parent,
-                child,
-                rect,
-                immediate,
-                focusedChildVisible
-            )
-        }
+        return super.requestChildRectangleOnScreen(
+            parent,
+            child,
+            rect,
+            immediate,
+            focusedChildVisible
+        )
     }
 
     /*override fun onRequestChildFocus(

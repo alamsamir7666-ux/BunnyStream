@@ -21,7 +21,6 @@ import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.mvvm.safe
 import com.lagradost.cloudstream3.services.PackageInstallerService
-import com.lagradost.cloudstream3.utils.AppContextUtils.setDefaultFocus
 import com.lagradost.cloudstream3.utils.AppUtils.parseJson
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
 import com.lagradost.cloudstream3.utils.GitInfo.currentCommitHash
@@ -353,7 +352,7 @@ object InAppUpdater {
                         }
                     }
                 }
-                builder.show().setDefaultFocus()
+                builder.show()
             }
         }
         return true

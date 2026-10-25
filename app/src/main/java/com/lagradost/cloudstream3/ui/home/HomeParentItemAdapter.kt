@@ -20,9 +20,7 @@ import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.setLinearListLayout
 import com.lagradost.cloudstream3.ui.search.SearchClickCallback
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.isRecyclerScrollable
 
@@ -159,7 +157,7 @@ open class ParentItemAdapter(
             })
 
             //(recyclerView.adapter as HomeChildItemAdapter).notifyDataSetChanged()
-            if (isLayout(PHONE or EMULATOR)) {
+            if (isLayout(PHONE)) {
                 homeChildMoreInfo.setOnClickListener {
                     moreInfoClickCallback.invoke(item)
                 }
@@ -168,11 +166,7 @@ open class ParentItemAdapter(
     }
 
     override fun onCreateContent(parent: ViewGroup): ParentItemHolder {
-        val layoutResId = when {
-            isLayout(TV) -> R.layout.homepage_parent_tv
-            isLayout(EMULATOR) -> R.layout.homepage_parent_emulator
-            else -> R.layout.homepage_parent
-        }
+        val layoutResId = R.layout.homepage_parent
 
         val inflater = LayoutInflater.from(parent.context)
         val binding = try {

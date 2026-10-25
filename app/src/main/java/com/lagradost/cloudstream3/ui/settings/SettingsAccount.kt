@@ -41,14 +41,10 @@ import com.lagradost.cloudstream3.syncproviders.PlainAuthRepo
 import com.lagradost.cloudstream3.syncproviders.SubtitleRepo
 import com.lagradost.cloudstream3.syncproviders.SyncRepo
 import com.lagradost.cloudstream3.ui.BasePreferenceFragmentCompat
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.getPref
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.hideOn
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setPaddingBottom
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setToolBarScrollFlags
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setUpToolbar
 import com.lagradost.cloudstream3.utils.AppContextUtils.html
 import com.lagradost.cloudstream3.utils.BackupUtils
@@ -116,9 +112,6 @@ class SettingsAccount : BasePreferenceFragmentCompat(), BiometricCallback {
                 showAccountSwitch(activity, api)
             }
 
-            if (isLayout(TV or EMULATOR)) {
-                binding.accountSwitchAccount.requestFocus()
-            }
         }
 
         private fun showAccountSwitch(activity: Activity, api: AuthRepo) {
@@ -289,25 +282,8 @@ class SettingsAccount : BasePreferenceFragmentCompat(), BiometricCallback {
                 binding.loginUsernameInput to req.username
             )
 
-            if (isLayout(TV or EMULATOR)) {
-                visibilityMap.forEach { (input, isVisible) ->
-                    input.isVisible = isVisible
-
-                    // Band-aid for weird FireTV behavior causing crashes because keyboard covers the screen
-                    input.setOnEditorActionListener { textView, actionId, _ ->
-                        if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                            val view = textView.focusSearch(FOCUS_DOWN)
-                            return@setOnEditorActionListener view?.requestFocus(
-                                FOCUS_DOWN
-                            ) == true
-                        }
-                        return@setOnEditorActionListener true
-                    }
-                }
-            } else {
-                visibilityMap.forEach { (input, isVisible) ->
-                    input.isVisible = isVisible
-                }
+            visibilityMap.forEach { (input, isVisible) ->
+                input.isVisible = isVisible
             }
 
             binding.createAccount.isGone = api.createAccountUrl.isNullOrBlank()
@@ -437,8 +413,6 @@ class SettingsAccount : BasePreferenceFragmentCompat(), BiometricCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpToolbar(R.string.category_account)
-        setPaddingBottom()
-        setToolBarScrollFlags()
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -446,9 +420,8 @@ class SettingsAccount : BasePreferenceFragmentCompat(), BiometricCallback {
         setPreferencesFromResource(R.xml.settings_account, rootKey)
 
         //Hides the security  category on TV as it's only Biometric for now
-        getPref(R.string.pref_category_security_key)?.hideOn(TV or EMULATOR)
 
-        getPref(R.string.biometric_key)?.hideOn(TV or EMULATOR)?.setOnPreferenceClickListener {
+        getPref(R.string.biometric_key)?.setOnPreferenceClickListener {
             val ctx = context ?: return@setOnPreferenceClickListener false
 
             if (deviceHasPasswordPinLock(ctx)) {

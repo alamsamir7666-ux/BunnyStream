@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.lagradost.cloudstream3.R
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.UIHelper.fixSystemBarsPadding
@@ -28,7 +26,7 @@ abstract class BaseComposeFragment : Fragment(), Screen {
         this.view?.let { view ->
             fixSystemBarsPadding(
                 view,
-                padLeft = isLayout(TV or EMULATOR),
+                padLeft = false,
                 padBottom = isLandscape()
             )
         }
@@ -38,14 +36,14 @@ abstract class BaseComposeFragment : Fragment(), Screen {
         super.onViewCreated(view, savedInstanceState)
         fixSystemBarsPadding(
             view,
-            padLeft = isLayout(TV or EMULATOR),
+            padLeft = false,
             padBottom = isLandscape()
         )
     }
 }
 
 abstract class BaseDialogComposeFragment : DialogFragment(), Screen {
-    var systemBarsAddPadding = isLayout(TV or EMULATOR)
+    var systemBarsAddPadding = false
 
     override fun onCreateView(
         inflater: LayoutInflater,

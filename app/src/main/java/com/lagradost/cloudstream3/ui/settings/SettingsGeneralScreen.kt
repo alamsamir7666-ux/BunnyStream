@@ -34,8 +34,6 @@ import com.lagradost.cloudstream3.utils.SubtitleHelper.fromTagToLanguageName
 import com.lagradost.cloudstream3.utils.SubtitleHelper.getNameNextToFlagEmoji
 import com.lagradost.cloudstream4.AppSettings
 import com.lagradost.cloudstream4.compose.ActionDialog
-import com.lagradost.cloudstream4.compose.PHONE
-import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.rememberAppSettings
 import com.lagradost.cloudstream4.theme.CloudStreamPreviewTheme
 import com.lagradost.safefile.SafeFile
@@ -186,7 +184,6 @@ object SettingsGeneralScreen : SearchableSettings {
                     Preference.PreferenceItem.TextPreference(
                         title = stringResource(R.string.battery_dialog_title),
                         icon = painterResource(R.drawable.battery_alert_24px),
-                        enabled = isLayout(PHONE),
                         onClick = {
                             if (isAppRestricted(context)) {
                                 isBatteryShown = true

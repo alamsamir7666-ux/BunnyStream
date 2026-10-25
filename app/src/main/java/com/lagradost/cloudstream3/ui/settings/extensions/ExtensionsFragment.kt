@@ -29,13 +29,10 @@ import com.lagradost.cloudstream3.ui.BaseFragment
 import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.setLinearListLayout
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setSystemBarsPadding
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setToolBarScrollFlags
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setUpToolbar
 import com.lagradost.cloudstream3.utils.AppContextUtils.addRepositoryDialog
-import com.lagradost.cloudstream3.utils.AppContextUtils.setDefaultFocus
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
 import com.lagradost.cloudstream3.utils.Coroutines.main
 import com.lagradost.cloudstream3.utils.UIHelper.dismissSafe
@@ -80,7 +77,6 @@ class ExtensionsFragment : BaseFragment<FragmentExtensionsBinding>(
 
     override fun onBindingCreated(binding: FragmentExtensionsBinding) {
         setUpToolbar(R.string.extensions)
-        setToolBarScrollFlags()
 
         binding.repoRecyclerView.apply {
             setLinearListLayout(
@@ -91,17 +87,16 @@ class ExtensionsFragment : BaseFragment<FragmentExtensionsBinding>(
                 nextLeft = R.id.nav_rail_view
             )
 
-            if (!isLayout(TV))
-                binding.addRepoButton.let { button ->
-                    button.post {
-                        setPadding(
-                            paddingLeft,
-                            paddingTop,
-                            paddingRight,
-                            button.measuredHeight + button.marginTop + button.marginBottom
-                        )
-                    }
+            binding.addRepoButton.let { button ->
+                button.post {
+                    setPadding(
+                        paddingLeft,
+                        paddingTop,
+                        paddingRight,
+                        button.measuredHeight + button.marginTop + button.marginBottom
+                    )
                 }
+            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
@@ -145,7 +140,7 @@ class ExtensionsFragment : BaseFragment<FragmentExtensionsBinding>(
                         .setMessage(uiContext.getString(R.string.delete_repository_plugins))
                         .setPositiveButton(R.string.delete, dialogClickListener)
                         .setNegativeButton(R.string.cancel, dialogClickListener)
-                        .show().setDefaultFocus()
+                        .show()
                 }
             })
         }
@@ -329,15 +324,7 @@ class ExtensionsFragment : BaseFragment<FragmentExtensionsBinding>(
         }
 
 
-        val isTv = isLayout(TV)
         binding.apply {
-            addRepoButton.isGone = isTv
-            addRepoButtonImageviewHolder.isVisible = isTv
-
-            // Band-aid for Fire TV
-            pluginStorageAppbar.isFocusableInTouchMode = isTv
-            addRepoButtonImageview.isFocusableInTouchMode = isTv
-
             addRepoButton.setOnClickListener(addRepositoryClick)
             addRepoButtonImageview.setOnClickListener(addRepositoryClick)
         }

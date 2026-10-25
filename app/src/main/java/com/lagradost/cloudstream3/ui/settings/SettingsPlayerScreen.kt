@@ -21,10 +21,7 @@ import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.getFold
 import com.lagradost.cloudstream3.ui.subtitles.ChromecastSubtitlesFragment
 import com.lagradost.cloudstream3.ui.subtitles.SubtitlesFragment
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
-import com.lagradost.cloudstream4.compose.EMULATOR
 import com.lagradost.cloudstream4.compose.PHONE
-import com.lagradost.cloudstream4.compose.TV
-import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.rememberAppSettings
 import com.mihon.presentation.settings.Preference
 import com.mihon.presentation.settings.SearchableSettings
@@ -174,7 +171,7 @@ object SettingsPlayerScreen : SearchableSettings {
                     ),
                     Preference.PreferenceItem.SwitchPreference(
                         preference = settings.player.previewBarEnabled,
-                        enabled = isLayout(PHONE or EMULATOR),
+                        enabled = isLayout(PHONE),
                         title = stringResource(R.string.preview_seekbar),
                         subtitle = stringResource(R.string.preview_seekbar_desc),
                         icon = painterResource(R.drawable.picture_in_picture_center_24px),
@@ -240,28 +237,6 @@ object SettingsPlayerScreen : SearchableSettings {
                 )
             ),
             Preference.PreferenceGroup(
-                title = stringResource(R.string.pref_category_android_tv),
-                enabled = isLayout(TV or EMULATOR),
-                preferenceItems = persistentListOf(
-                    Preference.PreferenceItem.SliderPreference(
-                        preference = settings.player.tvSeekOnTime,
-                        title = stringResource(R.string.android_tv_interface_on_seek_settings),
-                        subtitle = stringResource(R.string.android_tv_interface_on_seek_settings_summary),
-                        icon = painterResource(R.drawable.go_forward_30),
-                        valueRange = 5..60,
-                        //steps = 10,
-                    ),
-                    Preference.PreferenceItem.SliderPreference(
-                        preference = settings.player.tvSeekOffTime,
-                        title = stringResource(R.string.android_tv_interface_off_seek_settings),
-                        subtitle = stringResource(R.string.android_tv_interface_off_seek_settings_summary),
-                        icon = painterResource(R.drawable.go_forward_30),
-                        valueRange = 5..60,
-                        //steps = 10,
-                    ),
-                )
-            ),
-            Preference.PreferenceGroup(
                 title = stringResource(R.string.pref_category_player_layout),
                 preferenceItems = persistentListOf(
                     Preference.PreferenceItem.ListPreference(
@@ -273,7 +248,7 @@ object SettingsPlayerScreen : SearchableSettings {
                         ).toMap()
                     ),
                     Preference.PreferenceItem.SwitchPreference(
-                        enabled = isLayout(PHONE or EMULATOR),
+                        enabled = isLayout(PHONE),
                         preference = settings.player.hidePlayerControlNames,
                         icon = painterResource(R.drawable.visibility_off_24px),
                         title = stringResource(R.string.hide_player_control_names),

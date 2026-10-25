@@ -52,9 +52,7 @@ import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.mvvm.safe
 import com.lagradost.cloudstream3.ui.player.live.LivePreviewTimeBar
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.ui.subtitles.SaveCaptionStyle
 import com.lagradost.cloudstream3.ui.subtitles.SubtitlesFragment
@@ -287,13 +285,7 @@ class PlayerView @JvmOverloads constructor(
             val previewFrameLayout: FrameLayout? =
                 exoPlayerView?.findViewById(R.id.previewFrameLayout)
 
-            /** Hide the previewFrameLayout on TV to make the skip op button not float,
-             * as previewFrameLayout is normally invisible */
-            if(isLayout(TV)) {
-                previewFrameLayout?.isVisible = false
-            }
-
-            if (progressBar != null && previewImageView != null && previewFrameLayout != null && !isLayout(TV)) {
+            if (progressBar != null && previewImageView != null && previewFrameLayout != null) {
                 var resume = false
                 progressBar.addOnScrubListener(object : PreviewBar.OnScrubListener {
                     override fun onScrubStart(previewBar: PreviewBar?) {
@@ -417,8 +409,8 @@ class PlayerView @JvmOverloads constructor(
             gestureHelper.initialize()
             setupKeyEventListener()
 
-            // Apply duration-mode display (remaining time vs elapsed); TV always shows remaining
-            setRemainingTimeCounter(durationMode || isLayout(TV))
+            // Apply duration-mode display (remaining time vs elapsed)
+            setRemainingTimeCounter(durationMode)
         }
     }
 
@@ -717,11 +709,10 @@ class PlayerView @JvmOverloads constructor(
 
     /**
      * Returns the desired [ActivityInfo] orientation constant based on [isVerticalOrientation]
-     * and [autoPlayerRotateEnabled].  TV/emulator always returns sensor-landscape.
+     * and [autoPlayerRotateEnabled].
      * Host fragments call this from [Callbacks.playerDimensionsLoaded] to apply rotation.
      */
     fun dynamicOrientation(): Int {
-        if (isLayout(TV or EMULATOR)) return ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
         return if (autoPlayerRotateEnabled && isVerticalOrientation)
             ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
         else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
@@ -745,8 +736,8 @@ class PlayerView @JvmOverloads constructor(
                 // Skip 0x0 dimensions that the player emits when going to STATE_IDLE
                 // to avoid incorrectly resetting the auto-detected orientation.
                 if (event.width > 0 && event.height > 0) {
-                    // TV never rotates; otherwise track whether the video is portrait.
-                    isVerticalOrientation = !isLayout(TV or EMULATOR) && event.height > event.width
+                    // Track whether the video is portrait.
+                    isVerticalOrientation = event.height > event.width
                 }
                 callbacks?.playerDimensionsLoaded(event.width, event.height)
             }

@@ -19,7 +19,6 @@ import com.lagradost.cloudstream3.SearchQuality
 import com.lagradost.cloudstream3.SearchResponse
 import com.lagradost.cloudstream3.isMovieType
 import com.lagradost.cloudstream3.syncproviders.SyncAPI
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.getNameFull
 import com.lagradost.cloudstream3.utils.AppContextUtils.getShortSeasonText
@@ -175,14 +174,12 @@ object SearchResultBuilder {
 
         bg.isFocusable = false
         bg.isFocusableInTouchMode = false
-        if (!isLayout(TV)) {
-            bg.setOnClickListener {
-                click(it)
-            }
-            bg.setOnLongClickListener {
-                longClick(it)
-                return@setOnLongClickListener true
-            }
+        bg.setOnClickListener {
+            click(it)
+        }
+        bg.setOnLongClickListener {
+            longClick(it)
+            return@setOnLongClickListener true
         }
         //
         //
@@ -218,15 +215,6 @@ object SearchResultBuilder {
 
         */
 
-        if (isLayout(TV)) {
-            // bg.isFocusable = true
-            // bg.isFocusableInTouchMode = true
-            // bg.touchscreenBlocksFocus = false
-            itemView.isFocusableInTouchMode = true
-            itemView.isFocusable = true
-        }
-
-        /**/
 
         itemView.setOnLongClickListener {
             longClick(it)

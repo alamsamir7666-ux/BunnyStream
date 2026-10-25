@@ -20,8 +20,6 @@ import com.lagradost.cloudstream3.ui.newSharedPool
 import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_LOAD
 import com.lagradost.cloudstream3.ui.search.SearchClickCallback
 import com.lagradost.cloudstream3.ui.search.SearchResultBuilder
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.UIHelper.isBottomLayout
 import com.lagradost.cloudstream3.utils.UIHelper.toPx
@@ -35,10 +33,6 @@ class HomeScrollViewHolderState(view: ViewBinding) : ViewHolderState<Boolean>(vi
     override fun restore(state: Boolean) {
         if (state) {
             wasFocused = false
-            // only refocus if tv
-            if (isLayout(TV)) {
-                itemView.requestFocus()
-            }
         }
     }
 }
@@ -54,8 +48,7 @@ class ResumeItemAdapter(
     nextFocusDown = nextFocusDown,
     clickCallback = clickCallback
 ) {
-    // As there is no popup on TV we instead use the footer to clear
-    override val footers = if (isLayout(TV or EMULATOR)) 1 else 0
+    override val footers = 0
 
     override fun onCreateFooter(parent: ViewGroup): ViewHolderState<Boolean> {
         val expanded = parent.context.isBottomLayout()
@@ -85,10 +78,6 @@ class ResumeItemAdapter(
             }
         }
         holder.itemView.apply {
-            if (isLayout(TV)) {
-                isFocusableInTouchMode = true
-                isFocusable = true
-            }
             nextFocusUp?.let {
                 nextFocusUpId = it
             }

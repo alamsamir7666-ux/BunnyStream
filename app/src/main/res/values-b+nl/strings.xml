@@ -269,14 +269,10 @@
     <string name="random_button_settings">Willekeurige knop</string>
     <string name="random_button_settings_desc">Toon willekeurige knop op Homepage en Bibliotheek</string>
     <string name="provider_lang_settings">Extensietalen</string>
-    <string name="app_layout">App Layout</string>
     <string name="preferred_media_settings">Preferred media</string>
     <string name="subtitles_encoding">Subtitle encoding</string>
     <string name="category_ui">Layout</string>
     <string name="automatic">Auto</string>
-    <string name="tv_layout">TV layout</string>
-    <string name="phone_layout">Telefoon layout</string>
-    <string name="emulator_layout">emulator layout</string>
     <string name="primary_color_settings">Primaire kleur</string>
     <string name="app_theme_settings">App thema</string>
     <string name="bottom_title_settings">Locatie van de titel van de poster</string>
@@ -374,7 +370,6 @@
     <string name="provider_languages_tip">Bekijk video\'s in deze talen</string>
     <string name="previous">Vorige</string>
     <string name="skip_setup">Instelling overslaan</string>
-    <string name="app_layout_subtext">Pas het uiterlijk van de app aan uw apparaat aan</string>
     <string name="preferred_media_subtext">Wat wil je zien</string>
     <string name="setup_done">Klaar</string>
     <string name="action_mark_as_watched">Markeer als bekeken</string>
@@ -408,9 +403,6 @@
     <string name="plugin_loaded">Plugin Geladen</string>
     <string name="category_provider_test">Aanbieder test</string>
     <string name="test_passed">Geslaagd</string>
-    <string name="android_tv_interface_off_seek_settings_summary">De zoekhoeveelheid gebruikt als de speler onzichtbaar is</string>
-    <string name="android_tv_interface_on_seek_settings_summary">De gebruikte zoekhoeveelheid wanneer de speler zichtbaar is</string>
-    <string name="android_tv_interface_off_seek_settings">Speler Verborgen - Zoekhoeveelheid</string>
     <string name="extension_authors">Auteurs</string>
     <string name="pref_category_player_layout">Layout</string>
     <string name="extension_language">Taal</string>
@@ -424,7 +416,6 @@
     <string name="skip_type_op">Openen</string>
     <string name="plugin">plugins</string>
     <string name="watch_quality_pref_data">Voorkeurskwaliteit voor kijken (Mobiele Data)</string>
-    <string name="android_tv_interface_on_seek_settings">Speler Weergegeven - Zoekhoeveelheid</string>
     <string name="pref_category_actions">Acties</string>
     <string name="repository_name_hint">Repository naam (Optioneel)</string>
     <string name="plugin_downloaded">Plugin Gedownload</string>
@@ -453,7 +444,6 @@
     <string name="start">Start</string>
     <string name="pref_category_cache">Cache</string>
     <string name="pref_category_backup">Backup</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="extension_size">Grootte</string>
     <string name="skip_type_ed">Einde</string>
     <string name="delete_repository_plugins">Dit zal ook alle repository plugins verwijderen</string>

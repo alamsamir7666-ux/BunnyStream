@@ -322,10 +322,6 @@
     <string name="video_buffer_length_settings">Даўжыня буфера відэа</string>
     <string name="video_buffer_disk_settings">Кэш відэа на дыску</string>
     <string name="video_buffer_clear_settings">Ачысціць кэш відэа і відарысаў</string>
-    <string name="android_tv_interface_on_seek_settings">Прайгравальнік паказаны — крок перамоткі</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Крок перамоткі калі прайгравальнік бачны</string>
-    <string name="android_tv_interface_off_seek_settings">Прайгравальнік схаваны — крок перамоткі</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Крок перамоткі калі прайгравальнік схаваны</string>
     <string name="video_ram_description">Выклікае збоі пры высокіх значэннях на прыладах з маленькім аб\'ёмам памяці, такіх як Android TV.</string>
     <string name="video_disk_description">Выклікае праблемы пры высокіх значэннях на прыладах з маленькім аб\'ёмам сховішча, такіх як Android TV.</string>
     <string name="dns_pref">DNS праз HTTPS</string>
@@ -350,7 +346,6 @@
     <string name="pref_category_extensions">Пашырэнні</string>
     <string name="pref_category_actions">Дзеянні</string>
     <string name="pref_category_cache">Кэш</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="pref_category_gestures">Жэсты</string>
     <string name="pref_category_security">Бяспека</string>
     <string name="pref_category_accounts">Уліковыя запісы</string>
@@ -364,7 +359,6 @@
     <string name="random_button_settings">Кнопка «Выпадковае»</string>
     <string name="random_button_settings_desc">Паказваць кнопку «Выпадковае» на дамашняй старонцы і ў бібліятэцы</string>
     <string name="provider_lang_settings">Мовы пашырэнняў</string>
-    <string name="app_layout">Макет праграмы</string>
     <string name="preferred_media_settings">Прыярытэтнае медыя</string>
     <string name="enable_nsfw_on_providers">Уключыць NSFW на пашырэннях, дзе гэта падтрымліваецца</string>
     <string name="subtitles_encoding">Кадзіраванне субцітраў</string>
@@ -374,9 +368,6 @@
     <string name="test_extensions_summary">Гэта праверка прызначана толькі для распрацоўшчыкаў і не вызначае работу абы-якога пашырэння.</string>
     <string name="category_ui">Макет</string>
     <string name="automatic">Аўтаматычны</string>
-    <string name="tv_layout">Макет тэлевізара</string>
-    <string name="phone_layout">Макет тэлефона</string>
-    <string name="emulator_layout">Макет эмулятара</string>
     <string name="primary_color_settings">Асноўны колер</string>
     <string name="app_theme_settings">Тэма праграмы</string>
     <string name="bottom_title_settings">Размяшчэнне загалоўка плаката</string>
@@ -472,7 +463,6 @@
     <string name="provider_languages_tip">Праглядвайце відэа на гэтых мовах</string>
     <string name="previous">Назад</string>
     <string name="skip_setup">Прапусціць наладжванне</string>
-    <string name="app_layout_subtext">Змяніце выгляд праграмы пад вашу прыладу</string>
     <string name="preferred_media_subtext">Што хочаце ўбачыць</string>
     <string name="setup_done">Гатова</string>
     <string name="extensions">Пашырэнні</string>

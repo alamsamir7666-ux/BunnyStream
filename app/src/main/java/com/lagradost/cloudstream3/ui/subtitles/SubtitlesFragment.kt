@@ -43,8 +43,6 @@ import com.lagradost.cloudstream3.ui.player.CustomDecoder
 import com.lagradost.cloudstream3.ui.player.CustomDecoder.Companion.setSubtitleAlignment
 import com.lagradost.cloudstream3.ui.player.OutlineSpan
 import com.lagradost.cloudstream3.ui.player.RoundedBackgroundColorSpan
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.DataStore.setKey
@@ -434,7 +432,7 @@ class SubtitlesFragment : BaseDialogFragment<SubtitleSettingsBinding>(
         return R.style.DialogFullscreenPlayer
     }
 
-    var systemBarsAddPadding = isLayout(TV or EMULATOR)
+    var systemBarsAddPadding = false
     override fun fixLayout(view: View) {
         fixSystemBarsPadding(
             view,
@@ -455,14 +453,7 @@ class SubtitlesFragment : BaseDialogFragment<SubtitleSettingsBinding>(
         state = getCurrentSavedStyle()
         context?.updateState()
 
-        val isTvTrueSettings = isLayout(TV)
-        fun View.setFocusableInTv() {
-            this.isFocusableInTouchMode = isTvTrueSettings
-        }
-
         fun View.setup(id: Int) {
-            setFocusableInTv()
-
             this.setOnClickListener {
                 activity?.let {
                     ColorPickerDialog.newBuilder()

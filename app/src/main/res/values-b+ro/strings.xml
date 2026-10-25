@@ -262,14 +262,10 @@
     <string name="random_button_settings">Aleatoriu</string>
     <string name="random_button_settings_desc">Afișează butonul pentru aleatoriu pe Pagina Principală și în Bibliotecă</string>
     <string name="provider_lang_settings">Limbi ale extensiei</string>
-    <string name="app_layout">Aplicație de prezentare</string>
     <string name="preferred_media_settings">Media preferată</string>
     <string name="subtitles_encoding">Codificarea subtitrărilor</string>
     <string name="category_ui">Interfața utilizatorului</string>
     <string name="automatic">Auto</string>
-    <string name="tv_layout">Dispunere TV</string>
-    <string name="phone_layout">Dispunere telefonică</string>
-    <string name="emulator_layout">Dispunerea emulatorului</string>
     <string name="primary_color_settings">Culoare primară</string>
     <string name="app_theme_settings">Tema aplicației</string>
     <string name="bottom_title_settings">Locația titlului posterului</string>
@@ -382,14 +378,10 @@
     <string name="episode_format" formatted="true">%1$d %2$s</string>
     <string name="nsfw">NSFW</string>
     <string name="episodes_range">%1$d-%2$d</string>
-    <string name="android_tv_interface_on_seek_settings">Jucătorul afișat - Cantitatea de căutare</string>
-    <string name="android_tv_interface_off_seek_settings">Jucător ascuns - Sumă de căutare</string>
     <string name="livestreams">Livestream-uri</string>
     <string name="nsfw_singular">NSFW</string>
     <string name="test_failed">Eșuat</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Suma de căutare utilizată atunci când jucătorul este vizibil</string>
     <string name="live_singular">Livestream</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Cantitatea de căutare folosită când jucătorul este ascuns</string>
     <string name="watch_quality_pref_data">Calitatea preferată (Date Mobile)</string>
     <string name="other_singular">Video</string>
     <string name="apk_installer_settings">Instalator APK</string>
@@ -447,7 +439,6 @@
     <string name="pref_category_backup">Backup</string>
     <string name="extras">Suplimente</string>
     <string name="sort_updated_new">Actualizat (Nou la Vechi)</string>
-    <string name="app_layout_subtext">Schimbați aspectul aplicației pentru a se potrivi dispozitivului dvs</string>
     <string name="repository_name_hint">Nume de depozit</string>
     <string name="single_plugin_disabled" formatted="true">%s (Dezactivat)</string>
     <string name="no">Nu</string>
@@ -459,7 +450,6 @@
     <string name="select_library">Selectați Biblioteca</string>
     <string name="subtitles_filter_lang">Filtrați în funcție de limba media preferată</string>
     <string name="subscription_episode_released">Episodul %d a fost lansat!</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="provider_languages_tip">Urmăriți videoclipuri în aceste limbi</string>
     <string name="revert">Revenire</string>
     <string name="pref_category_actions">Acțiuni</string>

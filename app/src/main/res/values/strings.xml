@@ -339,10 +339,6 @@
     <string name="video_buffer_length_settings">Video buffer length</string>
     <string name="video_buffer_disk_settings">Video cache on disk</string>
     <string name="video_buffer_clear_settings">Clear video and image cache</string>
-    <string name="android_tv_interface_on_seek_settings">Player Shown - Seek Amount</string>
-    <string name="android_tv_interface_on_seek_settings_summary">The seek amount used when the player is visible</string>
-    <string name="android_tv_interface_off_seek_settings">Player Hidden - Seek Amount</string>
-    <string name="android_tv_interface_off_seek_settings_summary">The seek amount used when the player is hidden</string>
     <string name="video_ram_description">Causes crashes if set too high on devices with low memory, such as Android TV.</string>
     <string name="video_disk_description">Causes problems if set too high on devices with low storage space, such as Android TV.</string>
     <string name="dns_pref">DNS over HTTPS</string>
@@ -367,7 +363,6 @@
     <string name="pref_category_extensions">Extensions</string>
     <string name="pref_category_actions">Actions</string>
     <string name="pref_category_cache">Cache</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="pref_category_gestures">Gestures</string>
     <string name="pref_category_security">Security</string>
     <string name="pref_category_accounts">Accounts</string>
@@ -378,12 +373,9 @@
     <string name="pref_category_looks">Looks</string>
     <string name="pref_category_ui_features">Features</string>
     <string name="category_general">General</string>
-    <string name="tv_layout_clock_settings">Show real time clock</string>
-    <string name="tv_layout_clock_settings_des">Show a real time clock at the top of the screen. Applies to the homepage and player</string>
     <string name="random_button_settings">Random Button</string>
     <string name="random_button_settings_desc">Show random button on Homepage and Library</string>
     <string name="provider_lang_settings">Extension languages</string>
-    <string name="app_layout">App Layout</string>
     <string name="preferred_media_settings">Preferred media</string>
     <string name="enable_nsfw_on_providers">Enable NSFW on supported Extensions</string>
     <string name="subtitles_encoding">Subtitle encoding</string>
@@ -393,9 +385,6 @@
     <string name="test_extensions_summary">This Test is meant for developers only and does not verifies or denies working of any extension.</string>
     <string name="category_ui">Layout</string>
     <string name="automatic">Auto</string>
-    <string name="tv_layout">TV layout</string>
-    <string name="phone_layout">Phone layout</string>
-    <string name="emulator_layout">Emulator layout</string>
     <string name="primary_color_settings">Primary color</string>
     <string name="app_theme_settings">App theme</string>
     <string name="bottom_title_settings">Poster title location</string>
@@ -499,7 +488,6 @@
     <string name="provider_languages_tip">Watch videos in these languages</string>
     <string name="previous">Previous</string>
     <string name="skip_setup">Skip setup</string>
-    <string name="app_layout_subtext">Change the look of the app to suit your device</string>
     <string name="preferred_media_subtext">What do you want to see</string>
     <string name="setup_done">Done</string>
     <string name="extensions">Extensions</string>

@@ -26,10 +26,7 @@ import com.lagradost.cloudstream3.ui.clear
 import com.lagradost.cloudstream3.ui.home.HomeChildItemAdapter
 import com.lagradost.cloudstream3.ui.home.ParentItemAdapter
 import com.lagradost.cloudstream3.ui.search.SearchAdapter
-import com.lagradost.cloudstream3.ui.settings.Globals.updateTv
 import com.lagradost.cloudstream3.utils.UIHelper.toPx
-import com.lagradost.cloudstream4.compose.TV
-import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.rememberAppSettings
 import com.lagradost.cloudstream4.theme.CloudStreamPrimaryColor
 import com.lagradost.cloudstream4.theme.modeToTheme
@@ -131,21 +128,6 @@ object SettingsUIScreen : SearchableSettings {
                             }
                             return@ListPreference false
                         }),
-                    Preference.PreferenceItem.ListPreference(
-                        preference = settings.ui.layout,
-                        icon = painterResource(R.drawable.responsive_layout_24px),
-                        title = stringResource(R.string.app_layout),
-                        entries = integerArrayResource(R.array.app_layout_values).zip(
-                            stringArrayResource(R.array.app_layout)
-                        ).toMap().toPersistentMap(),
-                        onValueChanged = { newValue ->
-                            settings.ui.layout.set(newValue) // We need to set before we recreate
-                            safe {
-                                activity?.updateTv()
-                                activity?.recreate()
-                            }
-                            return@ListPreference false
-                        }),
                 )
             ),
 
@@ -158,7 +140,6 @@ object SettingsUIScreen : SearchableSettings {
                         subtitle = stringResource(R.string.overscan_settings_des),
                         valueRange = 0..100,
                         icon = painterResource(R.drawable.arrows_input_24px),
-                        enabled = isLayout(TV),
                         onValueChanged = { newValue ->
                             settings.ui.overscanDp.set(newValue)
                             val padding = newValue.toPx
@@ -204,13 +185,6 @@ object SettingsUIScreen : SearchableSettings {
                         preference = settings.ui.showMetadataOverlay,
                         title = stringResource(R.string.show_player_metadata_overlay),
                         icon = painterResource(R.drawable.metadata_overlay_icon)
-                    ),
-                    Preference.PreferenceItem.SwitchPreference(
-                        preference = settings.ui.showClock,
-                        title = stringResource(R.string.tv_layout_clock_settings),
-                        subtitle = stringResource(R.string.tv_layout_clock_settings_des),
-                        icon = painterResource(R.drawable.ic_baseline_clock_24),
-                        enabled = isLayout(TV),
                     ),
                     Preference.PreferenceItem.SwitchPreference(
                         preference = settings.ui.randomButtonEnabled,

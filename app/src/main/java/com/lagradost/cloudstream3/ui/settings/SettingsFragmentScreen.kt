@@ -75,10 +75,8 @@ import com.lagradost.cloudstream3.utils.UIHelper.clipboardHelper
 import com.lagradost.cloudstream3.utils.UIHelper.navigate
 import com.lagradost.cloudstream3.utils.txt
 import com.lagradost.cloudstream4.compose.Screen
-import com.lagradost.cloudstream4.compose.TV
 import com.lagradost.cloudstream4.compose.circleBorder
 import com.lagradost.cloudstream4.compose.focusOutline
-import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.theme.CloudStreamPreviewTheme
 import com.mihon.material.padding
 import com.mihon.presentation.settings.SearchableSettings
@@ -299,48 +297,20 @@ object SettingsFragmentScreen : Screen {
         val focusProgress by animateFloatAsState(targetValue = if (hasFocus) 1.0f else 0.0f)
         val focusManager = LocalFocusManager.current
         val focusRequester = remember { FocusRequester() }
-        val isTv = isLayout(TV)
         TextField(
             state = textFieldState,
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Search,
-                /**
-                 * We do not want to pull up the keyboard when navigating to the item on TV, therefore
-                 * we listen to when the TV user presses some key to "extra" focus it
-                 *
-                 * showKeyboardOnFocus is somewhat bugged, so need to change this to true when you
-                 * press it, as otherwise no keyboard will show even with keyboardController
-                 * */
-                showKeyboardOnFocus = if (isTv) isWritable else true
+                showKeyboardOnFocus = true
             ),
             lineLimits = TextFieldLineLimits.SingleLine,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp - 12.dp * focusProgress)
-                .focusOutline(enabled = isTv, CircleShape)
                 .onFocusChanged { newFocus ->
                     hasFocus = newFocus.hasFocus
-                    /** Loss of focus -> readonly */
-                    if (!newFocus.hasFocus) {
-                        isWritable = false
-                    }
                 }
-                .focusRequester(focusRequester)
-                .onPreviewKeyEvent { keyEvent ->
-                    if (isWritable || !isTv || !hasFocus || keyEvent.type != KeyEventType.KeyUp) {
-                        return@onPreviewKeyEvent false
-                    }
-
-                    /** Focus + press once -> writable */
-                    return@onPreviewKeyEvent when (keyEvent.key) {
-                        Key.Enter, Key.DirectionCenter, Key.NumPadEnter, Key.Spacebar -> {
-                            isWritable = true
-                            true
-                        }
-
-                        else -> false
-                    }
-                },
+                .focusRequester(focusRequester),
             placeholder = {
                 Text(text = stringResource(R.string.search_hint))
             },

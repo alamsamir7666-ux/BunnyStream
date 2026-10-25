@@ -249,7 +249,6 @@
     <string name="benene">Дайте бенен разработчикам</string>
     <string name="pref_category_links">Ссылки</string>
     <string name="pref_category_player_layout">Расстановка</string>
-    <string name="app_layout">Расстановка приложения</string>
     <string name="app_theme_settings">Тема приложения</string>
     <string name="add_repository">Добавить репозиторий</string>
     <string name="action_remove_from_watched">Убрать отметку</string>
@@ -325,9 +324,6 @@
     <string name="pref_category_player_features">Возможности плеера</string>
     <string name="pref_category_subtitles">Субтитры</string>
     <string name="bottom_title_settings">Расположение названия плаката</string>
-    <string name="tv_layout">Телевизионное оформление</string>
-    <string name="phone_layout">Телефон</string>
-    <string name="emulator_layout">Эмулятор</string>
     <string name="bottom_title_settings_des">Под плакатом</string>
     <string name="example_password">ваш пароль123</string>
     <string name="example_username">Имярек</string>
@@ -453,7 +449,6 @@
     <string name="enable_nsfw_on_providers">Включить вызывающее содержимое у поддерживаемых дополнений (поставщиков)</string>
     <string name="subtitles_remove_captions">Удалять скрытые субтитры из субтитров</string>
     <string name="extras">Дополнительно</string>
-    <string name="app_layout_subtext">Изменить вид интерфейса, чтобы соответствовать устройству</string>
     <string name="audio_tracks">Аудио дорожки</string>
     <string name="delete_repository_plugins">Это также удалит все дополнения из источника</string>
     <string name="view_public_repositories_button">Просмотреть репозитории сообщества</string>
@@ -478,12 +473,7 @@
     <string name="preferred_media_settings">Предпочтительные медиа</string>
     <string name="subtitles_depressed">Опущенные</string>
     <string name="double_tap_to_seek_amount_settings">Объем перемотки плеера (секундах)</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Объем перемотка, используемый, когда плеер виден</string>
-    <string name="android_tv_interface_on_seek_settings">Плеер показан - Перемотки объем</string>
-    <string name="android_tv_interface_off_seek_settings">Плеер спрятан - Перемотки объем</string>
     <string name="subtitles_remove_bloat">Удалять рекламу из субтитров</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Местоположение ползунка, когда игрок скрыт</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="actor_supporting">Второго планa</string>
     <string name="skip_type_mixed_op">Смешанный опенинг</string>
     <string name="skip_type_mixed_ed">Смешанный конец</string>
@@ -739,8 +729,6 @@
     <string name="video_singular">Видео</string>
     <string name="skip_type_preview">Предпросмотр</string>
     <string name="player_is_live">Прямой эфир</string>
-    <string name="tv_layout_clock_settings">Отображать текущее время</string>
-    <string name="tv_layout_clock_settings_des">Отображать в верхней части экрана часы с текущим временем. Применяется к главной странице и плееру</string>
     <string name="profile_settings">Настройки профиля</string>
     <string name="profile_hide_negative_sources">Скрывать источники с отрицательным приоритетом</string>
     <string name="profile_hide_error_sources">Скрывать источники с ошибками</string>

@@ -187,12 +187,10 @@
     <string name="legal_notice">Penafian</string>
     <string name="pref_category_links">Pautan</string>
     <string name="pref_category_backup">Sandaran</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="random_button_settings">Butang Rawak</string>
     <string name="pref_category_player_layout">Susun atur</string>
     <string name="pref_category_looks">Tengok</string>
     <string name="provider_lang_settings">Bahasa tambahan</string>
-    <string name="app_layout">Susun atur App</string>
     <string name="enable_nsfw_on_providers">Aktifkan NSFW pada tambahan yang disokong</string>
     <string name="category_providers">Sumber</string>
     <string name="add_account">Tambah akaun</string>
@@ -240,7 +238,6 @@
     <string name="others">Selain itu</string>
     <string name="pref_category_app_updates">Kemas kini aplikasi</string>
     <string name="pref_category_ui_features">Fitur</string>
-    <string name="phone_layout">Susun atur telefon</string>
     <string name="preferred_media_subtext">Apa yang anda mahu lihat</string>
     <string name="example_username">Nama Pengguna</string>
     <string name="authenticated_user_fail" formatted="true">Tidak dapat log masuk di %s</string>
@@ -285,7 +282,6 @@
     <string name="subtitle_offset_extra_hint_later_format">Gunakan ini sekiranya sari kata yang dipaparkan awal sebanyak %d</string>
     <string name="quality_hdr">HDR</string>
     <string name="custom_media_singular">Media</string>
-    <string name="tv_layout">Susun atur TV</string>
     <string name="tv_series">TV Bersiri</string>
     <string name="plugin_load_fail" formatted="true">Tidak dapat papar %s</string>
     <string name="plugins_downloaded" formatted="true">Dimuat turun: %d</string>
@@ -411,7 +407,6 @@
     <string name="quality_hq">HQ</string>
     <string name="quality_hd">HD</string>
     <string name="previous">Sebelum</string>
-    <string name="app_layout_subtext">Tukar kelihatan aplikasi mengikut peranti</string>
     <string name="setup_done">Tamat</string>
     <string name="extensions">Tambahan</string>
     <string name="add_repository">Tambah repositori</string>

@@ -33,9 +33,7 @@ import com.lagradost.cloudstream3.ui.search.SearchClickCallback
 import com.lagradost.cloudstream3.ui.search.SearchHelper
 import com.lagradost.cloudstream3.ui.search.SearchViewModel
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterProviderByPreferredMedia
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterSearchResultByFilmQuality
@@ -292,17 +290,11 @@ class QuickSearchFragment : BaseFragment<QuickSearchBinding>(
             }
         }
 
-        if (isLayout(PHONE or EMULATOR)) {
-            binding.quickSearchBack.apply {
-                isVisible = true
-                setOnClickListener {
-                    activity?.popCurrentPage()
-                }
+        binding.quickSearchBack.apply {
+            isVisible = true
+            setOnClickListener {
+                activity?.popCurrentPage()
             }
-        }
-
-        if (isLayout(TV)) {
-            binding.quickSearch.requestFocus()
         }
 
         arguments?.getString(AUTOSEARCH_KEY)?.let {

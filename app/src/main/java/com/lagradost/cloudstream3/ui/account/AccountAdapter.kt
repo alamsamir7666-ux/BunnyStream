@@ -10,8 +10,6 @@ import com.lagradost.cloudstream3.databinding.AccountListItemEditBinding
 import com.lagradost.cloudstream3.ui.NoStateAdapter
 import com.lagradost.cloudstream3.ui.ViewHolderState
 import com.lagradost.cloudstream3.ui.account.AccountHelper.showAccountEditDialog
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.DataStoreHelper
 import com.lagradost.cloudstream3.utils.ImageLoader.loadImage
@@ -51,7 +49,7 @@ class AccountAdapter(
     ) {
         when (val binding = holder.view) {
             is AccountListItemBinding -> binding.apply {
-                val isTv = isLayout(TV or EMULATOR) || !root.isInTouchMode
+                val isTv = !root.isInTouchMode
                 val isLastUsedAccount = item.keyIndex == DataStoreHelper.selectedKeyIndex
 
                 accountName.text = item.name
@@ -81,7 +79,7 @@ class AccountAdapter(
             }
 
             is AccountListItemEditBinding -> binding.apply {
-                val isTv = isLayout(TV or EMULATOR) || !root.isInTouchMode
+                val isTv = !root.isInTouchMode
                 val isLastUsedAccount = item.keyIndex == DataStoreHelper.selectedKeyIndex
 
                 accountName.text = item.name
@@ -108,7 +106,7 @@ class AccountAdapter(
     override fun onBindFooter(holder: ViewHolderState<Any>) {
         val binding = holder.view as? AccountListItemAddBinding ?: return
         binding.apply {
-            val isTv = isLayout(TV or EMULATOR) || !root.isInTouchMode
+            val isTv = !root.isInTouchMode
             if (!isTv) cardView.setRippleForeground()
 
             root.setOnClickListener {

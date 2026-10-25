@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.TvType
+import com.lagradost.cloudstream3.CloudStreamApp.Companion.setKey
 import com.lagradost.cloudstream3.databinding.FragmentSetupMediaBinding
 import com.lagradost.cloudstream3.mvvm.safe
 import com.lagradost.cloudstream3.ui.BaseFragment
@@ -64,7 +65,8 @@ class SetupFragmentMedia : BaseFragment<FragmentSetupMediaBinding>(
                 }
 
                 nextBtt.setOnClickListener {
-                    findNavController().navigate(R.id.navigation_setup_media_to_navigation_setup_layout)
+                    setKey(HAS_DONE_SETUP_KEY, true)
+                    findNavController().navigate(R.id.navigation_home)
                 }
 
                 prevBtt.setOnClickListener {

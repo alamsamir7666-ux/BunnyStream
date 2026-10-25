@@ -242,7 +242,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!-- Needed for leanback fuckery -->
         <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
@@ -252,7 +251,6 @@
         <item name="colorPrimaryDark">@color/material_dynamic_primary30</item>
         <item name="colorAccent">@color/material_dynamic_primary80</item>
         <item name="colorOnPrimary">@color/material_dynamic_primary20</item>
-        <!-- Needed for leanback fuckery -->
         <item name="android:colorAccent">@color/material_dynamic_primary80</item>
     </style>
 
@@ -262,7 +260,6 @@
         <item name="colorPrimaryDark">@color/material_dynamic_secondary30</item>
         <item name="colorAccent">@color/material_dynamic_secondary80</item>
         <item name="colorOnPrimary">@color/material_dynamic_secondary20</item>
-        <!-- Needed for leanback fuckery -->
         <item name="android:colorAccent">@color/material_dynamic_secondary80</item>
     </style>
 
@@ -272,7 +269,6 @@
         <item name="colorPrimaryDark">#4855A2</item>
         <item name="colorAccent">#5A6BCB</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!-- Needed for leanback fuckery -->
         <item name="android:colorAccent">@color/colorPrimaryBlue</item>
     </style>
 
@@ -309,7 +305,6 @@
         <item name="colorPrimaryDark">#B62B2B</item>
         <item name="colorAccent">@color/colorPrimaryRed</item> <!--#F53B3B-->
         <item name="colorOnPrimary">@color/whiteText</item> <!--#EC3838-->
-        <!-- Needed for leanback fuckery -->
         <item name="android:colorAccent">@color/colorPrimaryRed</item>
     </style>
 
@@ -346,7 +341,6 @@
         <item name="colorPrimaryDark">#83366f</item>
         <item name="colorAccent">#BD5DA5</item>
         <item name="colorOnPrimary">@color/blackText</item>
-        <!--   Needed for leanback fuckery   -->
         <item name="android:colorAccent">@color/colorPrimaryCarnationPink</item>
     </style>
 
@@ -356,7 +350,6 @@
         <item name="colorPrimaryDark">#370C0C</item>
         <item name="colorAccent">#451010</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!--   Needed for leanback fuckery   -->
         <item name="android:colorAccent">@color/colorPrimaryMaroon</item>
     </style>
 
@@ -366,7 +359,6 @@
         <item name="colorPrimaryDark">#003d00</item>
         <item name="colorAccent">#004500</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!--   Needed for leanback fuckery   -->
         <item name="android:colorAccent">@color/colorPrimaryDarkGreen</item>
     </style>
 
@@ -376,7 +368,6 @@
         <item name="colorPrimaryDark">#000073</item>
         <item name="colorAccent">#000080</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!--   Needed for leanback fuckery   -->
         <item name="android:colorAccent">@color/colorPrimaryNavyBlue</item>
     </style>
 
@@ -386,7 +377,6 @@
         <item name="colorPrimaryDark">#484848</item>
         <item name="colorAccent">#515151</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!--   Needed for leanback fuckery   -->
         <item name="android:colorAccent">@color/colorPrimaryGrey</item>
     </style>
 
@@ -396,7 +386,6 @@
         <item name="colorPrimaryDark">#CCCCCC</item>
         <item name="colorAccent">#FFFFFF</item>
         <item name="colorOnPrimary">@color/blackText</item>
-        <!--   Needed for leanback fuckery   -->
         <item name="android:colorAccent">@color/colorPrimaryWhite</item>
     </style>
 
@@ -406,7 +395,6 @@
         <item name="colorPrimaryDark">#582700</item>
         <item name="colorAccent">#622C00</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!--   Needed for leanback fuckery   -->
         <item name="android:colorAccent">@color/colorPrimaryBrown</item>
     </style>
 
@@ -416,7 +404,6 @@
         <item name="colorPrimaryDark">#A66B00</item>
         <item name="colorAccent">#CE8500</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!--    Needed for leanback fuckery    -->
         <item name="android:colorAccent">@color/colorPrimaryOrange</item>
     </style>
 
@@ -426,7 +413,6 @@
         <item name="colorPrimaryDark">#C49600</item>
         <item name="colorAccent">#F5BB00</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!--    Needed for leanback fuckery    -->
         <item name="android:colorAccent">@color/colorPrimaryDandelionYellow</item>
     </style>
 
@@ -436,7 +422,6 @@
         <item name="colorPrimaryDark">#306981</item>
         <item name="colorAccent">#51b0d7</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!--    Needed for leanback fuckery    -->
         <item name="android:colorAccent">@color/colorPrimaryCoolBlue</item>
     </style>
 
@@ -446,7 +431,6 @@
         <item name="colorPrimaryDark">#6B51AB</item>
         <item name="colorAccent">#7961B4</item>
         <item name="colorOnPrimary">@color/whiteText</item>
-        <!--    Needed for leanback fuckery    -->
         <item name="android:colorAccent">@color/colorPrimaryLavender</item>
     </style>
 

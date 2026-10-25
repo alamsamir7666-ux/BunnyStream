@@ -279,16 +279,12 @@
     <string name="random_button_settings">随机按钮</string>
     <string name="random_button_settings_desc">在主页和库中显示随机按钮</string>
     <string name="provider_lang_settings">扩展语言</string>
-    <string name="app_layout">应用布局</string>
     <string name="preferred_media_settings">首选类型</string>
     <string name="enable_nsfw_on_providers">在支持的扩展程序中启用 NSFW 内容</string>
     <string name="subtitles_encoding">字幕编码</string>
     <string name="category_providers">片源</string>
     <string name="category_ui">布局</string>
     <string name="automatic">自动</string>
-    <string name="tv_layout">电视布局</string>
-    <string name="phone_layout">手机布局</string>
-    <string name="emulator_layout">模拟器布局</string>
     <string name="primary_color_settings">主题色</string>
     <string name="app_theme_settings">应用主题</string>
     <string name="bottom_title_settings">封面标题位置</string>
@@ -387,7 +383,6 @@
     <string name="provider_languages_tip">观看这些语言的视频</string>
     <string name="previous">上一个</string>
     <string name="skip_setup">跳过设置向导</string>
-    <string name="app_layout_subtext">更改为适应您的设备的应用布局</string>
     <string name="preferred_media_subtext">您想要看什么</string>
     <string name="setup_done">完成</string>
     <string name="extensions">扩展</string>
@@ -496,11 +491,6 @@
     <string name="open_with">打开方式</string>
     <string name="empty_library_no_accounts_message">您的库是空的 :( \n登录库账户或添加节目到您的本地库。</string>
     <string name="empty_library_logged_in_message">此列表是空的，请尝试切换到另一个。</string>
-    <string name="android_tv_interface_on_seek_settings">播放器显示 - 快进快退秒数</string>
-    <string name="android_tv_interface_on_seek_settings_summary">播放器可见时使用的快进快退秒数</string>
-    <string name="android_tv_interface_off_seek_settings">播放器隐藏 - 快进快退秒数</string>
-    <string name="android_tv_interface_off_seek_settings_summary">播放器隐藏时使用的快进快退秒数</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="test_failed">失败</string>
     <string name="category_provider_test">片源测试</string>
     <string name="restart">重启</string>
@@ -747,8 +737,6 @@
     <string name="video_singular">视频</string>
     <string name="skip_type_preview">预览</string>
     <string name="player_is_live">播放中</string>
-    <string name="tv_layout_clock_settings">显示实时时钟</string>
-    <string name="tv_layout_clock_settings_des">在屏幕顶部显示实时时钟。应用于主页和播放器</string>
     <string name="profile_settings">配置文件设置</string>
     <string name="profile_hide_negative_sources">隐藏负优先级的来源</string>
     <string name="profile_hide_error_sources">隐藏有错误的来源</string>

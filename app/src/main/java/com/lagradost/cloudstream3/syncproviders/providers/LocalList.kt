@@ -6,7 +6,6 @@ import com.lagradost.cloudstream3.syncproviders.SyncAPI
 import com.lagradost.cloudstream3.syncproviders.SyncIdName
 import com.lagradost.cloudstream3.ui.WatchType
 import com.lagradost.cloudstream3.ui.library.ListSorting
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.Coroutines.ioWork
 import com.lagradost.cloudstream3.utils.DataStoreHelper.getAllFavorites
@@ -34,20 +33,14 @@ class LocalList : SyncAPI() {
         }?.distinctBy { it.first } ?: return null
 
         val list = ioWork {
-            val isTrueTv = isLayout(TV)
-
             val baseMap = WatchType.entries.filter { it != WatchType.NONE }.associate {
                 // None is not something to display
                 it.stringRes to emptyList<SyncAPI.LibraryItem>()
             } + mapOf(
                 R.string.favorites_list_name to emptyList()
-            ) + if (!isTrueTv) {
-                mapOf(
-                    R.string.subscription_list_name to emptyList()
-                )
-            } else {
-                emptyMap()
-            }
+            ) + mapOf(
+                R.string.subscription_list_name to emptyList()
+            )
 
             val watchStatusMap = watchStatusIds.groupBy { it.second.stringRes }.mapValues { group ->
                 group.value.mapNotNull {
@@ -59,10 +52,7 @@ class LocalList : SyncAPI() {
                 it.toLibraryItem()
             })
 
-            // Don't show subscriptions on TV
-            val result = if (isTrueTv) {
-                baseMap + watchStatusMap + favoritesMap
-            } else {
+            val result = run {
                 val subscriptionsMap =
                     mapOf(R.string.subscription_list_name to getAllSubscriptions().mapNotNull {
                         it.toLibraryItem()

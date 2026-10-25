@@ -107,7 +107,6 @@
     <string name="home_random">任意</string>
     <string name="extensions">拡張機能</string>
     <string name="pref_category_links">リンク</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="login">ログイン</string>
     <string name="logout">ログアウト</string>
     <string name="max">最大</string>
@@ -248,7 +247,6 @@
     <string name="video_skip_op">OPをスキップ</string>
     <string name="resize_fit">画面に合わせる</string>
     <string name="sync_total_episodes_some" formatted="true">/%d</string>
-    <string name="tv_layout">テレビでのレイアウト</string>
     <string name="eigengraumode_settings">再生速度</string>
     <string name="restore_failed_format" formatted="true">%s ファイルからデータを復元できませんでした</string>
     <string name="unexpected_error">予期しないプレーヤーエラー</string>
@@ -261,11 +259,8 @@
     <string name="video_buffer_size_settings">ビデオバッファサイズ</string>
     <string name="display_subbed_dubbed_settings">字幕付きまたは吹き替え済みのアニメを表示</string>
     <string name="pref_category_player_layout">レイアウト</string>
-    <string name="app_layout">アプリのレイアウト</string>
     <string name="subtitles_encoding">字幕エンコーディング</string>
     <string name="category_ui">レイアウト</string>
-    <string name="phone_layout">携帯電話でのレイアウト</string>
-    <string name="emulator_layout">エミュレータでのレイアウト</string>
     <string name="example_email">hello@world.com</string>
     <string name="disable">無効化</string>
     <string name="subtitles_outline">概要</string>
@@ -406,7 +401,6 @@
     <string name="downloads_empty">現在ダウンロードはがありません。</string>
     <string name="benene_count_text_none">ベネネは与えられていません</string>
     <string name="double_tap_to_seek_settings">ダブルタップでシーク</string>
-    <string name="android_tv_interface_off_seek_settings_summary">プレーヤーが非表示のときに使用されるシーク量</string>
     <string name="resize_zoom">ズーム</string>
     <string name="action_subscribe">購読</string>
     <string name="subtitles_from_embedded">埋め込み</string>
@@ -438,14 +432,12 @@
     <string name="test_extensions">すべての拡張機能をテスト</string>
     <string name="example_password">password123</string>
     <string name="restart">再起動</string>
-    <string name="android_tv_interface_on_seek_settings">プレーヤー表示時 - シーク量</string>
     <string name="random_button_settings_desc">ホームページとライブラリにランダムボタンを表示</string>
     <string name="batch_download_nothing_to_download_format" formatted="true">すべての %s はすでにダウンロードされています</string>
     <string name="extension_install_first">最初に拡張機能をインストール</string>
     <string name="player_settings_play_in_app">内部プレーヤー</string>
     <string name="backup_settings">データをバックアップ</string>
     <string name="queued">キューに入れられました</string>
-    <string name="android_tv_interface_on_seek_settings_summary">プレーヤーが表示されているときに使用されるシーク量</string>
     <string name="extras">エクストラ</string>
     <string name="skip_type_op">オープニング</string>
     <string name="subscription_new">%s を購読しました</string>
@@ -508,7 +500,6 @@
     <string name="title">タイトル</string>
     <string name="subtitles_filter_lang">優先メディア言語でフィルタ</string>
     <string name="referer">リファラー (任意)</string>
-    <string name="app_layout_subtext">デバイスの外観に合わせてアプリのレイアウトを変更</string>
     <string name="batch_download_start_format" formatted="true">%1$d %2$s のダウンロードを開始しました…</string>
     <string name="plugin_loaded">プラグインが読み込まれました</string>
     <string name="plugins_downloaded" formatted="true">ダウンロード済み: %d</string>
@@ -651,7 +642,6 @@
     <string name="player_notification_channel_description">バックグラウンドから再生を制御するためのプレーヤー通知</string>
     <string name="audio_singular">オーディオ</string>
     <string name="podcast_singular">ポッドキャスト</string>
-    <string name="android_tv_interface_off_seek_settings">プレーヤー非表示時 - シーク量</string>
     <string name="encoding_error">エンコーディングエラー</string>
     <string name="unsupported_error">サポートされていないエラー</string>
     <string name="pref_category_actions">アクション</string>
@@ -733,8 +723,6 @@
     <string name="video_singular">動画</string>
     <string name="skip_type_preview">プレビュー</string>
     <string name="player_is_live">ライブ</string>
-    <string name="tv_layout_clock_settings">現地時刻を表示</string>
-    <string name="tv_layout_clock_settings_des">画面上部に現地時刻を表示します。ホーム画面とプレイヤーに適用されます</string>
     <string name="profile_settings">プロフィール設定</string>
     <string name="profile_hide_negative_sources">優先度がマイナスのソースを非表示</string>
     <string name="profile_hide_error_sources">エラーが発生したソースを非表示</string>

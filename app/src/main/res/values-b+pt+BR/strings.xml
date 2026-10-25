@@ -269,14 +269,10 @@
     <string name="random_button_settings">Botão Aleatório</string>
     <string name="random_button_settings_desc">Mostrar botão aleatório na página inicial e na biblioteca</string>
     <string name="provider_lang_settings">Linguagem das extensões</string>
-    <string name="app_layout">Layout do App</string>
     <string name="preferred_media_settings">Mídia preferida</string>
     <string name="subtitles_encoding">Codificação das legendas</string>
     <string name="category_ui">Layout</string>
     <string name="automatic">Auto</string>
-    <string name="tv_layout">Layout de TV</string>
-    <string name="phone_layout">Layout de celular</string>
-    <string name="emulator_layout">Layout de emulador</string>
     <string name="primary_color_settings">Cor principal</string>
     <string name="app_theme_settings">Tema do App</string>
     <string name="bottom_title_settings">Local do título do poster</string>
@@ -373,7 +369,6 @@
     <string name="provider_languages_tip">Ver vídeos nestas linguagens</string>
     <string name="previous">Anterior</string>
     <string name="skip_setup">Saltar setup</string>
-    <string name="app_layout_subtext">Change the look of the app to suit your device</string>
     <string name="preferred_media_subtext">What do you want to see</string>
     <string name="setup_done">Feito</string>
     <string name="extensions">Extensões</string>
@@ -416,7 +411,6 @@
     <string name="play_trailer_button">Reproduzir trailer</string>
     <string name="browser">Navegador</string>
     <string name="pref_category_backup">Copia de Segurança</string>
-    <string name="android_tv_interface_off_seek_settings_summary">A Barra de Progresso pode ser usada quando o player estiver oculto</string>
     <string name="subscription_list_name">Inscrito</string>
     <string name="empty_library_logged_in_message">Essa lista está vazia. Tente mudar para outra.</string>
     <string name="play_livestream_button">Reproduzir transmissão ao vivo</string>
@@ -424,14 +418,12 @@
     <string name="automatic_plugin_download">Baixar plugins automaticamente</string>
     <string name="automatic_plugin_download_mode_title">Selecione o modo para filtrar os plugins baixados</string>
     <string name="test_failed">Reprovou nos testes</string>
-    <string name="android_tv_interface_on_seek_settings_summary">A Barra de Progresso pode ser usada quando o player estiver visível</string>
     <string name="sort">Organizar</string>
     <string name="yes">Sim</string>
     <string name="confirm_exit_dialog">Você tem certeza que deseja sair?</string>
     <string name="update_notification_installing">Instalando atualização do aplicativo…</string>
     <string name="edit">Editar</string>
     <string name="profiles">Perfis</string>
-    <string name="android_tv_interface_on_seek_settings">Exibindo Player - procure na Barra de Progresso</string>
     <string name="action_remove_from_watched">Remover dos assistidos</string>
     <string name="pref_category_extensions">Extensões</string>
     <string name="sort_alphabetical_a">Alfabética(A =&gt; Z)</string>
@@ -466,7 +458,6 @@
     <string name="mobile_data">Dados móveis</string>
     <string name="profile_number">Perfil %d</string>
     <string name="subscription_in_progress_notification">Atualizando shows inscritos</string>
-    <string name="android_tv_interface_off_seek_settings">Player oculto - Procure na barra de progresso</string>
     <string name="nsfw">Conteúdo +18</string>
     <string name="restart">Reiniciar</string>
     <string name="stop">Parar</string>
@@ -527,7 +518,6 @@
     <string name="jsdelivr_enabled">Não foi possível se conectar ao GitHub. Ativando proxy JsDelivr…</string>
     <string name="pref_category_cache">Cache</string>
     <string name="other_singular">Vídeo</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="wifi">Wi-Fi</string>
     <string name="unable_to_inflate">A interface de usuário não foi gerada corretamente. Isto se trata de um bug importante e deve ser reportado imediatamente %s</string>
     <string name="pref_category_ui_features">Características da interface de usuário</string>
@@ -752,8 +742,6 @@
     <string name="video_singular">Vídeo</string>
     <string name="skip_type_preview">Visualização</string>
     <string name="player_is_live">Ao vivo</string>
-    <string name="tv_layout_clock_settings">Mostrar relógio em tempo real</string>
-    <string name="tv_layout_clock_settings_des">Exiba um relógio em tempo real na parte superior da tela. Aplica-se à página inicial e ao player</string>
     <string name="profile_settings">Configurações de perfil</string>
     <string name="profile_hide_negative_sources">Ocultar fontes com prioridade negativa</string>
     <string name="profile_hide_error_sources">Ocultar fontes com erros</string>

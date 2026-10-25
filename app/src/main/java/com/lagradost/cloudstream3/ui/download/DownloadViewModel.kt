@@ -19,7 +19,6 @@ import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.services.DownloadQueueService
 import com.lagradost.cloudstream3.services.DownloadQueueService.Companion.downloadInstances
 import com.lagradost.cloudstream3.utils.AppContextUtils.getNameFull
-import com.lagradost.cloudstream3.utils.AppContextUtils.setDefaultFocus
 import com.lagradost.cloudstream3.utils.ConsistentLiveData
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
 import com.lagradost.cloudstream3.utils.Coroutines.ioWork
@@ -579,7 +578,7 @@ class DownloadViewModel : ViewModel() {
                 .setMessage(message)
                 .setPositiveButton(R.string.delete, dialogClickListener)
                 .setNegativeButton(R.string.cancel, dialogClickListener)
-                .show().setDefaultFocus()
+                .show()
         } catch (e: Exception) {
             logError(e)
         }

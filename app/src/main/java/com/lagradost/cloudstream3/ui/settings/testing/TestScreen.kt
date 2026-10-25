@@ -64,7 +64,6 @@ import com.lagradost.cloudstream4.compose.PHONE
 import com.lagradost.cloudstream4.compose.Screen
 import com.lagradost.cloudstream4.compose.WhiteButton
 import com.lagradost.cloudstream4.compose.WhiteFilterChip
-import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.state.LogItem
 import com.lagradost.cloudstream4.state.LogLevel
 import com.lagradost.cloudstream4.state.SearchableDataState
@@ -152,29 +151,27 @@ object TestScreen : Screen {
                 )
             },
             floatingActionButton = {
-                if (isLayout(PHONE)) {
-                    val loading = state.activeQueries > 0
-                    FloatingActionButton(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                        contentColor = MaterialTheme.colorScheme.onBackground,
-                        onClick = {
-                            if (loading) {
-                                onAction(TestAction.Cancel)
-                            } else {
-                                onAction(TestAction.Start)
-                            }
-                        }) {
+                val loading = state.activeQueries > 0
+                FloatingActionButton(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    contentColor = MaterialTheme.colorScheme.onBackground,
+                    onClick = {
                         if (loading) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(24.dp),
-                                color = MaterialTheme.colorScheme.onBackground,
-                            )
+                            onAction(TestAction.Cancel)
                         } else {
-                            Icon(
-                                painter = painterResource(R.drawable.play_arrow_24px),
-                                contentDescription = stringResource(R.string.test_extensions)
-                            )
+                            onAction(TestAction.Start)
                         }
+                    }) {
+                    if (loading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = MaterialTheme.colorScheme.onBackground,
+                        )
+                    } else {
+                        Icon(
+                            painter = painterResource(R.drawable.play_arrow_24px),
+                            contentDescription = stringResource(R.string.test_extensions)
+                        )
                     }
                 }
             },

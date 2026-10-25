@@ -247,7 +247,6 @@
     <string name="picture_in_picture">صور في صور</string>
     <string name="resume_time_left" formatted="true">%d \nباقي</string>
     <string name="video_source">مصدر</string>
-    <string name="android_tv_interface_off_seek_settings">اللاعب مخفي - ابحث عن المبلغ</string>
     <string name="backup_frequency">تكرار النسخ الاحتياطي</string>
     <string name="movies_singular">فلم</string>
     <string name="torrent_singular">توررنت</string>
@@ -282,10 +281,8 @@
     <string name="watch_quality_pref">(WiFi) جودة الساعة المفضلة</string>
     <string name="cartoons_singular">فلم كرتون</string>
     <string name="synopsis">ملخص</string>
-    <string name="android_tv_interface_on_seek_settings_summary">يتم استخدام مبلغ البحث عندما يكون اللاعب مرئيًا</string>
     <string name="other_singular">فيديو</string>
     <string name="live_singular">بث مباشر</string>
-    <string name="android_tv_interface_on_seek_settings">اللاعب المعروض - ابحث عن المبلغ</string>
     <string name="display_subbed_dubbed_settings">عرض الأنمي المدبلج/المترجم</string>
     <string name="ova">اوفياي</string>
     <string name="unexpected_error">خطأ غير متوقع من اللاعب</string>
@@ -314,7 +311,6 @@
     <string name="resize_zoom">تكبير</string>
     <string name="resize_fit">صالح للشاشة</string>
     <string name="jsdelivr_enabled">...jsDelivr لا يمكن الوصول إلى جيتهاب. جارٍ تشغيل وكيل</string>
-    <string name="android_tv_interface_off_seek_settings_summary">استخدام مبلغ البحث عندما يكون اللاعب مخفيًا</string>
     <string name="video_lock">قفل</string>
     <string name="storage_error">خطأ في التنزيل، تحقق من أذونات التخزين</string>
     <string name="anime_singular">انيمي</string>

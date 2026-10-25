@@ -337,7 +337,6 @@
     <string name="pref_category_links">لینک ها</string>
     <string name="pref_category_app_updates">آپدیت های برنامه</string>
     <string name="pref_category_extensions">افزونه ها</string>
-    <string name="pref_category_android_tv">تلویزیون اندروید</string>
     <string name="pref_category_security">محافظت</string>
     <string name="pref_category_accounts">اکانت ها</string>
     <string name="pref_category_subtitles">زیرنویس ها</string>

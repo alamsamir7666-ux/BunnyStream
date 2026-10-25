@@ -96,8 +96,7 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(
 
     private var toggleRandomButton = false
 
-    override fun pickLayout(): Int? =
-        if (isLayout(PHONE)) R.layout.fragment_library else R.layout.fragment_library_tv
+    override fun pickLayout(): Int? = R.layout.fragment_library
 
     override fun onSaveInstanceState(outState: Bundle) {
         binding?.viewpager?.currentItem?.let { currentItem ->

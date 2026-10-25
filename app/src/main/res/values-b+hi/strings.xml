@@ -121,12 +121,9 @@
     <string name="watch_quality_pref">देखने की तरजीही क्वालिटी (वाईफ़ाई)</string>
     <string name="dns_pref_summary">ISP ब्लॉक से छुटकारा पाएं</string>
     <string name="provider_lang_settings">एक्सटेंशन की भाषाएं</string>
-    <string name="app_layout">ऐप का रुप दर्शन</string>
     <string name="preferred_media_settings">पसंदीदा मीडिया</string>
     <string name="download_path_pref">डाउनलोड पथ</string>
     <string name="display_subbed_dubbed_settings">डब किए /सबब् किए एनीमे दिखाएं</string>
-    <string name="tv_layout">टीवी रुप दर्शन</string>
-    <string name="phone_layout">फ़ोन रुप दर्शन</string>
     <string name="primary_color_settings">मुख्य रंग</string>
     <string name="app_theme_settings">ऐप थीम</string>
     <string name="action_mark_as_watched">देखा हुआ चिह्नित करें</string>
@@ -342,10 +339,6 @@
     <string name="video_buffer_length_settings">वीडियो बफर की लंबाई</string>
     <string name="video_buffer_disk_settings">डिस्क पर वीडियो कैश</string>
     <string name="video_buffer_clear_settings">वीडियो और इमेज कैश साफ़ करें</string>
-    <string name="android_tv_interface_on_seek_settings">प्लेयर दिखाये - सीक मूल्य</string>
-    <string name="android_tv_interface_on_seek_settings_summary">जब प्लेयर दिखाई दे रहा हो तो इस्तेमाल की जाने वाली सीक राशि</string>
-    <string name="android_tv_interface_off_seek_settings">प्लेयर छुपाए - सीक मूल्य</string>
-    <string name="android_tv_interface_off_seek_settings_summary">जब प्लेयर छिपा होता है तो इस्तेमाल की जाने वाली सीक राशि</string>
     <string name="video_ram_description">अगर कम मेमोरी वाले डिवाइस, जैसे कि Android TV पर इसे बहुत ज़्यादा सेट किया जाता है, तो इससे क्रैश हो सकता है।</string>
     <string name="video_disk_description">अगर कम मेमोरी वाले डिवाइस, जैसे कि एन्ड्रोइड टीवी पर इसे बहुत ज़्यादा सेट किया जाता है, तो इससे क्रैश हो सकता है।</string>
     <string name="dns_pref">एचटीटीपीएस पर डीएनएस</string>
@@ -367,7 +360,6 @@
     <string name="pref_category_extensions">एक्सटेंशन्स</string>
     <string name="pref_category_actions">कार्यवाही</string>
     <string name="pref_category_cache">कैश</string>
-    <string name="pref_category_android_tv">एंड्रॉइड टीवी</string>
     <string name="pref_category_gestures">इशारे</string>
     <string name="pref_category_security">सुरक्षा</string>
     <string name="pref_category_accounts">अकाउंट</string>
@@ -388,7 +380,6 @@
     <string name="test_extensions_summary">यह परीक्षण मात्र डेवलपर्स के लिए है और किसी भी एक्सटेंशन के काम करने की पुष्टि या खंडन नहीं करता है।</string>
     <string name="category_ui">रुप दर्शन</string>
     <string name="automatic">स्वतह्</string>
-    <string name="emulator_layout">एमुलेटर रुप दर्शन</string>
     <string name="bottom_title_settings">पोस्टर शीर्षक स्थान</string>
     <string name="bottom_title_settings_des">शीर्षक को पोस्टर के नीचे रखें</string>
     <string name="example_password">पासवर्ड१२३</string>

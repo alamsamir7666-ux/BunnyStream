@@ -15,15 +15,12 @@ import com.lagradost.cloudstream3.ui.BaseFragment
 import com.lagradost.cloudstream3.ui.download.DownloadButtonSetup.handleDownloadClick
 import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.setLinearListLayout
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.BackPressedCallbackHelper.attachBackPressedCallback
 import com.lagradost.cloudstream3.utils.BackPressedCallbackHelper.detachBackPressedCallback
 import com.lagradost.cloudstream3.utils.UIHelper.fixSystemBarsPadding
-import com.lagradost.cloudstream3.utils.UIHelper.setAppBarNoScrollFlagsOnTV
 
 class DownloadChildFragment : BaseFragment<FragmentChildDownloadsBinding>(
     BaseFragment.BindingCreator.Inflate(FragmentChildDownloadsBinding::inflate)
@@ -50,7 +47,7 @@ class DownloadChildFragment : BaseFragment<FragmentChildDownloadsBinding>(
         fixSystemBarsPadding(
             view,
             padBottom = isLandscape(),
-            padLeft = isLayout(TV or EMULATOR)
+            padLeft = false
         )
     }
 
@@ -66,16 +63,14 @@ class DownloadChildFragment : BaseFragment<FragmentChildDownloadsBinding>(
 
         binding.downloadChildToolbar.apply {
             title = name
-            if (isLayout(PHONE or EMULATOR)) {
+            if (isLayout(PHONE)) {
                 setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
                 setNavigationOnClickListener {
                     dispatchBackPressed()
                 }
             }
-            setAppBarNoScrollFlagsOnTV()
         }
 
-        binding.downloadDeleteAppbar.setAppBarNoScrollFlagsOnTV()
 
         observe(downloadViewModel.childCards) { cards ->
             when (cards) {

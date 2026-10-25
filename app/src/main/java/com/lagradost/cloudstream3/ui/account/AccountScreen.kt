@@ -70,15 +70,12 @@ import com.lagradost.cloudstream3.utils.DataStoreHelper.Account
 import com.lagradost.cloudstream4.compose.ActionDialog
 import com.lagradost.cloudstream4.compose.BlackButton
 import com.lagradost.cloudstream4.compose.BlackTextField
-import com.lagradost.cloudstream4.compose.EMULATOR
 import com.lagradost.cloudstream4.compose.PHONE
 import com.lagradost.cloudstream4.compose.RoundedShape
-import com.lagradost.cloudstream4.compose.TV
 import com.lagradost.cloudstream4.compose.WhiteButton
 import com.lagradost.cloudstream4.compose.circle
 import com.lagradost.cloudstream4.compose.circleBorder
 import com.lagradost.cloudstream4.compose.focusOutline
-import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.compose.rounded
 import com.lagradost.cloudstream4.compose.whiteOutline
 import com.lagradost.cloudstream4.state.SearchableData
@@ -323,7 +320,6 @@ object AccountScreen {
             focusRequester.requestFocus()
         }
 
-        val isTv = isLayout(TV)
         AlertDialog(
             containerColor = MaterialTheme.colorScheme.background,
             confirmButton = {
@@ -350,13 +346,7 @@ object AccountScreen {
                 }
             },
             onDismissRequest = {
-                /**
-                 * For UX reasons we can only dismiss it with the cancel button,
-                 * but does not have those issues
-                 * */
-                if (isTv) {
-                    onAction(AccountAction.EditAccount(null))
-                }
+                // For UX reasons we can only dismiss it with the cancel button
             },
             text = {
                 Column(
@@ -500,7 +490,7 @@ object AccountScreen {
             var hasFocus by remember { mutableStateOf(false) }
             val size = 100.dp
             val innerPadding by animateDpAsState(
-                targetValue = if (hasFocus || isLayout(PHONE or EMULATOR)) 0.dp else MaterialTheme.padding.extraSmall,
+                targetValue = if (hasFocus || isLayout(PHONE)) 0.dp else MaterialTheme.padding.extraSmall,
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -744,7 +734,7 @@ object AccountScreen {
         var hasFocus by remember { mutableStateOf(false) }
         val size = 100.dp
         val innerPadding by animateDpAsState(
-            targetValue = if (hasFocus || isLayout(PHONE or EMULATOR)) 0.dp else MaterialTheme.padding.extraSmall,
+            targetValue = if (hasFocus || isLayout(PHONE)) 0.dp else MaterialTheme.padding.extraSmall,
         )
         val focusRequester = remember { FocusRequester() }
         LaunchedEffect(Unit) {

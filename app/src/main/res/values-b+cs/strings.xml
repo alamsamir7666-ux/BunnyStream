@@ -254,14 +254,10 @@
     <string name="random_button_settings">Náhodné tlačítko</string>
     <string name="random_button_settings_desc">Zobrazit na domovské stránce a v knihovně náhodné tlačítko</string>
     <string name="provider_lang_settings">Jazyky rozšíření</string>
-    <string name="app_layout">Rozložení aplikace</string>
     <string name="preferred_media_settings">Preferovaná média</string>
     <string name="subtitles_encoding">Kódování titulků</string>
     <string name="category_ui">Rozložení</string>
     <string name="automatic">Automaticky</string>
-    <string name="tv_layout">TV rozložení</string>
-    <string name="phone_layout">Mobilní rozložení</string>
-    <string name="emulator_layout">Rozložení emulátoru</string>
     <string name="primary_color_settings">Primární barva</string>
     <string name="app_theme_settings">Motiv aplikace</string>
     <string name="bottom_title_settings">Umístění názvu plakátu</string>
@@ -408,7 +404,6 @@
     <string name="enable_nsfw_on_providers">Povolit NSFW u podporovaných rozšíření</string>
     <string name="category_providers">Poskytovatelé</string>
     <string name="previous">Předchozí</string>
-    <string name="app_layout_subtext">Změnit vzhled aplikace tak, aby vám vyhovoval</string>
     <string name="preferred_media_subtext">Co chcete vidět</string>
     <string name="plugin_downloaded">Doplněk stažen</string>
     <string name="is_adult">18+</string>
@@ -497,11 +492,6 @@
     <string name="delete_repository">Odstranit repozitář</string>
     <string name="plugins_not_downloaded" formatted="true">Nestaženo: %d</string>
     <string name="no">Ne</string>
-    <string name="android_tv_interface_off_seek_settings">Skrytý přehrávač - doba hledání</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Množství vyhledávané doby při skrytém přehrávači</string>
-    <string name="android_tv_interface_on_seek_settings">Zobrazený přehrávač - doba hledání</string>
-    <string name="pref_category_android_tv">Android TV</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Množství vyhledávané doby při zobrazeném přehrávači</string>
     <string name="test_log">Protokol</string>
     <string name="category_provider_test">Test poskytovatele</string>
     <string name="test_failed">Neúspěšné</string>
@@ -763,8 +753,6 @@
         <item quantity="many">%d skrytých odkazů</item>
         <item quantity="other">%d skrytých odkazů</item>
     </plurals>
-    <string name="tv_layout_clock_settings">Zobrazit hodiny s reálným časem</string>
-    <string name="tv_layout_clock_settings_des">Zobrazit hodiny s reálným časem v horní části obrazovky. Platí pro domovskou obrazovku a přehrávač</string>
     <string name="log_cat">Logcat 🐈</string>
     <string name="start_paused_settings">Spustit videa pozastavená</string>
     <string name="start_paused_settings_des">Snížit stres při výběru zdrojů</string>

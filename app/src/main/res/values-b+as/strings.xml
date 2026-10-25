@@ -310,10 +310,6 @@
     <string name="video_buffer_length_settings">ভিডিঅ\' বাফাৰ দৈৰ্ঘ্য</string>
     <string name="video_buffer_disk_settings">ডিস্কত ভিডিঅ\' কেশ</string>
     <string name="video_buffer_clear_settings">ভিডিঅ\' আৰু ছবিৰ কেশ মচক</string>
-    <string name="android_tv_interface_on_seek_settings_summary">প্লেয়াৰ দেখুওৱা অৱস্থাত ব্যৱহৃত চাৰ্কৰ পৰিমাণ</string>
-    <string name="android_tv_interface_off_seek_settings">প্লেয়াৰ লুকোৱা - চাৰ্কৰ পৰিমাণ</string>
-    <string name="android_tv_interface_on_seek_settings">প্লেয়াৰ দেখুৱাব - চাৰ্কৰ পৰিমাণ</string>
-    <string name="android_tv_interface_off_seek_settings_summary">প্লেয়াৰ লুকোৱা অৱস্থাত ব্যৱহৃত চাৰ্কৰ পৰিমাণ</string>
     <string name="video_disk_description">কম সঞ্চয়স্থলৰ (যেনেঃ Android TV) সঁজুলিসমূহত সৰৱাধিক পৰিসৰত স্থাপন কৰিলে সমস্যা সৃষ্টি কৰে।</string>
     <string name="dns_pref">DNS ওপৰত HTTPS</string>
     <string name="video_ram_description">কম মেম\'ৰীৰ (যেনেঃ Android TV) সঁজুলিসমূহত সৰৱাধিক পৰিসৰত স্থাপন কৰিলে সমস্যা সৃষ্টি কৰে।</string>
@@ -336,7 +332,6 @@
     <string name="pref_category_extensions">এক্সটেনশ্বনসমূহ</string>
     <string name="pref_category_actions">ক্ৰিয়াসমূহ</string>
     <string name="pref_category_cache">কেশ</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="pref_category_gestures">ইঙ্গিতসমূহ</string>
     <string name="pref_category_player_features">প্লেয়াৰৰ বৈশিষ্ট্যসমূহ</string>
     <string name="pref_category_subtitles">সাবটাইটেলসমূহ</string>
@@ -348,7 +343,6 @@
     <string name="random_button_settings">যৌগিক বুটাম</string>
     <string name="random_button_settings_desc">হোমপেজ আৰু লাইব্ৰেৰীত যৌগিক বুটাম প্ৰদৰ্শন কৰক</string>
     <string name="provider_lang_settings">এক্সটেনশ্বন ভাষাসমূহ</string>
-    <string name="app_layout">এপ্লিকেশ্বন বিন্যাস</string>
     <string name="preferred_media_settings">পচন্দৰ মিডিয়া</string>
     <string name="enable_nsfw_on_providers">সমৰ্থিত এক্সটেনশ্বনত NSFW সক্ৰিয় কৰক</string>
     <string name="subtitles_encoding">সাবটাইটেল ক\'ডিং</string>
@@ -356,12 +350,9 @@
     <string name="category_provider_test">প্ৰদানকাৰীৰ পৰীক্ষা</string>
     <string name="test_extensions">সমস্ত এক্সটেনশ্বন পৰীক্ষা কৰক</string>
     <string name="test_extensions_summary">এই টেষ্টটি মাত্ৰ ডেভেলপাৰসকলৰ বাবে আৰু ই একো এক্সটেনচনৰ কাম কৰে নে নকৰে তাৰ পৰীক্ষা নকৰে।</string>
-    <string name="tv_layout">টিভি লেআউট</string>
-    <string name="emulator_layout">এমুলেটৰ লেআউট</string>
     <string name="primary_color_settings">প্ৰাথমিক ৰং</string>
     <string name="app_theme_settings">এপ থিম</string>
     <string name="bottom_title_settings">প\'ষ্টাৰৰ শিৰোনামৰ স্থান</string>
-    <string name="phone_layout">ফোন লেআউট</string>
     <string name="bottom_title_settings_des">প\'ষ্টাৰৰ তলত শিৰোনাম ৰাখক</string>
     <string name="example_site_name">নতুন সাইটৰ নাম</string>
     <string name="example_site_url">https://example.com</string>
@@ -430,7 +421,6 @@
     <string name="network_adress_example">https://example.com/example.mp4</string>
     <string name="previous">পূৰ্বৰ</string>
     <string name="skip_setup">ছেটআপ এৰি দিয়া</string>
-    <string name="app_layout_subtext">আপোনাৰ ডিভাইচৰ বাবে এপ্‌টোৰ চেহেৰাটো সলনি কৰক</string>
     <string name="preferred_media_subtext">আপুনি কি চাব বিচাৰে</string>
     <string name="extensions">বৃদ্ধিসকল</string>
     <string name="add_repository">ৰিপ\'জিট\'ৰি যোগ কৰক</string>

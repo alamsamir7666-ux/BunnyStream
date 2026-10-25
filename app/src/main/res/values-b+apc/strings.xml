@@ -183,7 +183,6 @@
     <string name="anime">أنمي</string>
     <string name="livestreams">بث مباشر</string>
     <string name="video_source">مصدر</string>
-    <string name="android_tv_interface_off_seek_settings">المشغل متخبى - مدة التقديم</string>
     <string name="movies_singular">فيلم</string>
     <string name="torrent_singular">تورنت</string>
     <string name="no_update_found">م لقينا تجديد</string>
@@ -205,10 +204,8 @@
     <string name="video_skip_op">أفي المقدمة</string>
     <string name="watch_quality_pref">الجودة المفضلة (Wi-Fi)</string>
     <string name="cartoons_singular">رسوم مُتَحَرِكة</string>
-    <string name="android_tv_interface_on_seek_settings_summary">مدة التقديم لم ما يكون مشغل الڤيديو مبين</string>
     <string name="other_singular">ڤيديو</string>
     <string name="live_singular">بث مباشر</string>
-    <string name="android_tv_interface_on_seek_settings">المشغل مبين - مدة التقديم</string>
     <string name="unexpected_error">مشكلة مش متوقع بمشغل الڤيديو (Unexpected player error)</string>
     <string name="video_disk_description">بسبِب أعطال إزا نحط على مستوى عالي كتير على الأجهزة يللي م بتساع كتير، متل تلفزيون \"أندرويد\".</string>
     <string name="others">شي غير</string>
@@ -224,7 +221,6 @@
     <string name="episode_action_chromecast_mirror">مراية \"كروم كاست\"</string>
     <string name="poster_ui_settings">شيل العناصر من الپوستر</string>
     <string name="jsdelivr_enabled">م قدرنا نوصل ل \"گِت هَب\". عم ندَوِر پروكسي JSDelivr …</string>
-    <string name="android_tv_interface_off_seek_settings_summary">مدة التقديم لم ما يكون مشغل الڤيديو مش مبين</string>
     <string name="video_lock">قفل</string>
     <string name="storage_error">مشكلة بال تنزيل. شوف إذن التخزين (storage permission)</string>
     <string name="anime_singular">أنيمي</string>
@@ -266,7 +262,6 @@
     <string name="resize_zoom">زوم</string>
     <string name="resize_fit">سيعه بال شاشة</string>
     <string name="pref_category_defaults">الإفتراضات</string>
-    <string name="pref_category_android_tv">تلفزيون \"أندرويد\"</string>
     <string name="pref_category_bypass">تجاوز مزود خدمة الإنترنت</string>
     <string name="action_remove_from_bookmarks">شيل</string>
     <string name="example_ip">127.0.0.1</string>
@@ -283,12 +278,10 @@
     <string name="sort_copy">نسخ</string>
     <string name="home_more_info">بَعد معلومات</string>
     <string name="error_loading_links_toast">في مشكلة بفتح الروابط</string>
-    <string name="app_layout">شكل الآپ</string>
     <string name="lock_profile">حط قفل على الأكونت</string>
     <string name="use_default_account">ستعمل الأكونت الإفتراضية</string>
     <string name="download_done">خُلِص التنزيل</string>
     <string name="skip_startup_account_select_pref">م تطلبو مني نقي أكونت لمّا إفتح الآپ</string>
-    <string name="emulator_layout">الشكل المعمول للكمپيوتر</string>
     <string name="downloading">عم يتنَزَل</string>
     <string name="play_episode">مشّي الحلقة</string>
     <string name="player_speed">سرعة الڤيديو</string>
@@ -304,7 +297,6 @@
     <string name="automatic">أوتوماتيك</string>
     <string name="edit_account">عدلو الأكونت</string>
     <string name="pin_error_incorrect">الأرقام السرية يللي نحطت مش صحيحة. جرب مرة أخرى.</string>
-    <string name="tv_layout">الشكل المعمول للتلفزيون</string>
     <string name="download_canceled">نلغى التنزيل</string>
     <string name="account">أكونت</string>
     <string name="home_expanded_hide">خبي</string>
@@ -327,7 +319,6 @@
     <string name="popup_play_file">فتاح ومَشّي الملف</string>
     <string name="app_theme_settings">نوع الألون</string>
     <string name="go_back">رجاع</string>
-    <string name="phone_layout">الشكل المعمول للتليفون</string>
     <string name="pref_category_gestures">تَحَكُم بلا كَبسات</string>
     <string name="logout">طلاع من الأكونت</string>
     <string name="home_info">معلومات</string>
@@ -434,7 +425,6 @@
     <string name="recommended">مقترح</string>
     <string name="quality_ts">TS</string>
     <string name="player_load_subtitles_online">فتاح من الإنترنت</string>
-    <string name="app_layout_subtext">غَير شكل الآپ حتى يتناسب مع جهازك</string>
     <string name="plugins_disabled" formatted="true">مطفي: %d</string>
     <string name="stop">وقف</string>
     <string name="empty_library_logged_in_message">هيدي للايحة فاضية. جربو تبدلو ع غيرا.</string>
@@ -739,8 +729,6 @@
     <string name="log_cat">لوگ كات 🐈</string>
     <string name="start_paused_settings">بلش الڤيديو مع پوز</string>
     <string name="start_paused_settings_des">بت قلل السترس وقت تنقاية المصدر</string>
-    <string name="tv_layout_clock_settings">فرجي ساعة وقت</string>
-    <string name="tv_layout_clock_settings_des">بت فرجس الوقت ع أعلى الشاشة بال صفحة الرئيسية و مشغل الڤيديو</string>
     <string name="profile_settings">ستنگز الپروفيل</string>
     <string name="profile_hide_negative_sources">خبي المصادر اللي عندها أولوية نيگاتيڤ</string>
     <string name="profile_hide_error_sources">خبي المصادر اللي عندها أخطاء</string>

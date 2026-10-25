@@ -17,9 +17,7 @@ import com.lagradost.cloudstream3.mvvm.observe
 import com.lagradost.cloudstream3.ui.AutofitRecyclerView
 import com.lagradost.cloudstream3.ui.account.AccountAdapter.Companion.VIEW_TYPE_EDIT_ACCOUNT
 import com.lagradost.cloudstream3.ui.account.AccountAdapter.Companion.VIEW_TYPE_SELECT_ACCOUNT
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.BiometricAuthenticator
 import com.lagradost.cloudstream3.utils.BiometricAuthenticator.BiometricCallback
@@ -155,21 +153,10 @@ class AccountSelectActivity : FragmentActivity(), BiometricCallback {
 
             recyclerView.adapter = adapter
 
-            if (isLayout(TV or EMULATOR)) {
-                binding.editAccountButton.setBackgroundResource(
-                    R.drawable.player_button_tv_attr_no_bg
-                )
-            }
-
             observe(accountViewModel.selectedKeyIndex) { selectedKeyIndex ->
                 // Scroll to current account (which is focused by default)
                 val layoutManager = recyclerView.layoutManager as GridLayoutManager
                 layoutManager.scrollToPositionWithOffset(selectedKeyIndex, 0)
-                if (isLayout(TV or EMULATOR)) {
-                    recyclerView.post {
-                        layoutManager.findViewByPosition(selectedKeyIndex)?.requestFocus()
-                    }
-                }
             }
 
             observe(accountViewModel.isEditing) { isEditing ->
@@ -201,11 +188,6 @@ class AccountSelectActivity : FragmentActivity(), BiometricCallback {
                 accountViewModel.toggleIsEditing()
             }
 
-            if (isLayout(TV or EMULATOR)) {
-                recyclerView.spanCount = if (liveAccounts.count() + 1 <= 6) {
-                    liveAccounts.count() + 1
-                } else 6
-            }
         }
 
         askBiometricAuth()

@@ -199,7 +199,6 @@
     <string name="download_path_pref">נתיב הורדה</string>
     <string name="pref_category_looks">נראה</string>
     <string name="automatic">אוטומטי</string>
-    <string name="tv_layout">פריסת טלוויזיה</string>
     <string name="login_format" formatted="true">%1$s %2$s</string>
     <string name="subtitles_filter_lang">סנן לפי שפת מדיה מועדפת</string>
     <string name="app_theme_settings">נושא אפליקציה</string>
@@ -248,7 +247,6 @@
     <string name="error">שגיאה</string>
     <string name="provider_lang_settings">שפות ההרחבות</string>
     <string name="pref_category_links">קישורים</string>
-    <string name="app_layout">פריסת אפליקציה</string>
     <string name="advanced_search">חיפוש מתקדם</string>
     <string name="is_adult">18+</string>
     <string name="search_poster_img_des">פוסטר</string>
@@ -350,8 +348,6 @@
     <string name="enable_nsfw_on_providers">אפשר תוכן למבוגרים (NSFW) בהרחבות נתמכות</string>
     <string name="subtitles_encoding">קידוד כתוביות</string>
     <string name="category_ui">פריסה</string>
-    <string name="phone_layout">פריסת טלפון</string>
-    <string name="emulator_layout">פריסת אמולטור</string>
     <string name="primary_color_settings">צבע ראשוני</string>
     <string name="bottom_title_settings_des">שים את הכותרת מתחת לפוסטר</string>
     <string name="example_password">סיסמה123</string>
@@ -403,7 +399,6 @@
     <string name="trailer">טריילר</string>
     <string name="provider_languages_tip">צפה בסרטונים בשפות אלה</string>
     <string name="previous">קודם</string>
-    <string name="app_layout_subtext">שנה את מראה האפליקציה כך שיתאים למכשירך</string>
     <string name="setup_done">סוים</string>
     <string name="extensions">הרחבות</string>
     <string name="add_repository">הוסף מאגר</string>
@@ -484,7 +479,6 @@
     <string name="empty_library_logged_in_message">נראה שהרשימה הזו ריקה, נסו לעבור לרשימה אחרת.</string>
     <string name="subscription_new">רשום ל%s</string>
     <string name="subscription_in_progress_notification">מעדכן סדרות שנרשמת אליהן</string>
-    <string name="android_tv_interface_off_seek_settings">נגן מוסתר - כמות הזזה</string>
     <string name="mobile_data">רשת סלולארית</string>
     <string name="subscription_list_name">רשום</string>
     <string name="revert">חזור</string>
@@ -500,8 +494,6 @@
     <string name="start">התחלה</string>
     <string name="stop">עצור</string>
     <string name="profile_number">פרופיל %d</string>
-    <string name="android_tv_interface_on_seek_settings_summary">הזמן שיזוז כשהנגן מוצג</string>
-    <string name="android_tv_interface_on_seek_settings">נגן מוצג - כמות הזזה</string>
     <string name="restart">אתחול</string>
     <string name="jsdelivr_proxy_summary">עקיפת חסימה של כתובות raw של GitHub באמצעות jsDelivr. עלול לגרום לעיכוב של כמה ימים בעדכונים.</string>
     <string name="automatic_plugin_download_mode_title">בחר מצב כדי לסנן תוספים להורדה</string>
@@ -514,10 +506,8 @@
     <string name="watch_quality_pref_data">איכות צפיה מועדפת (אינטרנט סלולארי)</string>
     <string name="no_repository_found_error">המאגר לא נמצא, נא לבדוק את ה-URL ולנסות VPN</string>
     <string name="jsdelivr_enabled">ההתחברות אל GitHub נכשלה. מדליק פרוקסי אל jsDelivr…</string>
-    <string name="android_tv_interface_off_seek_settings_summary">הזמן שיזוז כשהנגן מוסתר</string>
     <string name="already_voted">כבר הצבעת</string>
     <string name="no_plugins_found_error">לא נמצאו תוספים במאגר</string>
-    <string name="pref_category_android_tv">טלוויזיית אנדרואיד</string>
     <string name="set_default">קביעה כברירת מחדל</string>
     <string name="test_passed">עבר</string>
     <string name="pref_category_bypass">מעקף ספק אינטרנט</string>
@@ -745,8 +735,6 @@
         <item quantity="two">%d קישורים מוסתרים</item>
         <item quantity="other">%d קישורים מוסתרים</item>
     </plurals>
-    <string name="tv_layout_clock_settings">הצג שעון בזמן אמת</string>
-    <string name="tv_layout_clock_settings_des">הצג שעון בזמן אמת בראש המסך. חל על דף הבית ועל הנגן</string>
     <string name="log_cat">Logcat 🐈</string>
     <string name="start_paused_settings">התחל סרטונים במצב מושהה</string>
     <string name="start_paused_settings_des">הפחתת לחץ בעת בחירת מקורות</string>

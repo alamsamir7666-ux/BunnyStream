@@ -76,9 +76,7 @@ import com.lagradost.cloudstream3.CommonActivity.activity
 import com.lagradost.cloudstream3.CommonActivity.showToast
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.mvvm.logError
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.isRtl
 import com.lagradost.cloudstream3.utils.Coroutines.main
@@ -222,14 +220,6 @@ object UIHelper {
         activity?.window?.decorView?.clearFocus()
         view?.let {
             hideKeyboard(it)
-        }
-    }
-
-    fun View?.setAppBarNoScrollFlagsOnTV() {
-        if (isLayout(TV or EMULATOR)) {
-            this?.updateLayoutParams<AppBarLayout.LayoutParams> {
-                scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
-            }
         }
     }
 
@@ -384,10 +374,6 @@ object UIHelper {
     }
 
     fun Context.getStatusBarHeight(): Int {
-        if (isLayout(TV or EMULATOR)) {
-            return 0
-        }
-
         var result = 0
         val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
         if (resourceId > 0) {
@@ -545,10 +531,7 @@ object UIHelper {
     fun Activity.showSystemUI() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val controller = WindowCompat.getInsetsController(window, window.decorView)
-            if (isLayout(EMULATOR)) {
-                controller.show(WindowInsetsCompat.Type.navigationBars())
-                controller.hide(WindowInsetsCompat.Type.statusBars())
-            } else controller.show(WindowInsetsCompat.Type.systemBars())
+            controller.show(WindowInsetsCompat.Type.systemBars())
             return
         }
 
@@ -556,7 +539,7 @@ object UIHelper {
         window.decorView.systemUiVisibility =
             (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
 
-        changeStatusBarState(isLayout(EMULATOR))
+        changeStatusBarState(false)
     }
 
     fun hideKeyboard(view: View?) {

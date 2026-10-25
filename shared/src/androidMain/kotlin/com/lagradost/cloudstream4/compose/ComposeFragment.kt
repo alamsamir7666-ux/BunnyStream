@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.lagradost.cloudstream4.rememberAppSettings
 import com.lagradost.cloudstream4.theme.CloudStreamTheme
@@ -35,8 +34,6 @@ fun CloudStreamThemeAppSettings(content: @Composable () -> Unit) {
     val settings = rememberAppSettings()
     val mode by settings.ui.theme.collectAsState()
     val primaryColor by settings.ui.primaryColor.collectAsState()
-    val layout by settings.ui.layout.collectAsState()
-    val layoutFlag = DeviceLayout.layoutToFlag(LocalContext.current, layout)
 
     CloudStreamTheme(
         mode = perfToMode(mode),
@@ -48,7 +45,7 @@ fun CloudStreamThemeAppSettings(content: @Composable () -> Unit) {
 
         CompositionLocalProvider(
             LocalBackPress provides backDispatcher::onBackPressed,
-            DeviceLayout.LocalLayout provides layoutFlag
+            DeviceLayout.LocalLayout provides PHONE
         ) {
             content()
         }

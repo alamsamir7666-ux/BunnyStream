@@ -37,7 +37,6 @@ import com.lagradost.cloudstream3.CommonActivity.showToast
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.mvvm.safe
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.DataStoreHelper
@@ -101,7 +100,7 @@ class PlayerGestureHelper(private val playerView: PlayerView) {
     private val context: Context get() = playerView.context
 
     /** Set true by the host when the player occupies the full screen.
-     *  Controls whether hardware volume-key overrides are active (phones/emulators only). */
+     *  Controls whether hardware volume-key overrides are active. */
     var isFullScreen: Boolean = false
 
     /** Volume state */
@@ -318,18 +317,12 @@ class PlayerGestureHelper(private val playerView: PlayerView) {
 
     /**
      * Handles a hardware volume key press.
-     * Only active on phones/emulators when [isFullScreen] is true.
+     * Only active when [isFullScreen] is true.
      *
      * @return true if the key was consumed (suppresses the system volume UI).
      */
     fun handleVolumeKey(keyCode: Int): Boolean {
-        /**
-         * Some TVs do not support volume boosting, and overriding
-         * the volume buttons can be inconvenient for TV users.
-         * Since boosting volume is mainly useful on phones and emulators,
-         * we limit this feature to those devices.
-         */
-        if (!isLayout(PHONE or EMULATOR) || !isFullScreen) return false
+        if (!isLayout(PHONE) || !isFullScreen) return false
         if (keyCode != KeyEvent.KEYCODE_VOLUME_UP && keyCode != KeyEvent.KEYCODE_VOLUME_DOWN) return false
         verifyVolume()
         if (currentRequestedVolume <= 1.0f) hasShownVolumeToast = false

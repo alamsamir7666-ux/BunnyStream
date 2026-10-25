@@ -22,11 +22,8 @@ import com.lagradost.cloudstream3.network.initClient
 import com.lagradost.cloudstream3.plugins.PluginManager
 import com.lagradost.cloudstream3.services.BackupWorkManager
 import com.lagradost.cloudstream3.ui.BasePreferenceFragmentCompat
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.getPref
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.hideOn
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setPaddingBottom
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setToolBarScrollFlags
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setUpToolbar
 import com.lagradost.cloudstream3.ui.settings.utils.getChooseFolderLauncher
 import com.lagradost.cloudstream3.utils.BackupUtils
@@ -53,8 +50,6 @@ class SettingsUpdates : BasePreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpToolbar(R.string.category_updates)
-        setPaddingBottom()
-        setToolBarScrollFlags()
     }
 
     private val pathPicker = getChooseFolderLauncher { uri, path ->
@@ -111,7 +106,7 @@ class SettingsUpdates : BasePreferenceFragmentCompat() {
             activity?.restorePrompt()
             return@setOnPreferenceClickListener true
         }
-        getPref(R.string.backup_path_key)?.hideOn(EMULATOR)?.setOnPreferenceClickListener {
+        getPref(R.string.backup_path_key)?.setOnPreferenceClickListener {
             val dirs = getBackupDirsForDisplay()
             val currentDir =
                 settingsManager.getString(getString(R.string.backup_dir_key), null)

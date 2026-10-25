@@ -277,16 +277,12 @@
     <string name="random_button_settings">Nút ngẫu nhiên</string>
     <string name="random_button_settings_desc">Hiện nút ngẫu nhiên trên Trang chủ và Thư viện</string>
     <string name="provider_lang_settings">Ngôn ngữ mở rộng</string>
-    <string name="app_layout">Bố cục ứng dụng</string>
     <string name="preferred_media_settings">Thể loại ưu tiên</string>
     <string name="enable_nsfw_on_providers">Kích hoạt NSFW trên các Tiện ích mở rộng được hỗ trợ</string>
     <string name="subtitles_encoding">Mã hoá phụ đề</string>
     <string name="category_providers">Nguồn phim</string>
     <string name="category_ui">Giao diện</string>
     <string name="automatic">Tự động</string>
-    <string name="tv_layout">Giao diện TV</string>
-    <string name="phone_layout">Giao diện điện thoại</string>
-    <string name="emulator_layout">Giao diện giả lập</string>
     <string name="primary_color_settings">Màu chính</string>
     <string name="app_theme_settings">Chủ đề ứng dụng</string>
     <string name="bottom_title_settings">Vị trí tên phim</string>
@@ -385,7 +381,6 @@
     <string name="provider_languages_tip">Xem video bằng các ngôn ngữ này</string>
     <string name="previous">Trước đó</string>
     <string name="skip_setup">Bỏ qua thiết lập lần đầu</string>
-    <string name="app_layout_subtext">Thay đổi giao diện phù hợp với thiết bị của bạn</string>
     <string name="preferred_media_subtext">Bạn muốn xem gì</string>
     <string name="setup_done">Hoàn tất</string>
     <string name="extensions">Tiện ích mở rộng</string>
@@ -504,7 +499,6 @@
     <string name="category_provider_test">Kiểm tra nguồn phim</string>
     <string name="jsdelivr_proxy">GitHub Proxy</string>
     <string name="jsdelivr_enabled">Không thể kết nối được tới GitHub. Đang bật jsDelivr proxy…</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="restart">Phát từ đầu</string>
     <string name="subscription_new">Đã đăng kí %s</string>
     <string name="subscription_episode_released">Tập %d đã ra mắt!</string>
@@ -516,10 +510,6 @@
     <string name="revert">Hoàn tác</string>
     <string name="subscription_in_progress_notification">Đang cập nhật các phim đã đăng kí</string>
     <string name="jsdelivr_proxy_summary">Bỏ chặn các URL gốc của GitHub bằng jsDelivr. Có thể làm cập nhật bị trễ vài ngày.</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Lượng thời gian tua được dùng khi trình phát đang bị ẩn</string>
-    <string name="android_tv_interface_off_seek_settings">Thời lượng tua khi trình phát đang ẩn</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Lượng thời gian tua được dùng khi trình phát đang hiển thị</string>
-    <string name="android_tv_interface_on_seek_settings">Thời lượng tua khi trình phát đang hiện</string>
     <string name="profile_number">Hồ sơ %d</string>
     <string name="mobile_data">Dữ liệu di động</string>
     <string name="set_default">Đặt mặc định</string>
@@ -748,8 +738,6 @@
     <string name="player_is_live">Trực tiếp</string>
     <string name="video_singular">Video</string>
     <string name="skip_type_preview">Xem trước</string>
-    <string name="tv_layout_clock_settings">Hiển thị đồng hồ thời gian thực</string>
-    <string name="tv_layout_clock_settings_des">Hiển thị đồng hồ thời gian thực ở phía trên màn hình. Áp dụng cho trang chủ và trình phát</string>
     <string name="profile_settings">Cài đặt hồ sơ</string>
     <string name="profile_hide_negative_sources">Ẩn nguồn có độ ưu tiên âm</string>
     <string name="profile_hide_error_sources">Ẩn nguồn có lỗi</string>

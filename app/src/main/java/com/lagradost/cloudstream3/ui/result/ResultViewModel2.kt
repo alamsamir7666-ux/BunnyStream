@@ -81,7 +81,6 @@ import com.lagradost.cloudstream3.ui.player.SubtitleData
 import com.lagradost.cloudstream3.ui.result.EpisodeAdapter.Companion.getPlayerAction
 import com.lagradost.cloudstream3.utils.AppContextUtils.getNameFull
 import com.lagradost.cloudstream3.utils.AppContextUtils.isConnectedToChromecast
-import com.lagradost.cloudstream3.utils.AppContextUtils.setDefaultFocus
 import com.lagradost.cloudstream3.utils.AppContextUtils.sortSubs
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import com.lagradost.cloudstream3.utils.CastHelper.startCast
@@ -1100,7 +1099,7 @@ class ResultViewModel2 : ViewModel() {
             .setPositiveButton(R.string.duplicate_add, dialogClickListener)
             .setNegativeButton(R.string.duplicate_cancel, dialogClickListener)
             .setNeutralButton(replaceMessage, dialogClickListener)
-            .show().setDefaultFocus()
+            .show()
     }
 
     private fun getImdbIdFromSyncData(syncData: Map<String, String>?): String? {

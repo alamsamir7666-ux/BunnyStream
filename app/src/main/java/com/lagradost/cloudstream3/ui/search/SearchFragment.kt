@@ -58,9 +58,7 @@ import com.lagradost.cloudstream3.ui.home.ParentItemAdapter
 import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.setLinearListLayout
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterProviderByPreferredMedia
@@ -69,7 +67,6 @@ import com.lagradost.cloudstream3.utils.AppContextUtils.getApiProviderLangSettin
 import com.lagradost.cloudstream3.utils.AppContextUtils.getApiSettings
 import com.lagradost.cloudstream3.utils.AppContextUtils.ownHide
 import com.lagradost.cloudstream3.utils.AppContextUtils.ownShow
-import com.lagradost.cloudstream3.utils.AppContextUtils.setDefaultFocus
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
 import com.lagradost.cloudstream3.utils.Coroutines.main
 import com.lagradost.cloudstream3.utils.DataStoreHelper
@@ -125,8 +122,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             }
         }
 
-    override fun pickLayout(): Int? =
-        if (isLayout(TV or EMULATOR)) R.layout.fragment_search_tv else R.layout.fragment_search
+    override fun pickLayout(): Int? = R.layout.fragment_search
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -223,7 +219,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         fixSystemBarsPadding(
             view,
             padBottom = isLandscape(),
-            padLeft = isLayout(TV or EMULATOR)
+            padLeft = false
         )
 
         // Fix grid
@@ -601,7 +597,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                             )
                                 .setPositiveButton(R.string.sort_clear, dialogClickListener)
                                 .setNegativeButton(R.string.cancel, dialogClickListener)
-                                .show().setDefaultFocus()
+                                .show()
                         } catch (e: Exception) {
                             logError(e)
                         }

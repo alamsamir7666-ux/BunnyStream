@@ -91,13 +91,11 @@ import com.lagradost.cloudstream3.mvvm.safe
 import com.lagradost.cloudstream3.ui.player.CustomDecoder.Companion.fixSubtitleAlignment
 import com.lagradost.cloudstream3.ui.player.live.LiveHelper
 import com.lagradost.cloudstream3.ui.player.live.PREFERRED_LIVE_OFFSET
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.ui.subtitles.SaveCaptionStyle
 import com.lagradost.cloudstream3.ui.subtitles.SubtitlesFragment.Companion.applyStyle
 import com.lagradost.cloudstream3.utils.AppContextUtils.isUsingMobileData
-import com.lagradost.cloudstream3.utils.AppContextUtils.setDefaultFocus
 import com.lagradost.cloudstream3.utils.CLEARKEY_DRM_UUID
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
 import com.lagradost.cloudstream3.utils.Coroutines.runOnMainThread
@@ -1116,8 +1114,7 @@ class CS3IPlayer : IPlayer {
                         2 -> true to true // SW+HW, aka on but prefer sw
                         1 -> false to false // HW, aka off
                         // -1 = automatic
-                        // We do not want tv to have software decoding, because of crashes
-                        else -> isLayout(PHONE or EMULATOR) to false
+                        else -> isLayout(PHONE) to false
                     }
 
                     // Only create the compressor when the setting is actually enabled.
@@ -1925,7 +1922,7 @@ class CS3IPlayer : IPlayer {
                         }
                         .setPositiveButton(R.string.ok, dialogClickListener)
                         .setNegativeButton(R.string.go_back, dialogClickListener)
-                        .show().setDefaultFocus()
+                        .show()
 
                     return
                 }

@@ -16,11 +16,8 @@ import com.lagradost.cloudstream3.ui.home.HomeFragment.Companion.bindChips
 import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.setLinearListLayout
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setSystemBarsPadding
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setToolBarScrollFlags
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setUpToolbar
 import com.lagradost.cloudstream3.utils.AppContextUtils.getApiProviderLangSettings
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
@@ -74,7 +71,6 @@ class PluginsFragment : BaseFragment<FragmentPluginsBinding>(
             return
         }
 
-        setToolBarScrollFlags()
         setUpToolbar(repositoryData.name)
         binding.settingsToolbar.apply {
             setOnMenuItemClickListener { menuItem ->
@@ -163,11 +159,6 @@ class PluginsFragment : BaseFragment<FragmentPluginsBinding>(
                 PluginAdapter {
                     pluginViewModel.handlePluginAction(activity, listOf(repositoryData), it, isLocal)
                 }
-        }
-
-        if (isLayout(TV or EMULATOR)) {
-            // Scrolling down does not reveal the whole RecyclerView on TV, add to bypass that.
-            binding.pluginRecyclerView.setPadding(0, 0, 0, 200.toPx)
         }
 
         observe(pluginViewModel.filteredPlugins) { (scrollToTop, list) ->

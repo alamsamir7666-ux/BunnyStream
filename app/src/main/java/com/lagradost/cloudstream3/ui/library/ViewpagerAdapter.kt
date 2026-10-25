@@ -17,8 +17,6 @@ import com.lagradost.cloudstream3.ui.BaseDiffCallback
 import com.lagradost.cloudstream3.ui.ViewHolderState
 import com.lagradost.cloudstream3.ui.home.getSafeParcelable
 import com.lagradost.cloudstream3.ui.search.SearchClickCallback
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.UIHelper.getSpanCount
 
@@ -98,16 +96,6 @@ class ViewpagerAdapter(
                 setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                     val diff = scrollY - oldScrollY
 
-                    //Expand the top Appbar based on scroll direction up/down, simulate phone behavior
-                    if (isLayout(TV or EMULATOR)) {
-                        binding.root.rootView.findViewById<AppBarLayout>(R.id.search_bar)
-                            ?.apply {
-                                if (diff <= 0)
-                                    setExpanded(true)
-                                else
-                                    setExpanded(false)
-                            }
-                    }
                     if (diff == 0) return@setOnScrollChangeListener
 
                     scrollCallback.invoke(diff > 0)

@@ -31,9 +31,7 @@ import com.lagradost.cloudstream3.ui.quicksearch.QuickSearchFragment
 import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_FOCUSED
 import com.lagradost.cloudstream3.ui.search.SearchClickCallback
 import com.lagradost.cloudstream3.ui.search.SearchHelper
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
-import com.lagradost.cloudstream3.utils.AppContextUtils.addProgramsToContinueWatching
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterHomePageListByFilmQuality
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterProviderByPreferredMedia
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterSearchResultByFilmQuality
@@ -153,12 +151,6 @@ class HomeViewModel : ViewModel() {
 
     private fun loadResumeWatching() = viewModelScope.launchSafe {
         val resumeWatchingResult = getResumeWatching()
-        if (isLayout(TV) && resumeWatchingResult != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ioSafe {
-                // this WILL crash on non tvs, so keep this inside a try catch
-                activity?.addProgramsToContinueWatching(resumeWatchingResult)
-            }
-        }
         resumeWatchingResult?.let {
             _resumeWatching.postValue(it)
         }

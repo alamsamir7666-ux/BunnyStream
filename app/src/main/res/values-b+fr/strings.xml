@@ -133,13 +133,10 @@
     <string name="category_general">Général</string>
     <string name="dns_pref">DNS avec HTTPS</string>
     <string name="display_subbed_dubbed_settings">Afficher les animés en Anglais (Dub) / sous-titrés</string>
-    <string name="phone_layout">Disposition en mode téléphone</string>
     <string name="app_dub_sub_episode_text_format">%1$s Ep %2$d</string>
     <string name="rated_format" formatted="true">Note : %.1f</string>
     <string name="resize_zoom">Zoom</string>
     <string name="resize_fit">Adapter à l\'écran</string>
-    <string name="app_layout">Disposition de l\'application</string>
-    <string name="tv_layout">Disposition TV</string>
     <string name="provider_lang_settings">Langues des extensions</string>
     <string name="preferred_media_settings">Médias préférées</string>
     <string name="automatic">Auto</string>
@@ -166,7 +163,6 @@
     <string name="video_disk_description">Cause des problèmes si la valeur choisie est trop élevée sur un appareil avec peu de stockage comme une télévision android.</string>
     <string name="random_button_settings">Bouton aléatoire</string>
     <string name="random_button_settings_desc">Afficher un bouton aléatoire sur la page d\'accueil et la librairie</string>
-    <string name="emulator_layout">Disposition émulateur</string>
     <string name="bottom_title_settings">Position du titre du poster</string>
     <string name="bottom_title_settings_des">Mettre le titre sous le poster</string>
     <string name="account">compte</string>
@@ -387,7 +383,6 @@
     <string name="quality_cam_rip">CamRip</string>
     <string name="trailer">Trailer</string>
     <string name="provider_languages_tip">Regardez les vidéos dans ces langues</string>
-    <string name="app_layout_subtext">Modifier le style de l\'application pour être assortie à votre appareil</string>
     <string name="uppercase_all_subtitles">Tous les sous-titres en majuscules</string>
     <string name="view_public_repositories_button">Voir les repository de la communauté</string>
     <string name="view_public_repositories_button_short">Liste publique</string>
@@ -476,7 +471,6 @@
     <string name="sort_alphabetical_a">Alphabétique (A à Z)</string>
     <string name="empty_library_no_accounts_message">Votre bibliothèque est vide :( \nConnectez-vous à un compte de bibliothèque ou ajoutez des séries à votre bibliothèque locale.</string>
     <string name="empty_library_logged_in_message">Cette liste est vide. Essayez d\'en changer.</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="sort_by">Trier par</string>
     <string name="sort_alphabetical_z">Alphabétique (Z à A)</string>
     <string name="select_library">Sélectionnez la bibliothèque</string>
@@ -499,12 +493,8 @@
     <string name="pref_category_bypass">Contournements de FAI</string>
     <string name="subscription_episode_released">L\'épisode %d est sorti !</string>
     <string name="test_failed">Échec</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Le temps de recherche utilisé lorsque le lecteur est invisible</string>
     <string name="subscription_in_progress_notification">Mise à jour des programmes auxquels vous êtes abonné(e)</string>
     <string name="jsdelivr_proxy_summary">Contourne le blocage de GitHub en utilisant jsDelivr. Cela peut retarder les mises à jour de quelques jours.</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Le temps de recherche utilisé lorsque le lecteur vidéo est visible</string>
-    <string name="android_tv_interface_on_seek_settings">Lecteur Visible - Temps de recherche</string>
-    <string name="android_tv_interface_off_seek_settings">Lecteur Invisible - Temps de recherche</string>
     <string name="jsdelivr_enabled">Impossible d\'atteindre GitHub. Activation du proxy jsDelivr…</string>
     <string name="already_voted">Vous avez déjà voté</string>
     <string name="disable">Désactivé</string>
@@ -739,8 +729,6 @@
     <string name="skip_type_preview">Prévisualisation</string>
     <string name="player_is_live">Live</string>
     <string name="profile_hide_negative_sources">Cacher les sources avec une priorité négative</string>
-    <string name="tv_layout_clock_settings">Afficher l\'heure</string>
-    <string name="tv_layout_clock_settings_des">Affiche l\'heure en haut de l\'écran. S\'applique à la page d\'Accueil et au lecteur</string>
     <string name="profile_settings">Paramètres du profil</string>
     <string name="profile_hide_error_sources">Cacher les sources avec des erreurs</string>
     <plurals name="links_hidden">

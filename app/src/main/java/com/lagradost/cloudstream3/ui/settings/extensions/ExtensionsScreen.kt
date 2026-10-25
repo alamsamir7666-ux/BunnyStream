@@ -120,12 +120,10 @@ import com.lagradost.cloudstream4.compose.MultiSelectDialog
 import com.lagradost.cloudstream4.compose.PHONE
 import com.lagradost.cloudstream4.compose.RoundedShape
 import com.lagradost.cloudstream4.compose.Screen
-import com.lagradost.cloudstream4.compose.TV
 import com.lagradost.cloudstream4.compose.WhiteButton
 import com.lagradost.cloudstream4.compose.WhiteFilterChip
 import com.lagradost.cloudstream4.compose.WhiteIconButton
 import com.lagradost.cloudstream4.compose.focusOutline
-import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.compose.rounded
 import com.lagradost.cloudstream4.generated.resources.Res
 import com.lagradost.cloudstream4.generated.resources.no_results_found
@@ -334,21 +332,6 @@ object ExtensionsScreen : Screen {
 
         var extraDialog by remember { mutableStateOf(false) }
         if (!state.searchPlugins) {
-            if (isLayout(TV)) {
-                WhiteIconButton(
-                    onClick = {
-                        scope.launch {
-                            openRepositoryDialog(clipboard = clipboard, onAction = onAction)
-                        }
-                    }) {
-                    Icon(
-                        tint = MaterialTheme.colorScheme.onBackground,
-                        painter = painterResource(R.drawable.add_24px),
-                        contentDescription = stringResource(R.string.add_repository)
-                    )
-                }
-            }
-
             WhiteIconButton(
                 onClick = {
                     extraDialog = true
@@ -871,12 +854,6 @@ object ExtensionsScreen : Screen {
             .joinToString("\n")
 
         val (logFocusRequester, dismissFocusRequester) = remember { FocusRequester.createRefs() }
-        val isTv = isLayout(TV)
-        LaunchedEffect(Unit) {
-            if (isTv) {
-                dismissFocusRequester.requestFocus()
-            }
-        }
 
         AlertDialog(
             containerColor = MaterialTheme.colorScheme.background,
@@ -941,16 +918,10 @@ object ExtensionsScreen : Screen {
     ) {
         val description = plugin.info.description
         var extendedDialog by remember { mutableStateOf(false) }
-        val isTv = isLayout(TV)
         val isPluginDisabledByAuthor = plugin.info.status == PROVIDER_STATUS_DOWN
 
         if (extendedDialog) {
             val dismissFocusRequester = remember { FocusRequester() }
-            LaunchedEffect(Unit) {
-                if (isTv) {
-                    dismissFocusRequester.requestFocus()
-                }
-            }
 
             AlertDialog(
                 containerColor = MaterialTheme.colorScheme.background,

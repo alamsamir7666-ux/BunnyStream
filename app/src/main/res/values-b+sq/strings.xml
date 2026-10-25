@@ -325,10 +325,6 @@
     <string name="video_buffer_length_settings">Gjatësia e bufferit të videos</string>
     <string name="video_buffer_disk_settings">Video cache në disk</string>
     <string name="video_buffer_clear_settings">Pastro cache-në e videove dhe imazheve</string>
-    <string name="android_tv_interface_on_seek_settings">Sasia e kalimit - Luajtësi i dukshëm</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Sasia e kalimit kur luajtësi është i dukshëm</string>
-    <string name="android_tv_interface_off_seek_settings">Sasia e kalimit - Luajtësi i fshehur</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Sasia e kalimit kur luajtësi është i fshehur</string>
     <string name="video_ram_description">Shkakton keqfunksionim nëse vendoset shumë lartë në pajisje me memorie të ulët, si Android TV.</string>
     <string name="video_disk_description">Shkakton probleme nëse vendoset shumë lartë në pajisje me memorie të ulët, si Android TV.</string>
     <string name="dns_pref">DNS në vend të HTTPS</string>
@@ -353,7 +349,6 @@
     <string name="pref_category_extensions">Shtesat</string>
     <string name="pref_category_actions">Veprimet</string>
     <string name="pref_category_cache">Cache</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="pref_category_gestures">Gjeste</string>
     <string name="pref_category_security">Siguria</string>
     <string name="pref_category_accounts">Llogaritë</string>
@@ -369,7 +364,6 @@
     <string name="select_library">Zgjidh Bibliotekën</string>
     <string name="empty_library_no_accounts_message">Biblioteka juaj është bosh :(\nHyni në një llogari biblioteke ose shtoni shfaqje në bibliotekën tuaj lokale.</string>
     <string name="provider_lang_settings">Gjuha e shtesave</string>
-    <string name="app_layout">Paraqitja e aplikacionit</string>
     <string name="preferred_media_settings">Media e preferuar</string>
     <string name="enable_nsfw_on_providers">Aktivizo NSFW për shtesat që e suportojnë</string>
     <string name="subtitles_encoding">Enkodimi i titrave</string>
@@ -379,9 +373,6 @@
     <string name="test_extensions_summary">Ky test është vetëm për developer-a dhe nuk verifikon apo mohon funksionimin e asnjë shtese.</string>
     <string name="category_ui">Paraqitja</string>
     <string name="automatic">Automatikisht</string>
-    <string name="tv_layout">Paraqitja për TV</string>
-    <string name="phone_layout">Paraqitja për Celular</string>
-    <string name="emulator_layout">Paraqitja për emulator</string>
     <string name="primary_color_settings">Ngjyra kryesore</string>
     <string name="app_theme_settings">Pamja e aplikacionit</string>
     <string name="bottom_title_settings">Vendodhja e titullit te posterit</string>
@@ -477,7 +468,6 @@
     <string name="provider_languages_tip">Shiko videot në këto gjuhë</string>
     <string name="previous">E mëparshme</string>
     <string name="skip_setup">Kalo konfigurimin</string>
-    <string name="app_layout_subtext">Ndrysho pamjen e aplikacionit për tu përshtatur me pajisjen tuaj</string>
     <string name="preferred_media_subtext">Çfarë dëshironi të shihni</string>
     <string name="setup_done">U krye</string>
     <string name="extensions">Shtesat</string>
@@ -742,6 +732,4 @@
         <item quantity="one">%d link i fshehur</item>
         <item quantity="other">%d linqe të fshehura</item>
     </plurals>
-    <string name="tv_layout_clock_settings">Shfaq orën në kohë reale</string>
-    <string name="tv_layout_clock_settings_des">Shfaq një orë në krye të ekranit. Aplikohet në faqen kryesore dhe në luajtës</string>
 </resources>

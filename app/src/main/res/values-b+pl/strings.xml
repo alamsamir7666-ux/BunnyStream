@@ -266,16 +266,12 @@
     <string name="random_button_settings">Przycisk do losowania</string>
     <string name="random_button_settings_desc">Pokaż przycisk do losowania na stronie głównej i w bibliotece</string>
     <string name="provider_lang_settings">Języki rozszerzeń</string>
-    <string name="app_layout">Układ aplikacji</string>
     <string name="preferred_media_settings">Preferowane multimedia</string>
     <string name="enable_nsfw_on_providers">Włącz NSFW w obsługiwanych rozszerzeniach</string>
     <string name="subtitles_encoding">Kodowanie napisów</string>
     <string name="category_providers">Źródła</string>
     <string name="category_ui">Układ interfejsu</string>
     <string name="automatic">Automatyczny</string>
-    <string name="tv_layout">Układ dla telewizorów</string>
-    <string name="phone_layout">Układ dla telefonów</string>
-    <string name="emulator_layout">Układ dla emulatorów</string>
     <string name="primary_color_settings">Kolor podstawowy</string>
     <string name="app_theme_settings">Motyw aplikacji</string>
     <string name="bottom_title_settings">Pozycja tytułu względem obrazka</string>
@@ -358,7 +354,6 @@
     <string name="provider_languages_tip">Wyświetlaj filmy w tych językach</string>
     <string name="previous">Poprzedni</string>
     <string name="skip_setup">Pomiń konfigurację</string>
-    <string name="app_layout_subtext">Dostosuj wygląd aplikacji do urządzenia</string>
     <string name="preferred_media_subtext">Co chcesz obejrzeć</string>
     <string name="setup_done">Gotowe</string>
     <string name="extensions">Rozszerzenia</string>
@@ -485,11 +480,6 @@
     <string name="empty_library_no_accounts_message">Twoja biblioteka jest pusta :( \nZaloguj się na swoje konto lub dodaj programy do swojej lokalnej biblioteki.</string>
     <string name="empty_library_logged_in_message">Ta lista jest pusta. Spróbuj przełączyć się na inną.</string>
     <string name="safe_mode_file">Znaleziono plik trybu bezpiecznego. \nRozszerzenia nie zostaną wczytane, dopóki plik nie zostanie usunięty.</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Używana ilość przewijania, gdy widoczny jest odtwarzacz</string>
-    <string name="android_tv_interface_off_seek_settings">Ukryty odtwarzacz - ilość przewijania</string>
-    <string name="pref_category_android_tv">Android TV</string>
-    <string name="android_tv_interface_on_seek_settings">Pokazany odtwarzacz — ilość przewijania</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Używana ilość przewijania, gdy ukryty jest odtwarzacz</string>
     <string name="test_log">Dziennik</string>
     <string name="restart">Uruchom ponownie</string>
     <string name="start">Rozpocznij</string>
@@ -751,8 +741,6 @@
         <item quantity="many">%d ukrytych odnośników</item>
         <item quantity="other">%d ukrytych odnośników</item>
     </plurals>
-    <string name="tv_layout_clock_settings">Pokaż zegar czasu rzeczywistego</string>
-    <string name="tv_layout_clock_settings_des">Wyświetl zegar czasu rzeczywistego u góry ekranu. Dotyczy strony głównej i odtwarzacza</string>
     <string name="log_cat">Logcat 🐈</string>
     <string name="start_paused_settings">Uruchamiaj filmy wstrzymane</string>
     <string name="start_paused_settings_des">Ogranicz obciążenie podczas wyboru źródeł</string>

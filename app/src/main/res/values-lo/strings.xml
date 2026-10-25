@@ -326,10 +326,6 @@
     <string name="video_buffer_length_settings">ຄວາມຍາວບັບເຟີວິດີໂອ</string>
     <string name="video_buffer_disk_settings">ແຄດວິດີໂອໃນພື້ນທີ່ເກັບຂໍ້ມູນ</string>
     <string name="video_buffer_clear_settings">ລ້າງແຄດວິດີໂອ ແລະ ຮູບພາບ</string>
-    <string name="android_tv_interface_on_seek_settings">ເມື່ອສະແດງເຄື່ອງຫຼິ້ນ - ໄລຍະການເລື່ອນ</string>
-    <string name="android_tv_interface_on_seek_settings_summary">ໄລຍະການເລື່ອນທີ່ໃຊ້ເມື່ອເຫັນເຄື່ອງຫຼິ້ນ</string>
-    <string name="android_tv_interface_off_seek_settings">ເມື່ອເຊື່ອງເຄື່ອງຫຼິ້ນ - ໄລຍະການເລື່ອນ</string>
-    <string name="android_tv_interface_off_seek_settings_summary">ໄລຍະການເລື່ອນທີ່ໃຊ້ເມື່ອເຄື່ອງຫຼິ້ນຖືກເຊື່ອງໄວ້</string>
     <string name="video_ram_description">ອາດເຮັດໃຫ້ແອັບຯຄ້າງໄດ້ ຖ້າຕັ້ງຄ່າສູງເກີນໄປໃນອຸປະກອນທີ່ມີແຮມໜ້ອຍ ເຊັ່ນ Android TV.</string>
     <string name="video_disk_description">ອາດເຮັດໃຫ້ເກີດບັນຫາ ຖ້າຕັ້ງຄ່າສູງເກີນໄປໃນອຸປະກອນທີ່ມີພື້ນທີ່ໜ້ອຍ ເຊັ່ນ Android TV.</string>
     <string name="dns_pref">DNS over HTTPS</string>
@@ -354,7 +350,6 @@
     <string name="pref_category_extensions">ສ່ວນເສີມ</string>
     <string name="pref_category_actions">ການກະທຳ</string>
     <string name="pref_category_cache">ແຄດ</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="pref_category_gestures">ການຄວບຄຸມດ້ວຍທ່າທາງ</string>
     <string name="pref_category_security">ຄວາມປອດໄພ</string>
     <string name="pref_category_accounts">ບັນຊີ</string>
@@ -365,12 +360,9 @@
     <string name="pref_category_looks">ຮູບລັກສະນະ</string>
     <string name="pref_category_ui_features">ຄຸນສົມບັດ</string>
     <string name="category_general">ທົ່ວໄປ</string>
-    <string name="tv_layout_clock_settings">ສະແດງໂມງເວລາຈິງ</string>
-    <string name="tv_layout_clock_settings_des">ສະແດງໂມງເວລາຈິງຢູ່ເທິງສຸດຂອງໜ້າຈໍ. ນຳໃຊ້ກັບໜ້າຫຼັກ ແລະ ເຄື່ອງຫຼິ້ນ</string>
     <string name="random_button_settings">ປຸ່ມສຸ່ມ</string>
     <string name="random_button_settings_desc">ສະແດງປຸ່ມສຸ່ມໃນໜ້າທຳອິດ ແລະ ຫ້ອງສະໝຸດ</string>
     <string name="provider_lang_settings">ພາສາຂອງສ່ວນເສີມ</string>
-    <string name="app_layout">ຮູບແບບແອັບ</string>
     <string name="preferred_media_settings">ສື່ທີ່ມັກ</string>
     <string name="enable_nsfw_on_providers">ເປີດເນື້ອຫາ 18+ (NSFW) ໃນສ່ວນເສີມທີ່ຮອງຮັບ</string>
     <string name="subtitles_encoding">ການເຂົ້າລະຫັດຄຳບັນຍາຍ</string>
@@ -380,9 +372,6 @@
     <string name="test_extensions_summary">ການທົດສອບນີ້ແມ່ນສຳລັບຜູ້ພັດທະນາເທົ່ານັ້ນ ແລະ ບໍ່ໄດ້ຢືນຢັນ ຫຼື ປະຕິເສດການເຮັດວຽກຂອງສ່ວນເສີມໃດໆ.</string>
     <string name="category_ui">ຮູບແບບ</string>
     <string name="automatic">ອັດຕະໂນມັດ</string>
-    <string name="tv_layout">ຮູບແບບ TV</string>
-    <string name="phone_layout">ຮູບແບບໂທລະສັບ</string>
-    <string name="emulator_layout">ຮູບແບບຕົວຈຳລອງ</string>
     <string name="primary_color_settings">ສີຫຼັກ</string>
     <string name="app_theme_settings">ທີມຂອງແອັບ</string>
     <string name="bottom_title_settings">ຕຳແໜ່ງຊື່ຂອງໂປສເຕີ</string>
@@ -478,7 +467,6 @@
     <string name="provider_languages_tip">ເບິ່ງວິດີໂອໃນພາສາເຫຼົ່ານີ້</string>
     <string name="previous">ກ່ອນໜ້າ</string>
     <string name="skip_setup">ຂ້າມການຕັ້ງຄ່າ</string>
-    <string name="app_layout_subtext">ປ່ຽນຮູບລັກສະນະຂອງແອັບໃຫ້ເໝາະສົມກັບອຸປະກອນຂອງທ່ານ</string>
     <string name="preferred_media_subtext">ພາກສ່ວນໃດທີ່ເຈົ້າຢາກເບິ່ງ</string>
     <string name="setup_done">ສຳເລັດ</string>
     <string name="extensions">ສ່ວນເສີມ</string>

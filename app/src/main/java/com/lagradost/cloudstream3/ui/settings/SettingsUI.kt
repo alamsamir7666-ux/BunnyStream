@@ -17,13 +17,9 @@ import com.lagradost.cloudstream3.ui.home.HomeChildItemAdapter
 import com.lagradost.cloudstream3.ui.home.ParentItemAdapter
 import com.lagradost.cloudstream3.ui.search.SearchAdapter
 import com.lagradost.cloudstream3.ui.search.SearchResultBuilder
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
-import com.lagradost.cloudstream3.ui.settings.Globals.updateTv
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.getPref
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.hideOn
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setPaddingBottom
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setToolBarScrollFlags
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setUpToolbar
 import com.lagradost.cloudstream3.utils.SingleSelectionHelper.showBottomDialog
 import com.lagradost.cloudstream3.utils.SingleSelectionHelper.showDialog
@@ -35,8 +31,6 @@ class SettingsUI : BasePreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpToolbar(R.string.category_ui)
-        setPaddingBottom()
-        setToolBarScrollFlags()
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -44,7 +38,7 @@ class SettingsUI : BasePreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.settings_ui, rootKey)
         val settingsManager = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
-        (getPref(R.string.overscan_key)?.hideOn(PHONE or EMULATOR) as? SeekBarPreference)?.setOnPreferenceChangeListener { pref, newValue ->
+        (getPref(R.string.overscan_key) as? SeekBarPreference)?.setOnPreferenceChangeListener { pref, newValue ->
             val padding = (newValue as? Int)?.toPx ?: return@setOnPreferenceChangeListener true
             (pref.context.getActivity() as? MainActivity)?.binding?.homeRoot?.setPadding(padding, padding, padding, padding)
             return@setOnPreferenceChangeListener true
@@ -90,34 +84,6 @@ class SettingsUI : BasePreferenceFragmentCompat() {
                 SearchResultBuilder.updateCache(it.context)
             }
 
-            return@setOnPreferenceClickListener true
-        }
-
-        getPref(R.string.app_layout_key)?.setOnPreferenceClickListener {
-            val prefNames = resources.getStringArray(R.array.app_layout)
-            val prefValues = resources.getIntArray(R.array.app_layout_values)
-
-            val currentLayout =
-                settingsManager.getInt(getString(R.string.app_layout_key), -1)
-
-            activity?.showBottomDialog(
-                items = prefNames.toList(),
-                selectedIndex = prefValues.indexOf(currentLayout),
-                name = getString(R.string.app_layout),
-                showApply = true,
-                dismissCallback = {},
-                callback = {
-                    try {
-                        settingsManager.edit {
-                            putInt(getString(R.string.app_layout_key), prefValues[it])
-                        }
-                        context?.updateTv()
-                        activity?.recreate()
-                    } catch (e: Exception) {
-                        logError(e)
-                    }
-                }
-            )
             return@setOnPreferenceClickListener true
         }
 
@@ -227,8 +193,6 @@ class SettingsUI : BasePreferenceFragmentCompat() {
 
             return@setOnPreferenceClickListener true
         }
-
-        getPref(R.string.tv_layout_clock_key)?.hideOn(PHONE or EMULATOR)
 
         getPref(R.string.confirm_exit_key)?.setOnPreferenceClickListener {
             val prefNames = resources.getStringArray(R.array.confirm_exit)

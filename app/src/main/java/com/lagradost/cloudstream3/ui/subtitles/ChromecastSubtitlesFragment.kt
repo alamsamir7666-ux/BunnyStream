@@ -29,8 +29,6 @@ import com.lagradost.cloudstream3.CommonActivity.showToast
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.databinding.ChromecastSubtitleSettingsBinding
 import com.lagradost.cloudstream3.ui.BaseFragment
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.DataStore.setKey
@@ -169,7 +167,7 @@ class ChromecastSubtitlesFragment : BaseFragment<ChromecastSubtitleSettingsBindi
         fixSystemBarsPadding(
             view,
             padBottom = isLandscape(),
-            padLeft = isLayout(TV or EMULATOR)
+            padLeft = false
         )
     }
 
@@ -181,13 +179,7 @@ class ChromecastSubtitlesFragment : BaseFragment<ChromecastSubtitleSettingsBindi
         state = getCurrentSavedStyle()
         updateState()
 
-        val isTvSettings = isLayout(TV or EMULATOR)
-        fun View.setFocusableInTv() {
-            this.isFocusableInTouchMode = isTvSettings
-        }
-
         fun View.setup(id: Int) {
-            setFocusableInTv()
             this.setOnClickListener {
                 activity?.let {
                     ColorPickerDialog.newBuilder()

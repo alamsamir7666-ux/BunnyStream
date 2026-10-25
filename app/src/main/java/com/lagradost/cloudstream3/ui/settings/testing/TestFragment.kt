@@ -8,10 +8,8 @@ import com.lagradost.cloudstream3.mvvm.safe
 import com.lagradost.cloudstream3.mvvm.observe
 import com.lagradost.cloudstream3.mvvm.observeNullable
 import com.lagradost.cloudstream3.ui.BaseFragment
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setSystemBarsPadding
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setToolBarScrollFlags
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setUpToolbar
 
 class TestFragment : BaseFragment<FragmentTestingBinding>(
@@ -26,7 +24,6 @@ class TestFragment : BaseFragment<FragmentTestingBinding>(
 
     override fun onBindingCreated(binding: FragmentTestingBinding) {
         setUpToolbar(R.string.category_provider_test)
-        setToolBarScrollFlags()
 
         binding.apply {
             providerTestRecyclerView.adapter = TestResultAdapter()
@@ -57,11 +54,6 @@ class TestFragment : BaseFragment<FragmentTestingBinding>(
                 }
             }
 
-            if (isLayout(TV)) {
-                providerTest.playPauseButton?.isFocusableInTouchMode = true
-                providerTest.playPauseButton?.requestFocus()
-            }
-
             providerTest.playPauseButton?.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     providerTestAppbar.setExpanded(true, true)
@@ -69,11 +61,6 @@ class TestFragment : BaseFragment<FragmentTestingBinding>(
             }
 
             fun focusRecyclerView() {
-                // Hack to make it possible to focus the recyclerview.
-                if (isLayout(TV)) {
-                    providerTestRecyclerView.requestFocus()
-                    providerTestAppbar.setExpanded(false, true)
-                }
             }
 
             providerTest.setOnMainClick {

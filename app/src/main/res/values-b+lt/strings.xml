@@ -171,7 +171,6 @@
     <string name="resize_fit">Sutalpinti į ekraną</string>
     <string name="video_lock">Užrakinti</string>
     <string name="storage_error">Atsiuntimo klaida, patikrinkite atminties leidimus</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="asian_drama_singular">Azijietiška drama</string>
     <string name="sync_total_episodes_some" formatted="true">/%d</string>
     <string name="source_error">Šaltinio klaida</string>

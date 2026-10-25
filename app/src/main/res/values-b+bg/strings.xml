@@ -272,16 +272,12 @@
     <string name="random_button_settings">Случаен бутон</string>
     <string name="random_button_settings_desc">Показване на произволен бутон на началната страница и библиотека</string>
     <string name="provider_lang_settings">Езици на доставчика</string>
-    <string name="app_layout">Оформление на приложението</string>
     <string name="preferred_media_settings">Предпочитана медия</string>
     <string name="enable_nsfw_on_providers">Активирайте разпоретините на поддържани доставчици</string>
     <string name="subtitles_encoding">Кодиране на субтитрите</string>
     <string name="category_providers">Доставчици</string>
     <string name="category_ui">Оформление</string>
     <string name="automatic">Автоматично</string>
-    <string name="tv_layout">ТВ оформление</string>
-    <string name="phone_layout">Оформление като телефон</string>
-    <string name="emulator_layout">Оформление като емулатор</string>
     <string name="primary_color_settings">Основен цвят</string>
     <string name="app_theme_settings">Тема на приложението</string>
     <string name="bottom_title_settings">Местоположение на заглавието на плаката</string>
@@ -378,7 +374,6 @@
     <string name="provider_languages_tip">Гледайте видеоклипове на тези езици</string>
     <string name="previous">Предишен</string>
     <string name="skip_setup">Пропуснете настройката</string>
-    <string name="app_layout_subtext">Променете външния вид на приложението, за да отговаря на вашето устройство</string>
     <string name="preferred_media_subtext">Какво искате да видите</string>
     <string name="setup_done">Край</string>
     <string name="extensions">Разширения</string>
@@ -487,7 +482,6 @@
     <string name="jsdelivr_proxy_summary">Заобикали блокирането на GitHub адреси с помощта на jsDelivr. Може да доведе до забавяне на актуализациите с няколко дни.</string>
     <string name="category_provider_test">Тест на доставчик</string>
     <string name="disable">Деактивиране</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="pref_category_bypass">Заобикаляне на интернет доставчик</string>
     <string name="no_plugins_found_error">Няма намерени добавки в този архив</string>
     <string name="no_repository_found_error">Архивът не е намерен, проверете уеб-адреса и пробвайте с VPN</string>
@@ -538,11 +532,8 @@
     <string name="action_subscribe">Абонирай се</string>
     <string name="action_unsubscribe">Отписване</string>
     <string name="duplicate_title">Открит е Потенциален дубликат</string>
-    <string name="android_tv_interface_on_seek_settings">Показан играч - сума за търсене</string>
     <string name="qualities">Качества</string>
     <string name="rotate_video">Завърти</string>
-    <string name="android_tv_interface_off_seek_settings">Скрит играч - сума за търсене</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Сумата за търсене, използвана, когато играчът е скрит</string>
     <string name="sort_updated_new">Актуализирано (от ново към старо)</string>
     <string name="quality_profile_help">Тук можете да промените начина на подреждане на източниците. Ако даден видеоклип има по-висок приоритет, той ще се показва по-високо в избора на източник. Сборът от приоритета на източника и приоритета на качеството е приоритетът на видеото. \n \nИзточник A: 3 \nКачество B: 7 \nЩе има комбиниран видео приоритет от 10. \n \nЗАБЕЛЕЖКА: Ако сумата е 10 или повече, играчът автоматично ще пропусне зареждането, когато тази връзка се зареди!</string>
     <string name="duplicate_replace">Замени</string>
@@ -560,7 +551,6 @@
     <string name="duplicate_add">Добави</string>
     <string name="auto_rotate_video_desc">Разрешете автоматичното превключване на ориентацията на екрана въз основа на ориентацията на видеото</string>
     <string name="auto_rotate_video">Автоматично завъртане</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Използваният размер на превъртане, когато плеърът е видим</string>
     <string name="test_extensions">Тествай всички добавки</string>
     <string name="subscribe_tooltip">Известие за нов епизод</string>
     <string name="result_search_tooltip">Търси в други екстеншъни</string>

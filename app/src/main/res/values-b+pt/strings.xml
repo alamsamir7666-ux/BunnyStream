@@ -262,16 +262,12 @@
     <string name="random_button_settings">Botão Aleatório</string>
     <string name="random_button_settings_desc">Mostrar botão aleatório na página inicial</string>
     <string name="provider_lang_settings">Línguas de extensão</string>
-    <string name="app_layout">Layout da App</string>
     <string name="preferred_media_settings">Mídia preferida</string>
     <string name="enable_nsfw_on_providers">Ativar NSFW nas Extensões suportadas</string>
     <string name="subtitles_encoding">Codificação das legendas</string>
     <string name="category_providers">Fornecedores</string>
     <string name="category_ui">Layout</string>
     <string name="automatic">Auto</string>
-    <string name="tv_layout">Layout de TV</string>
-    <string name="phone_layout">Layout de telemóvel</string>
-    <string name="emulator_layout">Layout de emulador</string>
     <string name="primary_color_settings">Cor Primária</string>
     <string name="app_theme_settings">Tema do App</string>
     <string name="bottom_title_settings">Local do título do poster</string>
@@ -339,7 +335,6 @@
     <string name="provider_languages_tip">Ver vídeos nestas linguagens</string>
     <string name="previous">Anterior</string>
     <string name="skip_setup">Saltar setup</string>
-    <string name="app_layout_subtext">Change the look of the app to suit your device</string>
     <string name="preferred_media_subtext">What do you want to see</string>
     <string name="setup_done">Feito</string>
     <string name="extensions">Extensões</string>
@@ -393,7 +388,6 @@
     <string name="anim">Aplicativo de Anime pelos mesmos desenvolvedores</string>
     <string name="ova_singular">Ova</string>
     <string name="anime_singular">Anime</string>
-    <string name="android_tv_interface_on_seek_settings">Player visível - Procurar valor</string>
     <string name="update_notification_installing">Instalando atualização do app…</string>
     <string name="confirm_exit_dialog">Você tem certeza que deseja sair?</string>
     <string name="extension_version">Versão</string>
@@ -442,7 +436,6 @@
     <string name="sort_rating_desc">Avaliações (Decrescente)</string>
     <string name="apply_on_restart">Reinicie a aplicação para ver as alterações.</string>
     <string name="referer">Referenciador (opcional)</string>
-    <string name="android_tv_interface_off_seek_settings">Player oculto - Quantidade de Busca</string>
     <string name="jsdelivr_proxy">Proxy do GitHub</string>
     <string name="quality_blueray">Blu-ray</string>
     <string name="pref_category_looks">Aparência</string>
@@ -477,11 +470,8 @@
     <string name="pref_category_ui_features">Recursos</string>
     <string name="pref_category_app_updates">Atualizações de aplicativos</string>
     <string name="watch_quality_pref_data">Qualidade Preferida (Dados Móveis)</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Quantidade de busca (em segundos) usada quando o player de video está visível</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Quantidade de busca (em segundos) usada quando o player de video está oculto</string>
     <string name="jsdelivr_enabled">Não foi possível chegar ao GitHub. Ativando o proxy jsDelivr…</string>
     <string name="pref_category_cache">Cache</string>
-    <string name="pref_category_android_tv">Android TV</string>
     <string name="pref_category_subtitles">Legendas</string>
     <string name="login_format" formatted="true">%1$s %2$s</string>
     <string name="quality_ts">TS</string>

@@ -275,16 +275,12 @@
     <string name="random_button_settings">Zufalls-Button</string>
     <string name="random_button_settings_desc">Zeige Knopf mit Zufallsgenerator auf Startseite und Bibliothek</string>
     <string name="provider_lang_settings">Erweiterungssprachen</string>
-    <string name="app_layout">App-Layout</string>
     <string name="preferred_media_settings">Bevorzugte Medien</string>
     <string name="enable_nsfw_on_providers">NSFW bei unterstützten Erweiterungen aktivieren</string>
     <string name="subtitles_encoding">Untertitel-Kodierung</string>
     <string name="category_providers">Anbieter</string>
     <string name="category_ui">Layout</string>
     <string name="automatic">Auto</string>
-    <string name="tv_layout">TV-Layout</string>
-    <string name="phone_layout">Telefon-Layout</string>
-    <string name="emulator_layout">Emulator-Layout</string>
     <string name="primary_color_settings">Grundfarbe</string>
     <string name="app_theme_settings">App-Thema</string>
     <string name="bottom_title_settings">Vorschaubildtitel Platzierung</string>
@@ -375,7 +371,6 @@
     <string name="provider_languages_tip">Videos in diesen Sprachen ansehen</string>
     <string name="previous">Vorherige</string>
     <string name="skip_setup">Einrichtung überspringen</string>
-    <string name="app_layout_subtext">Aussehen der App passend zu dem des Geräts ändern</string>
     <string name="preferred_media_subtext">Was möchten Sie sehen</string>
     <string name="setup_done">Fertig</string>
     <string name="extensions">Erweiterungen</string>
@@ -482,11 +477,6 @@
     <string name="empty_library_no_accounts_message">Deine Bibliothek ist leer :( \nMelde dich mit einem Bibliothekskonto an oder füge Titel zu deiner lokalen Bibliothek hinzu.</string>
     <string name="empty_library_logged_in_message">Diese Liste ist leer. Versuch zu einer anderen Liste zu wechseln.</string>
     <string name="safe_mode_file">Datei für den abgesicherten Modus gefunden! \nBeim Start werden keine Erweiterungen geladen, bis die Datei entfernt wird.</string>
-    <string name="android_tv_interface_off_seek_settings">Player ausgeblendet - Betrag zum vor- und zurückspulen</string>
-    <string name="android_tv_interface_on_seek_settings_summary">Der Betrag, welcher verwendet wird, wenn der Player eingeblendet ist</string>
-    <string name="android_tv_interface_off_seek_settings_summary">Der Betrag, welcher verwendet wird, wenn der Player ausgeblendet ist</string>
-    <string name="pref_category_android_tv">Android-TV</string>
-    <string name="android_tv_interface_on_seek_settings">Player eingeblendet - Betrag zum vor- und zurückspulen</string>
     <string name="test_failed">Fehlgeschlagen</string>
     <string name="test_passed">Erfolgreich</string>
     <string name="category_provider_test">Anbieter-Test</string>
@@ -735,8 +725,6 @@
     <string name="video_singular">Video</string>
     <string name="skip_type_preview">Vorschau</string>
     <string name="player_is_live">Live</string>
-    <string name="tv_layout_clock_settings">Echtzeituhr anzeigen</string>
-    <string name="tv_layout_clock_settings_des">Echtzeituhr oben auf dem Bildschirm anzeigen. Gilt für Startseite und Player</string>
     <string name="profile_settings">Profil-Einstellungen</string>
     <string name="profile_hide_negative_sources">Quellen mit negativer Priorität verbergen</string>
     <string name="profile_hide_error_sources">Quellen mit Fehlern ausblenden</string>

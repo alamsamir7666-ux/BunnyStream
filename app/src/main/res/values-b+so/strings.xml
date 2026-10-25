@@ -133,7 +133,6 @@
     <string name="update">Cusbooneysii</string>
     <string name="watch_quality_pref">Tayada aad doorbiddo</string>
     <string name="pref_category_player_layout">Qaabka</string>
-    <string name="emulator_layout">Qaab emulator</string>
     <string name="random_button_settings_desc">Waxa uu ku tusayaa badhin aad si xukasho la\'aan ah ugu dooran kartid</string>
     <string name="subs_subtitle_elevation">Kor-u-baxa Qrl-hoosaadka</string>
     <string name="subs_font">Farta</string>
@@ -253,7 +252,6 @@
     <string name="restore_settings">Kasoo celi Xogta gurmadka aad kaydsatay</string>
     <string name="video_buffer_length_settings">Dhererka K. kumeelgaadhka ah</string>
     <string name="preferred_media_settings">Noocyada muqaal eed doorbiddo</string>
-    <string name="tv_layout">Qaab TV</string>
     <string name="video_buffer_disk_settings">Heerka Kayd-yaraha</string>
     <string name="video_buffer_clear_settings">Masax kayd yaraha sawirrada/muqaalka</string>
     <string name="video_ram_description">Laga yaaba inuu appku duqeeyo haddii aad badiso.</string>
@@ -270,7 +268,6 @@
     <string name="random_button_settings">Badhinka X. la\'aanta</string>
     <string name="category_providers">Qaybiyeyaasha</string>
     <string name="automatic">Iskii</string>
-    <string name="phone_layout">Qaab moobil</string>
     <string name="pref_category_actions">Falal</string>
     <string name="pref_category_cache">Kayd-yare</string>
     <string name="pref_category_gestures">Ishaarooyinka</string>
@@ -299,7 +296,6 @@
     <string name="nsfw">CEEB</string>
     <string name="limit_title">Tirada inta ka muuqanaysa magaca filinka</string>
     <string name="provider_lang_settings">Luuqadda bixiyaha</string>
-    <string name="app_layout">Qaabka Appka</string>
     <string name="action_remove_from_watched">Ka saar kuwa la daawaday</string>
     <string name="view_public_repositories_button">Eeg Kuwa Dadka kale Rakibeen</string>
     <string name="audio_tracks">Codad kale</string>
@@ -439,7 +435,6 @@
     <string name="provider_languages_tip">Ku daawo muuqaallada luuqadahan</string>
     <string name="previous">Kii hore</string>
     <string name="skip_setup">Is dhaafi fadhiisintan</string>
-    <string name="app_layout_subtext">Beddel sida appku u muuqdo si uu ugu habboonaado moobilekaaga</string>
     <string name="preferred_media_subtext">Maxaad rabtaa inaad daawato</string>
     <string name="setup_done">Dhan</string>
     <string name="add_repository">Ku dar kayd-weyne</string>

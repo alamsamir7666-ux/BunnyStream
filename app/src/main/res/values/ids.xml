@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Focus-navigation ids that were previously declared inside the removed TV
+         layouts (fragment_home_head_tv / fragment_result_tv). Declared here so the
+         remaining nextFocus* references and code lookups keep resolving. -->
+    <item type="id" name="home_preview_info_btt" />
+    <item type="id" name="result_bookmark_Button" />
+    <item type="id" name="home_type_holder" />
+</resources>

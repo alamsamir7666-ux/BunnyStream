@@ -169,9 +169,6 @@
     <string name="limit_title">ခေါင်းစဥ်အတွက်စာလုံးရေပြည့်ခြင်း</string>
     <string name="limit_title_rez">ကြည့်ရှုမှု အရည်အသွေး</string>
     <string name="video_buffer_size_settings">ဗီဒီယိုရှေ့ပြေးသိမ်းဆည်းမှုပမာဏ</string>
-    <string name="android_tv_interface_on_seek_settings_summary">ကြည့်ရှုမှုဘားမြင်တွေ့ရချိန်တွင်ပြသသောပမာဏ</string>
-    <string name="android_tv_interface_off_seek_settings">ဝှက်ထားသောကြည့်ရှုပြီးသောပမာဏ</string>
-    <string name="android_tv_interface_off_seek_settings_summary">ဝှက်ထားသည့်အခါ အသုံးပြုသည့် ရှာဖွေမှုပမာဏ</string>
     <string name="video_ram_description">Android TV ကဲ့သို့သော မမ်မိုရီနည်းသော စက်ပစ္စည်းများတွင် သတ်မှတ်နှုန်း အလွန်မြင့်မားပါက ပျက်စီးမှုများ ဖြစ်စေသည်။</string>
     <string name="dns_pref">DNS over HTTPS</string>
     <string name="jsdelivr_proxy">raw.githubusercontent.com ပရောက်စီ</string>
@@ -192,7 +189,6 @@
     <string name="pref_category_extensions">Extensions</string>
     <string name="pref_category_actions">ဆောင်ရွက်ချက်များ</string>
     <string name="pref_category_cache">Cache</string>
-    <string name="pref_category_android_tv">Android တီဗွီ</string>
     <string name="pref_category_subtitles">စာတန်းထိုးများ</string>
     <string name="pref_category_defaults">ပုံသေများ</string>
     <string name="pref_category_looks">ပုံပန်းသဏ္ဌာန်</string>
@@ -262,7 +258,6 @@
     <string name="search">ရှာရန်</string>
     <string name="category_account">အကောင့်များ</string>
     <string name="settings_info">အချက်အလက်</string>
-    <string name="android_tv_interface_on_seek_settings">ကြည့်ရှုပြီးသောအချိန်ပမာဏ</string>
     <string name="video_disk_description">Android TV ကဲ့သို့သော သိုလှောင်မှုနေရာနည်းပါးသော စက်ပစ္စည်းများတွင် အလွန်မြင့်မားစွာ သတ်မှတ်ပါက ပြဿနာများ ဖြစ်လာနိုင်သည်။</string>
     <string name="dns_pref_summary">ISP ပိတ်ဆို့ခြင်းကို ကျော်လွှားရန်အတွက် အသုံးဝင်သည်</string>
     <string name="jsdelivr_proxy_summary">jsDelivr ကို အသုံးပြု၍ GitHub ပိတ်ဆို့ခြင်းကို ကျော်ဖြတ်သည်။ အပ်ဒိတ်များကို ရက်အနည်းငယ်ကြာအောင် နှောင့်နှေးစေနိုင်သည်။</string>
@@ -310,13 +305,10 @@
     <string name="video_buffer_clear_settings">ဗီဒီယို cache နှင့် ရုပ်ပုံ cache များကိူရှင်းလင်းရန်</string>
     <string name="enable_nsfw_on_providers">ပံ့ပိုးပေးထားသည့် ဝန်ဆောင်မှုများပေါ်တွင် အပြာဗီဒီယို ကို ဖွင့်ပါ</string>
     <string name="provider_lang_settings">ဝန်ဆောင်မှုပံ့ပိုးသူဘာသာစကား</string>
-    <string name="app_layout">အက်ပ်အပြင်အဆင်</string>
     <string name="preferred_media_settings">ဦးစားပေးမီဒီယာ</string>
     <string name="app_theme_settings">အက်ပ် အပြင်အဆင်</string>
     <string name="bottom_title_settings">ပိုစတာခေါင်းစဉ်တည်နေရာ</string>
     <string name="bottom_title_settings_des">ခေါင်းစဉ်ကို ပိုစတာအောက်မှာ ထားပါ</string>
-    <string name="phone_layout">ဖုန်းအပြင်အဆင်</string>
-    <string name="emulator_layout">အင်မြူလိတ်တာ အပြင်အဆင်</string>
     <string name="primary_color_settings">အဓိကအရောင်</string>
     <string name="recommended">အကြံပြုသည်</string>
     <string name="quality_dvd">ဒီဗွီဒီ</string>
@@ -365,7 +357,6 @@
     <string name="category_providers">ပံ့ပိုးပေးသူများ</string>
     <string name="category_ui">အပြင်အဆင်</string>
     <string name="automatic">အလိုအလျောက်</string>
-    <string name="tv_layout">တီဗွီအပြင်အဆင်</string>
     <string name="example_password">သင့်စကားဝှက်</string>
     <string name="example_username">သင့်ယူဇာနိမ်း</string>
     <string name="example_email">သင့်အီးမေးလ် လိပ်စာ</string>
@@ -447,7 +438,6 @@
     <string name="setup_done">ပြီးပြီ</string>
     <string name="extensions">အဆက်များ</string>
     <string name="plugin_load_fail" formatted="true">မသွင်းနိုင်ပါ %s</string>
-    <string name="app_layout_subtext">သင့်စက်ပစ္စည်းနှင့် ကိုက်ညီစေရန် အက်ပ်၏အသွင်အပြင်ကို ပြောင်းလဲပါ</string>
     <string name="add_repository">ရီပိုစစ်ထရီထည့်ရန်</string>
     <string name="is_adult">အသက်ပြည့်ပြီးသူများသာ</string>
     <string name="repository_name_hint">ရီပိုစစ်ထရီအမည်</string>

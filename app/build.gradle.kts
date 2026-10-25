@@ -262,7 +262,6 @@ dependencies {
     // UI Stuff
     implementation(libs.shimmer) // Shimmering Effect (Loading Skeleton)
     implementation(libs.palette.ktx) // Palette for Images -> Colors
-    implementation(libs.tvprovider)
     implementation(libs.overlappingpanels) // Gestures
     implementation(libs.biometric) // Fingerprint Authentication
     implementation(libs.previewseekbar.media3) // SeekBar Preview

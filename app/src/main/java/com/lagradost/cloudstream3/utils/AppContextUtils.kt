@@ -14,7 +14,6 @@ import android.database.Cursor
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
-import android.media.tv.TvContract.Channels.COLUMN_INTERNAL_PROVIDER_ID
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -42,10 +41,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.tvprovider.media.tv.PreviewChannelHelper
-import androidx.tvprovider.media.tv.TvContractCompat
-import androidx.tvprovider.media.tv.WatchNextProgram
-import androidx.tvprovider.media.tv.WatchNextProgram.fromCursor
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastState
@@ -70,7 +65,6 @@ import com.lagradost.cloudstream3.isMovieType
 import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.mvvm.safe
 import com.lagradost.cloudstream3.plugins.RepositoryManager
-import com.lagradost.cloudstream3.syncproviders.AccountManager.Companion.APP_STRING_RESUME_WATCHING
 import com.lagradost.cloudstream3.syncproviders.providers.Kitsu
 import com.lagradost.cloudstream3.ui.WebviewFragment
 import com.lagradost.cloudstream3.ui.player.SubtitleData
@@ -118,18 +112,6 @@ object AppContextUtils {
         }, 200)
     }
 
-    //fun Context.deleteFavorite(data: SearchResponse) {
-    //    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
-    //    safe {
-    //        val existingId =
-    //            getWatchNextProgramByVideoId(data.url, this).second ?: return@safe
-    //        contentResolver.delete(
-//
-    //            TvContractCompat.buildWatchNextProgramUri(existingId),
-    //            null, null
-    //        )
-    //    }
-    //}
     fun String?.html(): Spanned {
         return getHtmlText(this ?: return "".toSpanned())
     }
@@ -144,51 +126,6 @@ object AppContextUtils {
             logError(e)
             text.toSpanned()
         }
-    }
-
-    /** Get channel ID by name */
-    @SuppressLint("RestrictedApi")
-    private fun buildWatchNextProgramUri(
-        context: Context,
-        card: DataStoreHelper.ResumeWatchingResult,
-        resumeWatching: DownloadObjects.ResumeWatching?
-    ): WatchNextProgram {
-        val isSeries = card.type?.isMovieType() == false
-        val title = if (isSeries) {
-            context.getNameFull(card.name, card.episode, card.season)
-        } else {
-            card.name
-        }
-
-        val builder = WatchNextProgram.Builder()
-            .setEpisodeTitle(title)
-            .setType(
-                if (isSeries) {
-                    TvContractCompat.WatchNextPrograms.TYPE_TV_EPISODE
-                } else TvContractCompat.WatchNextPrograms.TYPE_MOVIE
-            )
-            .setWatchNextType(TvContractCompat.WatchNextPrograms.WATCH_NEXT_TYPE_CONTINUE)
-            .setTitle(title)
-            .setPosterArtUri(card.posterUrl?.toUri())
-            .setIntentUri((card.id?.let {
-                "$APP_STRING_RESUME_WATCHING://$it"
-            } ?: card.url).toUri())
-            .setInternalProviderId(card.url)
-            .setLastEngagementTimeUtcMillis(
-                resumeWatching?.updateTime ?: System.currentTimeMillis()
-            )
-
-        card.watchPos?.let {
-            builder.setDurationMillis(it.duration.toInt())
-            builder.setLastPlaybackPositionMillis(it.position.toInt())
-        }
-
-        if (isSeries)
-            card.episode?.let {
-                builder.setEpisodeNumber(it)
-            }
-
-        return builder.build()
     }
 
     // https://stackoverflow.com/a/67441735/13746422
@@ -234,132 +171,6 @@ object AppContextUtils {
                 this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    @SuppressLint("RestrictedApi")
-    fun getAllWatchNextPrograms(context: Context): Set<Long> {
-        val COLUMN_WATCH_NEXT_ID_INDEX = 0
-        val cursor = context.contentResolver.query(
-            TvContractCompat.WatchNextPrograms.CONTENT_URI,
-            WatchNextProgram.PROJECTION,
-            /* selection = */ null,
-            /* selectionArgs = */ null,
-            /* sortOrder = */ null
-        )
-        val set = mutableSetOf<Long>()
-        cursor?.use {
-            if (it.moveToFirst()) {
-                do {
-                    set.add(cursor.getLong(COLUMN_WATCH_NEXT_ID_INDEX))
-                } while (it.moveToNext())
-            }
-        }
-        return set
-    }
-
-    /**
-     * Find the Watch Next program for given id.
-     * Returns the first instance available.
-     */
-    @SuppressLint("RestrictedApi")
-    // Suppress RestrictedApi due to https://issuetracker.google.com/138150076
-    fun findFirstWatchNextProgram(context: Context, predicate: (Cursor) -> Boolean):
-            Pair<WatchNextProgram?, Long?> {
-        val COLUMN_WATCH_NEXT_ID_INDEX = 0
-//        val COLUMN_WATCH_NEXT_INTERNAL_PROVIDER_ID_INDEX = 1
-//        val COLUMN_WATCH_NEXT_COLUMN_BROWSABLE_INDEX = 2
-
-        val cursor = context.contentResolver.query(
-            TvContractCompat.WatchNextPrograms.CONTENT_URI,
-            WatchNextProgram.PROJECTION,
-            /* selection = */ null,
-            /* selectionArgs = */ null,
-            /* sortOrder = */ null
-        )
-        cursor?.use {
-            if (it.moveToFirst()) {
-                do {
-                    if (predicate(cursor)) {
-                        return fromCursor(cursor) to cursor.getLong(COLUMN_WATCH_NEXT_ID_INDEX)
-                    }
-                } while (it.moveToNext())
-            }
-        }
-        return null to null
-    }
-
-    /**
-     * Query the Watch Next list and find the program with given videoId.
-     * Return null if not found.
-     */
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("Range")
-    @Synchronized
-    private fun getWatchNextProgramByVideoId(
-        id: String,
-        context: Context
-    ): Pair<WatchNextProgram?, Long?> {
-        return findFirstWatchNextProgram(context) { cursor ->
-            (cursor.getString(cursor.getColumnIndex(COLUMN_INTERNAL_PROVIDER_ID)) == id)
-        }
-    }
-
-    /** Prevents losing data when removing and adding simultaneously */
-    private val continueWatchingLock = Mutex()
-
-    // https://github.com/googlearchive/leanback-homescreen-channels/blob/master/app/src/main/java/com/google/android/tvhomescreenchannels/SampleTvProvider.java
-    @SuppressLint("RestrictedApi")
-    @Throws
-    @WorkerThread
-    suspend fun Context.addProgramsToContinueWatching(data: List<DataStoreHelper.ResumeWatchingResult>) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
-        val context = this
-        continueWatchingLock.withLock {
-            // A way to get all last watched timestamps
-            val timeStampHashMap = HashMap<Int, DownloadObjects.ResumeWatching>()
-            getAllResumeStateIds()?.forEach { id ->
-                val lastWatched = getLastWatched(id) ?: return@forEach
-                timeStampHashMap[lastWatched.parentId] = lastWatched
-            }
-
-            val currentProgramIds = data.mapNotNull { episodeInfo ->
-                try {
-                    val customId = "${episodeInfo.id}|${episodeInfo.apiName}|${episodeInfo.url}"
-                    val (program, id) = getWatchNextProgramByVideoId(customId, context)
-                    val nextProgram = buildWatchNextProgramUri(
-                        context,
-                        episodeInfo,
-                        timeStampHashMap[episodeInfo.id]
-                    )
-
-                    // If the program is already in the Watch Next row, update it
-                    if (program != null && id != null) {
-                        PreviewChannelHelper(context).updateWatchNextProgram(
-                            nextProgram,
-                            id,
-                        )
-                        id
-                    } else {
-                        PreviewChannelHelper(context)
-                            .publishWatchNextProgram(nextProgram)
-                    }
-                } catch (e: Exception) {
-                    logError(e)
-                    null
-                }
-            }.toSet()
-
-            val allOldPrograms = getAllWatchNextPrograms(context) - currentProgramIds
-
-            // Ensures synced watch next progress by deleting all old programs.
-            allOldPrograms.forEach {
-                context.contentResolver.delete(
-                    TvContractCompat.buildWatchNextProgramUri(it),
-                    null, null
-                )
-            }
         }
     }
 
@@ -567,7 +378,7 @@ object AppContextUtils {
                     openAddedRepo()
                 }
                 setNegativeButton(R.string.dismiss, null)
-                show().setDefaultFocus()
+                show()
             }
         }
     }
@@ -702,11 +513,7 @@ object AppContextUtils {
     //private val viewModel: ResultViewModel by activityViewModels()
 
     private fun getResultsId(): Int {
-        return if (Globals.isLayout(Globals.TV or Globals.EMULATOR)) {
-            R.id.global_to_navigation_results_tv
-        } else {
-            R.id.global_to_navigation_results_phone
-        }
+        return R.id.global_to_navigation_results_phone
     }
 
     fun loadResult(
@@ -834,17 +641,6 @@ object AppContextUtils {
             }
         }
         return false
-    }
-
-    /**
-     * Sets the focus to the negative button when in TV and Emulator layout.
-     **/
-    fun AlertDialog.setDefaultFocus(buttonFocus: Int = DialogInterface.BUTTON_NEGATIVE) {
-        if (!Globals.isLayout(Globals.TV or Globals.EMULATOR)) return
-        this.getButton(buttonFocus).run {
-            isFocusableInTouchMode = true
-            requestFocus()
-        }
     }
 
     fun Context.isUsingMobileData(): Boolean {

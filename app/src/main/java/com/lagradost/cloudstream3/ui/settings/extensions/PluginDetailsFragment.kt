@@ -15,8 +15,6 @@ import com.lagradost.cloudstream3.plugins.VotingApi.vote
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.ui.BaseBottomSheetDialogFragment
 import com.lagradost.cloudstream3.ui.BaseFragment
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
@@ -49,7 +47,7 @@ class PluginDetailsFragment(val data: PluginViewData) : BaseBottomSheetDialogFra
         fixSystemBarsPadding(
             view,
             padBottom = isLandscape(),
-            padLeft = isLayout(TV or EMULATOR)
+            padLeft = false
         )
     }
 

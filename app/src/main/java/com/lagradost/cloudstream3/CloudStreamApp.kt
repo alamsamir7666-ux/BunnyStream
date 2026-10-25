@@ -17,8 +17,6 @@ import com.lagradost.cloudstream3.BuildConfig
 import com.lagradost.cloudstream3.mvvm.safe
 import com.lagradost.cloudstream3.mvvm.safeAsync
 import com.lagradost.cloudstream3.plugins.PluginManager
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.openBrowser
 import com.lagradost.cloudstream3.utils.AppDebug
@@ -169,11 +167,10 @@ class CloudStreamApp : Application(), SingletonImageLoader.Factory {
             context?.openBrowser(url, fallbackWebView, fragment)
         }
 
-        /** Will fall back to WebView if in TV or emulator layout. */
         fun openBrowser(url: String, activity: Activity?) {
             openBrowser(
                 url,
-                isLayout(TV or EMULATOR),
+                false,
                 (activity as? FragmentActivity)?.supportFragmentManager?.fragments?.lastOrNull()
             )
         }

@@ -66,9 +66,6 @@ class UIPreferences(preferences: PreferenceStore) {
     val theme = preferences.getString(
         "app_theme_key", "AmoledLight"
     )
-    val layout = preferences.getInt(
-        "app_layout_key", -1
-    )
     val bottomTitle = preferences.getBoolean(
         "bottom_title_key", true
     )
@@ -116,9 +113,6 @@ class UIPreferences(preferences: PreferenceStore) {
     )
     val posterShowEpisode = preferences.getBoolean(
         "show_episode_text_key", true
-    )
-    val showClock = preferences.getBoolean(
-        "tv_layout_clock_key", false
     )
 
     val randomButtonEnabled = preferences.getBoolean(
@@ -184,8 +178,6 @@ class PlayerPreferences(preferences: PreferenceStore) {
     val bufferDiskMB = preferences.getInt("video_buffer_disk_key", 0)
     val bufferRamMB = preferences.getInt("video_buffer_size_key", 0)
     val bufferTimeSec = preferences.getInt("video_buffer_length_key", 0)
-    val tvSeekOnTime = preferences.getInt("android_tv_interface_on_seek_key", 10)
-    val tvSeekOffTime = preferences.getInt("android_tv_interface_off_seek_key", 10)
 }
 
 class GeneralPreferences(preferences: PreferenceStore) {

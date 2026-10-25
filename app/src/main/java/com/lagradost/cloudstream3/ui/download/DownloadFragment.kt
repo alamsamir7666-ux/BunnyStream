@@ -36,8 +36,6 @@ import com.lagradost.cloudstream3.ui.player.LinkGenerator
 import com.lagradost.cloudstream3.ui.player.OfflinePlaybackHelper.playUri
 import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.setLinearListLayout
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.loadResult
@@ -49,7 +47,6 @@ import com.lagradost.cloudstream3.utils.UIHelper.dismissSafe
 import com.lagradost.cloudstream3.utils.UIHelper.fixSystemBarsPadding
 import com.lagradost.cloudstream3.utils.UIHelper.hideKeyboard
 import com.lagradost.cloudstream3.utils.UIHelper.navigate
-import com.lagradost.cloudstream3.utils.UIHelper.setAppBarNoScrollFlagsOnTV
 import java.net.URI
 
 const val DOWNLOAD_NAVIGATE_TO = "downloadpage"
@@ -79,14 +76,12 @@ class DownloadFragment : BaseFragment<FragmentDownloadsBinding>(
         fixSystemBarsPadding(
             view,
             padBottom = isLandscape(),
-            padLeft = isLayout(TV or EMULATOR)
+            padLeft = false
         )
     }
 
     override fun onBindingCreated(binding: FragmentDownloadsBinding) {
         hideKeyboard()
-        binding.downloadAppbar.setAppBarNoScrollFlagsOnTV()
-        binding.downloadDeleteAppbar.setAppBarNoScrollFlagsOnTV()
 
         observe(downloadViewModel.headerCards) { cards ->
             when (cards) {
@@ -231,24 +226,12 @@ class DownloadFragment : BaseFragment<FragmentDownloadsBinding>(
         }
 
         binding.apply {
-            openLocalVideoButton.apply {
-                isGone = isLayout(TV)
-                setOnClickListener { openLocalVideo() }
-            }
-            downloadStreamButton.apply {
-                isGone = isLayout(TV)
-                setOnClickListener { showStreamInputDialog(it.context) }
-            }
+            openLocalVideoButton.setOnClickListener { openLocalVideo() }
+            downloadStreamButton.setOnClickListener { showStreamInputDialog(it.context) }
 
             downloadQueueButton.setOnClickListener {
                 activity?.navigate(R.id.action_navigation_global_to_navigation_download_queue)
             }
-
-            downloadStreamButtonTv.isFocusableInTouchMode = isLayout(TV)
-            downloadAppbar.isFocusableInTouchMode = isLayout(TV)
-
-            downloadStreamButtonTv.setOnClickListener { showStreamInputDialog(it.context) }
-            steamImageviewHolder.isVisible = isLayout(TV)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

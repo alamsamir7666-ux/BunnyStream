@@ -29,13 +29,9 @@ import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.mvvm.safe
 import com.lagradost.cloudstream3.network.initClient
 import com.lagradost.cloudstream3.ui.BasePreferenceFragmentCompat
-import com.lagradost.cloudstream3.ui.settings.Globals.EMULATOR
-import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.beneneCount
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.getPref
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.hideOn
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setPaddingBottom
-import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setToolBarScrollFlags
 import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.setUpToolbar
 import com.lagradost.cloudstream3.ui.settings.utils.getChooseFolderLauncher
 import com.lagradost.cloudstream3.utils.BatteryOptimizationChecker.isAppRestricted
@@ -152,8 +148,6 @@ class SettingsGeneral : BasePreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpToolbar(R.string.category_general)
-        setPaddingBottom()
-        setToolBarScrollFlags()
     }
 
     @OptIn(ExperimentalSerializationApi::class) // JsonNames is an experimental annotation for now
@@ -303,7 +297,7 @@ class SettingsGeneral : BasePreferenceFragmentCompat() {
             return@setOnPreferenceClickListener true
         }
 
-        getPref(R.string.battery_optimisation_key)?.hideOn(TV or EMULATOR)?.setOnPreferenceClickListener {
+        getPref(R.string.battery_optimisation_key)?.setOnPreferenceClickListener {
             val ctx = context ?: return@setOnPreferenceClickListener false
 
             if (isAppRestricted(ctx)) {
