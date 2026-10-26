@@ -438,8 +438,8 @@
     <!--
     Example text (pangram) can optionally be translated; if you do, include all the letters in the alphabet,
     see: 
-	https://en.wikipedia.org/w/index.php?title=Pangram&oldid=225849300
-	https://en.wikipedia.org/wiki/The_quick_brown_fox_jumps_over_the_lazy_dog
+        https://en.wikipedia.org/w/index.php?title=Pangram&oldid=225849300
+        https://en.wikipedia.org/wiki/The_quick_brown_fox_jumps_over_the_lazy_dog
     -->
     <string name="subtitles_example_text">The quick brown fox jumps over the lazy dog</string>
     <string name="recommended">Recommended</string>
@@ -453,6 +453,16 @@
     <string name="actor_background">Background</string>
     <string name="home_source">Source</string>
     <string name="home_random">Random</string>
+    <!-- YouTube layout home -->
+    <string name="home_yt_app_title">BunnyStream</string>
+    <string name="home_yt_chip_all">All</string>
+    <string name="home_yt_chip_anime">Anime</string>
+    <string name="home_yt_chip_movies">Movies</string>
+    <string name="home_yt_chip_tv_shows">TV Shows</string>
+    <string name="home_yt_chip_action">Action</string>
+    <string name="home_yt_chip_comedy">Comedy</string>
+    <string name="home_yt_season">Season</string>
+    <string name="home_yt_seasons">Seasons</string>
     <string name="coming_soon">Coming soon…</string>
     <string name="quality_cam">Cam</string>
     <string name="quality_cam_rip">CamRip</string>

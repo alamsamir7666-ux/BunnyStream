@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- YouTube layout home logo: red rounded square with white play triangle -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFF0000"
+        android:pathData="M5,2 L19,2 Q22,2 22,5 L22,19 Q22,22 19,22 L5,22 Q2,22 2,19 L2,5 Q2,2 5,2 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M9.8,7.4 L16.8,12 L9.8,16.6 Z" />
+</vector>

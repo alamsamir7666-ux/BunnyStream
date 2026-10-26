@@ -60,8 +60,10 @@ import com.lagradost.cloudstream3.ui.search.SearchAdapter
 import com.lagradost.cloudstream3.ui.search.SearchHelper.handleSearchClickCallback
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
+import com.lagradost.cloudstream3.ui.settings.Globals.YOUTUBE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
+import androidx.core.content.ContextCompat
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterProviderByPreferredMedia
 import com.lagradost.cloudstream3.utils.AppContextUtils.getApiProviderLangSettings
 import com.lagradost.cloudstream3.utils.AppContextUtils.isNetworkAvailable
@@ -558,6 +560,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     }
 
     override fun onDestroyView() {
+        HomeFeedFilter.onChanged = null
         bottomSheetDialog?.ownHide()
         super.onDestroyView()
     }
@@ -577,6 +580,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     private var currentApiName: String? = null
     private var toggleRandomButton = false
+
+    /** Latest unfiltered home feed lists, used to re-filter when a YouTube chip changes. */
+    private var lastPageLists: List<HomeViewModel.ExpandableHomepageList>? = null
+
+    private fun submitFilteredPage() {
+        val lists = lastPageLists ?: return
+        (binding?.homeMasterRecycler?.adapter as? ParentItemAdapter)?.submitList(
+            HomeFeedFilter.filterPage(lists)
+        )
+    }
 
     private var bottomSheetDialog: BottomSheetDialog? = null
     private var homeMasterAdapter: HomeParentItemAdapterPreview? = null
@@ -620,6 +633,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             homeMasterRecycler.adapter = homeMasterAdapter
 
             homeApiFab.isVisible = isLayout(PHONE)
+
+            if (isLayout(YOUTUBE)) {
+                homeRoot.setBackgroundColor(ContextCompat.getColor(root.context, R.color.yt_black))
+                HomeFeedFilter.onChanged = { submitFilteredPage() }
+            }
 
             homePreviewReloadProvider.setOnClickListener {
                 homeViewModel.loadAndCancel(
@@ -697,11 +715,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 when (data) {
                     is Resource.Success -> {
                         val d = data.value
-                        (homeMasterRecycler.adapter as? ParentItemAdapter)?.submitList(d.values.map {
+                        lastPageLists = d.values.map {
                             it.copy(
                                 list = it.list.copy(list = it.list.list.toMutableList())
                             )
-                        })
+                        }
+                        (homeMasterRecycler.adapter as? ParentItemAdapter)?.submitList(
+                            HomeFeedFilter.filterPage(lastPageLists!!)
+                        )
 
                         homeLoading.isVisible = false
                         homeLoadingError.isVisible = false

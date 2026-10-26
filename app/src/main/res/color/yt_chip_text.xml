@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- YouTube layout category chip text: black when selected, light gray otherwise -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#FF0F0F0F" android:state_checked="true" />
+    <item android:color="#FFF1F1F1" />
+</selector>

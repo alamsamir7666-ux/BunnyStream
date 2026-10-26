@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -28,6 +29,7 @@ import com.lagradost.cloudstream3.MainActivity
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.SearchResponse
 import com.lagradost.cloudstream3.databinding.FragmentHomeHeadBinding
+import com.lagradost.cloudstream3.databinding.FragmentHomeHeadYoutubeBinding
 import com.lagradost.cloudstream3.mvvm.Resource
 import com.lagradost.cloudstream3.mvvm.debugException
 import com.lagradost.cloudstream3.mvvm.logError
@@ -46,8 +48,12 @@ import com.lagradost.cloudstream3.ui.result.setLinearListLayout
 import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_LOAD
 import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_SHOW_METADATA
 import com.lagradost.cloudstream3.ui.search.SearchClickCallback
+import com.lagradost.cloudstream3.ui.settings.Globals
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.html
+import com.lagradost.cloudstream3.utils.AppContextUtils.isCastApiAvailable
+import com.google.android.gms.cast.framework.CastButtonFactory
+import com.google.android.gms.cast.framework.CastContext
 import com.lagradost.cloudstream3.utils.DataStoreHelper
 import com.lagradost.cloudstream3.utils.ImageLoader.loadImage
 import com.lagradost.cloudstream3.utils.SingleSelectionHelper.showBottomDialog
@@ -73,7 +79,11 @@ class HomeParentItemAdapterPreview(
     override val headers = 1
     override fun onCreateHeader(parent: ViewGroup): ViewHolderState<Bundle> {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentHomeHeadBinding.inflate(inflater, parent, false)
+        val binding = if (isLayout(Globals.YOUTUBE)) {
+            FragmentHomeHeadYoutubeBinding.inflate(inflater, parent, false)
+        } else {
+            FragmentHomeHeadBinding.inflate(inflater, parent, false)
+        }
 
         return HeaderViewHolder(binding, viewModel, accountViewModel)
     }
@@ -127,11 +137,18 @@ class HomeParentItemAdapterPreview(
             }
         }
 
-        val previewAdapter = HomeScrollAdapter { view, position, item ->
-            viewModel.click(
-                LoadClickCallback(0, view, position, item)
-            )
-        }
+        val previewAdapter = HomeScrollAdapter(
+            callback = { view, position, item ->
+                viewModel.click(
+                    LoadClickCallback(0, view, position, item)
+                )
+            },
+            playCallback = { view, position, item ->
+                viewModel.click(
+                    LoadClickCallback(START_ACTION_RESUME_LATEST, view, position, item)
+                )
+            }
+        )
 
         private val resumeAdapter = ResumeItemAdapter(
             nextFocusUp = itemView.nextFocusUpId,
@@ -311,6 +328,13 @@ class HomeParentItemAdapterPreview(
 
         private val homeNonePadding: View = itemView.findViewById(R.id.home_none_padding)
 
+        private val watchSectionTitle: TextView? =
+            itemView.findViewById(R.id.home_watch_parent_item_title)
+        private val bookmarkSectionTitle: View? =
+            itemView.findViewById(R.id.home_bookmark_parent_item_title)
+
+        private var lastPreviewItems: List<LoadResponse> = emptyList()
+
         fun onSelect(item: LoadResponse, position: Int) {
             (binding as? FragmentHomeHeadBinding)?.apply {
                 //homePreviewImage.setImage(item.posterUrl, item.posterHeaders)
@@ -412,7 +436,31 @@ class HomeParentItemAdapterPreview(
         fun bind() = Unit
 
         init {
-            previewViewpager.setPageTransformer(HomeScrollTransformer())
+            if (binding is FragmentHomeHeadYoutubeBinding) {
+                fixPaddingStatusbarMargin(binding.homeTopBarYt)
+
+                binding.homeSearchIconYt.setOnClickListener {
+                    viewModel.queryTextSubmit("")
+                }
+
+                setUpCastButton(binding)
+
+                binding.homeYtChips.setOnCheckedStateChangeListener { _, checkedIds ->
+                    val category = when (checkedIds.firstOrNull()) {
+                        R.id.home_yt_chip_anime -> HomeFeedFilter.Category.ANIME
+                        R.id.home_yt_chip_movies -> HomeFeedFilter.Category.MOVIES
+                        R.id.home_yt_chip_tv_shows -> HomeFeedFilter.Category.TV_SHOWS
+                        R.id.home_yt_chip_action -> HomeFeedFilter.Category.ACTION
+                        R.id.home_yt_chip_comedy -> HomeFeedFilter.Category.COMEDY
+                        else -> HomeFeedFilter.Category.ALL
+                    }
+                    HomeFeedFilter.current = category
+                    applyPreviewFilter()
+                    HomeFeedFilter.onChanged?.invoke()
+                }
+            } else {
+                previewViewpager.setPageTransformer(HomeScrollTransformer())
+            }
 
             previewViewpager.adapter = previewAdapter
             resumeRecyclerView.adapter = resumeAdapter
@@ -501,8 +549,28 @@ class HomeParentItemAdapterPreview(
             }
         }
 
+        /** Re-filters the hero banner items with the current category chip. */
+        private fun applyPreviewFilter() {
+            previewAdapter.submitList(HomeFeedFilter.filterPreview(lastPreviewItems))
+        }
+
+        private fun setUpCastButton(binding: FragmentHomeHeadYoutubeBinding) {
+            val act = itemView.context.getActivity() ?: return
+            try {
+                if (!act.isCastApiAvailable()) return
+                CastButtonFactory.setUpMediaRouteButton(act, binding.homeMediaRouteButton)
+                CastContext.getSharedInstance(act.applicationContext) {
+                    it.run()
+                }.addOnCompleteListener {
+                    binding.homeMediaRouteButton.isGone = !it.isSuccessful
+                }
+            } catch (e: Exception) {
+                logError(e)
+            }
+        }
+
         private fun updatePreview(preview: Resource<Pair<Boolean, List<LoadResponse>>>) {
-            if (preview is Resource.Success) {
+            if (preview is Resource.Success || binding is FragmentHomeHeadYoutubeBinding) {
                 homeNonePadding.apply {
                     val params = layoutParams
                     params.height = 0
@@ -514,7 +582,8 @@ class HomeParentItemAdapterPreview(
                 is Resource.Success -> {
                     homePreviewShimmer?.stopShimmer()
                     homePreviewShimmer?.isGone = true
-                    previewAdapter.submitList(preview.value.second)
+                    lastPreviewItems = preview.value.second
+                    previewAdapter.submitList(HomeFeedFilter.filterPreview(lastPreviewItems))
                     previewAdapter.hasMoreItems = preview.value.first
                     /*if (!.setItems(
                             preview.value.second,
@@ -566,10 +635,8 @@ class HomeParentItemAdapterPreview(
             resumeHolder.isVisible = resumeWatching.isNotEmpty()
             resumeAdapter.submitList(resumeWatching)
 
-            if (binding is FragmentHomeHeadBinding) {
-                val title = binding.homeWatchParentItemTitle
-
-                title?.setOnClickListener {
+            watchSectionTitle?.let { title ->
+                title.setOnClickListener {
                     viewModel.popup(
                         HomeViewModel.ExpandableHomepageList(
                             HomePageList(
@@ -591,27 +658,23 @@ class HomeParentItemAdapterPreview(
             bookmarkHolder.isVisible = visible
             bookmarkAdapter.submitList(list)
 
-            if (binding is FragmentHomeHeadBinding) {
-                val title = binding.homeBookmarkParentItemTitle
+            bookmarkSectionTitle?.setOnClickListener {
+                val items = toggleList.map { it.first }.filter { it.isChecked }
+                if (items.isEmpty()) return@setOnClickListener // we don't want to show an empty dialog
+                val textSum = items
+                    .mapNotNull { it.text }.joinToString()
 
-                title?.setOnClickListener {
-                    val items = toggleList.map { it.first }.filter { it.isChecked }
-                    if (items.isEmpty()) return@setOnClickListener // we don't want to show an empty dialog
-                    val textSum = items
-                        .mapNotNull { it.text }.joinToString()
-
-                    viewModel.popup(
-                        HomeViewModel.ExpandableHomepageList(
-                            HomePageList(
-                                textSum,
-                                list,
-                                false
-                            ), 1, false
-                        ), deleteCallback = {
-                            viewModel.deleteBookmarks(list)
-                        }
-                    )
-                }
+                viewModel.popup(
+                    HomeViewModel.ExpandableHomepageList(
+                        HomePageList(
+                            textSum,
+                            list,
+                            false
+                        ), 1, false
+                    ), deleteCallback = {
+                        viewModel.deleteBookmarks(list)
+                    }
+                )
             }
         }
 
