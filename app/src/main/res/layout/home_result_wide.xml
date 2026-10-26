@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- YouTube layout home list card: wide 16:9 landscape card (sized to ~70% of
-     the row width at runtime so the next card peeks ~30% behind it, swipe to
-     scroll). Keeps the same view ids as home_result_grid.xml so
+<!-- YouTube layout home list card: poster card with a 2:3 portrait image
+     area so the full movie poster shows uncropped, exactly like the result
+     page poster (sized to ~70% of the row width at runtime so the next card
+     peeks ~30% behind it, swipe to scroll). Keeps the same view ids as
+     home_result_grid.xml so
      SearchResultBuilder can bind it (background_card, imageView, imageText,
      text_rating, text_quality, text_is_dub/sub, episode_text, resume
      progress). Extra ids: wide_image_container, wide_type_chip. -->
@@ -23,11 +25,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- 16:9 image area, height is computed from the card width at runtime -->
+        <!-- 2:3 portrait poster area, height is computed from the card width
+             at runtime (matches the poster aspect so nothing is cropped) -->
         <FrameLayout
             android:id="@+id/wide_image_container"
             android:layout_width="match_parent"
-            android:layout_height="158dp">
+            android:layout_height="420dp">
 
             <ImageView
                 android:id="@+id/imageView"

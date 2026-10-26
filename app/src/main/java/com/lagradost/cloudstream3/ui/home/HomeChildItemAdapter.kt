@@ -194,7 +194,8 @@ open class HomeChildItemAdapter(
         private const val WIDE_CARD_WIDTH_RATIO = 0.70f
 
         /** YouTube layout wide card: sizes the card to ~70% of the row width
-         *  and its image area to 16:9. */
+         *  and its image area to a 2:3 portrait so the full poster artwork
+         *  shows uncropped, matching the result page poster. */
         fun sizeWideCard(root: View, imageContainer: View?, parent: ViewGroup) {
             val screenWidth = parent.context.resources.displayMetrics.widthPixels
             // Full-width rows give the exact size; narrow (wrap_content, few
@@ -209,7 +210,7 @@ open class HomeChildItemAdapter(
                 width = cardWidth
             }
             imageContainer?.updateLayoutParams {
-                height = (cardWidth * 9f / 16f).toInt()
+                height = (cardWidth * 3f / 2f).toInt()
             }
         }
     }
