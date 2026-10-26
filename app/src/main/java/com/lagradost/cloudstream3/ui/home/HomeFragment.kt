@@ -708,6 +708,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 homePreviewReloadProvider.isGone = (apiName == noneApi.name)
                 homePreviewSearchButton.isGone = (apiName == noneApi.name)
             }
+            // Update the YouTube top bar brand (provider logo + name)
+            homeMasterAdapter?.onApiChanged(apiName)
         }
 
         observe(homeViewModel.page) { data ->

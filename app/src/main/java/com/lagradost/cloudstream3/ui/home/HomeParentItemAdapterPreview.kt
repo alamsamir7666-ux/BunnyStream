@@ -1,6 +1,11 @@
 package com.lagradost.cloudstream3.ui.home
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -18,10 +23,14 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
+import coil3.asImage
+import coil3.request.transformations
+import coil3.transform.CircleCropTransformation
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.navigation.NavigationBarItemView
 import com.lagradost.cloudstream3.CloudStreamApp.Companion.getActivity
+import com.lagradost.cloudstream3.CloudStreamApp.Companion.getKey
 import com.lagradost.cloudstream3.CommonActivity.activity
 import com.lagradost.cloudstream3.HomePageList
 import com.lagradost.cloudstream3.LoadResponse
@@ -34,11 +43,16 @@ import com.lagradost.cloudstream3.mvvm.Resource
 import com.lagradost.cloudstream3.mvvm.debugException
 import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.mvvm.observe
+import com.lagradost.cloudstream3.plugins.RepositoryManager
+import com.lagradost.cloudstream3.plugins.RepositoryManager.PREBUILT_REPOSITORIES
+import com.lagradost.cloudstream3.ui.APIRepository.Companion.noneApi
+import com.lagradost.cloudstream3.ui.APIRepository.Companion.randomApi
 import com.lagradost.cloudstream3.ui.ViewHolderState
 import com.lagradost.cloudstream3.ui.WatchType
 import com.lagradost.cloudstream3.ui.account.AccountHelper.showAccountEditDialog
 import com.lagradost.cloudstream3.ui.account.AccountHelper.showAccountSelectLinear
 import com.lagradost.cloudstream3.ui.account.AccountViewModel
+import com.lagradost.cloudstream3.ui.home.HomeFragment.Companion.selectHomepage
 import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.ResultFragment.bindLogo
 import com.lagradost.cloudstream3.ui.result.ResultViewModel2
@@ -50,10 +64,14 @@ import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_SHOW_METADATA
 import com.lagradost.cloudstream3.ui.search.SearchClickCallback
 import com.lagradost.cloudstream3.ui.settings.Globals
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
+import com.lagradost.cloudstream3.ui.settings.extensions.REPOSITORIES_KEY
+import com.lagradost.cloudstream3.ui.settings.extensions.RepositoryData
 import com.lagradost.cloudstream3.utils.AppContextUtils.html
 import com.lagradost.cloudstream3.utils.AppContextUtils.isCastApiAvailable
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
+import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
+import com.lagradost.cloudstream3.utils.Coroutines.runOnMainThread
 import com.lagradost.cloudstream3.utils.DataStoreHelper
 import com.lagradost.cloudstream3.utils.ImageLoader.loadImage
 import com.lagradost.cloudstream3.utils.SingleSelectionHelper.showBottomDialog
@@ -77,6 +95,15 @@ class HomeParentItemAdapterPreview(
         viewModel.expand(it)
     }) {
     override val headers = 1
+
+    /** Currently attached header holder, used to push provider changes to the YouTube top bar. */
+    private var headerHolder: HeaderViewHolder? = null
+
+    /** Updates the YouTube top bar brand (provider logo + name) when the home provider changes. */
+    fun onApiChanged(apiName: String?) {
+        headerHolder?.updateProviderBranding(apiName)
+    }
+
     override fun onCreateHeader(parent: ViewGroup): ViewHolderState<Bundle> {
         val inflater = LayoutInflater.from(parent.context)
         val binding = if (isLayout(Globals.YOUTUBE)) {
@@ -85,7 +112,9 @@ class HomeParentItemAdapterPreview(
             FragmentHomeHeadBinding.inflate(inflater, parent, false)
         }
 
-        return HeaderViewHolder(binding, viewModel, accountViewModel)
+        return HeaderViewHolder(binding, viewModel, accountViewModel).also {
+            headerHolder = it
+        }
     }
 
     override fun onBindHeader(holder: ViewHolderState<Bundle>) {
@@ -433,6 +462,10 @@ class HomeParentItemAdapterPreview(
 
         private val toggleListHolder: ChipGroup? = itemView.findViewById(R.id.home_type_holder)
 
+        /** Name of the provider currently shown in the YouTube top bar brand. */
+        var currentApiName: String? = null
+            private set
+
         fun bind() = Unit
 
         init {
@@ -444,6 +477,16 @@ class HomeParentItemAdapterPreview(
                 }
 
                 setUpCastButton(binding)
+
+                // Tap the logo + provider name to switch home provider
+                binding.homeYtBrand.setOnClickListener {
+                    it.context.selectHomepage(currentApiName) { api ->
+                        viewModel.loadAndCancel(api, forceReload = true, fromUI = true)
+                    }
+                }
+                // Show the current provider brand immediately (kept up to date by
+                // HomeParentItemAdapterPreview.onApiChanged)
+                updateProviderBranding(viewModel.apiName.value)
 
                 binding.homeYtChips.setOnCheckedStateChangeListener { _, checkedIds ->
                     val category = when (checkedIds.firstOrNull()) {
@@ -567,6 +610,115 @@ class HomeParentItemAdapterPreview(
             } catch (e: Exception) {
                 logError(e)
             }
+        }
+
+        /**
+         * Shows the current home provider name + logo in the YouTube top bar.
+         * - Real provider: provider name + repo icon (circular), falling back to a
+         *   colored letter avatar while the icon loads or if the repo has none.
+         * - No provider / Random: falls back to the app brand (BunnyStream + play logo).
+         */
+        fun updateProviderBranding(apiName: String?) {
+            val ytBinding = binding as? FragmentHomeHeadYoutubeBinding ?: return
+            currentApiName = apiName
+            when (apiName) {
+                null, noneApi.name -> {
+                    ytBinding.homeYtTitle.setText(R.string.home_yt_app_title)
+                    ytBinding.homeYtLogo.setImageResource(R.drawable.ic_yt_logo)
+                }
+                randomApi.name -> {
+                    ytBinding.homeYtTitle.setText(R.string.home_random)
+                    ytBinding.homeYtLogo.setImageResource(R.drawable.ic_yt_logo)
+                }
+                else -> {
+                    ytBinding.homeYtTitle.text = apiName
+                    ytBinding.homeYtLogo.setImageDrawable(createLetterAvatar(apiName))
+                    lookupProviderIcon(apiName)
+                }
+            }
+        }
+
+        /** Loads the provider icon url, if any, and applies it over the letter avatar. */
+        private fun applyProviderIcon(url: String, apiName: String) {
+            val ytBinding = binding as? FragmentHomeHeadYoutubeBinding ?: return
+            if (currentApiName != apiName) return
+            ytBinding.homeYtLogo.loadImage(url) {
+                transformations(CircleCropTransformation())
+                error(createLetterAvatar(apiName).asImage())
+            }
+        }
+
+        /** Resolves the provider icon from the extension repositories (cached per process). */
+        private fun lookupProviderIcon(apiName: String) {
+            val cached = providerIconCache[apiName]
+            if (cached != null) {
+                if (cached.isNotEmpty()) {
+                    applyProviderIcon(cached, apiName)
+                }
+                return
+            }
+
+            ioSafe {
+                val repositories =
+                    (getKey<Array<RepositoryData>>(REPOSITORIES_KEY) ?: emptyArray()) +
+                            PREBUILT_REPOSITORIES
+
+                var foundUrl: String? = null
+                outer@ for (repoData in repositories) {
+                    val plugins = RepositoryManager.getRepoPlugins(repoData) ?: continue
+                    for (wrapper in plugins) {
+                        if (wrapper.plugin.internalName.equals(apiName, ignoreCase = true) ||
+                            wrapper.plugin.internalName.replace("provider", "", ignoreCase = true)
+                                .equals(apiName, ignoreCase = true)
+                        ) {
+                            foundUrl = wrapper.plugin.iconUrl
+                            break@outer
+                        }
+                    }
+                }
+
+                val normalizedUrl = foundUrl
+                    ?.replace("%size%", "256")
+                    ?.replace("%exact_size%", "256")
+
+                providerIconCache[apiName] = normalizedUrl ?: ""
+
+                if (normalizedUrl != null) {
+                    runOnMainThread {
+                        if (currentApiName == apiName) {
+                            applyProviderIcon(normalizedUrl, apiName)
+                        }
+                    }
+                }
+            }
+        }
+
+        /** Colored circle with the provider initial, used until the real icon loads. */
+        private fun createLetterAvatar(name: String): BitmapDrawable {
+            val density = itemView.resources.displayMetrics.density
+            val size = (AVATAR_LOGO_SIZE_DP * density).toInt().coerceAtLeast(AVATAR_LOGO_SIZE_DP)
+            val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+
+            val background = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = AVATAR_COLORS[name.hashCode().mod(AVATAR_COLORS.size)]
+            }
+            canvas.drawCircle(size / 2f, size / 2f, size / 2f, background)
+
+            val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = Color.WHITE
+                textAlign = Paint.Align.CENTER
+                textSize = size * 0.5f
+                isFakeBoldText = true
+            }
+            val baseline = size / 2f - (textPaint.descent() + textPaint.ascent()) / 2f
+            canvas.drawText(
+                name.firstOrNull()?.uppercase() ?: "?",
+                size / 2f,
+                baseline,
+                textPaint
+            )
+            return BitmapDrawable(itemView.resources, bitmap)
         }
 
         private fun updatePreview(preview: Resource<Pair<Boolean, List<LoadResponse>>>) {
@@ -701,6 +853,28 @@ class HomeParentItemAdapterPreview(
                     toggleListHolder?.isGone = visible.isEmpty()
                 }
             }
+        }
+
+        companion object {
+            /** Matches the 26dp top bar logo size in fragment_home_head_youtube.xml. */
+            private const val AVATAR_LOGO_SIZE_DP = 26
+
+            /** Provider name -> resolved icon url. Empty string = looked up, none found. */
+            private val providerIconCache = HashMap<String, String>()
+
+            /** Material-style palette used for the letter avatar background. */
+            private val AVATAR_COLORS = intArrayOf(
+                0xFFE53935.toInt(), // red
+                0xFFD81B60.toInt(), // pink
+                0xFF8E24AA.toInt(), // purple
+                0xFF5E35B1.toInt(), // deep purple
+                0xFF3949AB.toInt(), // indigo
+                0xFF1E88E5.toInt(), // blue
+                0xFF00897B.toInt(), // teal
+                0xFF43A047.toInt(), // green
+                0xFFFB8C00.toInt(), // orange
+                0xFFF4511E.toInt(), // deep orange
+            )
         }
     }
 }
