@@ -125,4 +125,6 @@
     <!-- YouTube layout colors -->
     <color name="yt_black">#FF0F0F0F</color>
     <color name="yt_gray">#FF909090</color>
+    <!-- YouTube layout wide home card surface (sits on top of yt_black) -->
+    <color name="yt_card">#FF212121</color>
 </resources>

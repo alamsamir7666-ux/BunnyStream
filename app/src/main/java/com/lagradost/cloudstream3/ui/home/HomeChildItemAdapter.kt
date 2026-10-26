@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.preference.PreferenceManager
 import androidx.viewbinding.ViewBinding
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.SearchResponse
+import com.lagradost.cloudstream3.TvType
 import com.lagradost.cloudstream3.databinding.HomeRemoveGridBinding
 import com.lagradost.cloudstream3.databinding.HomeRemoveGridExpandedBinding
 import com.lagradost.cloudstream3.databinding.HomeResultGridBinding
 import com.lagradost.cloudstream3.databinding.HomeResultGridExpandedBinding
+import com.lagradost.cloudstream3.databinding.HomeResultWideBinding
 import com.lagradost.cloudstream3.ui.BaseAdapter
 import com.lagradost.cloudstream3.ui.BaseDiffCallback
 import com.lagradost.cloudstream3.ui.ViewHolderState
@@ -20,6 +24,7 @@ import com.lagradost.cloudstream3.ui.newSharedPool
 import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_LOAD
 import com.lagradost.cloudstream3.ui.search.SearchClickCallback
 import com.lagradost.cloudstream3.ui.search.SearchResultBuilder
+import com.lagradost.cloudstream3.ui.settings.Globals
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.UIHelper.isBottomLayout
 import com.lagradost.cloudstream3.utils.UIHelper.toPx
@@ -137,6 +142,15 @@ open class HomeChildItemAdapter(
     protected var setHeight = 0
 
     override fun onCreateContent(parent: ViewGroup): ViewHolderState<Boolean> {
+        if (isLayout(Globals.YOUTUBE)) {
+            val binding = HomeResultWideBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            sizeWideCard(binding.root, binding.wideImageContainer, parent)
+            return HomeScrollViewHolderState(binding)
+        }
         val expanded = parent.context.isBottomLayout()
         val inflater = LayoutInflater.from(parent.context)
         val binding = if (expanded) HomeResultGridExpandedBinding.inflate(
@@ -173,6 +187,30 @@ open class HomeChildItemAdapter(
             params.height = height
 
             layout.layoutParams = params
+        }
+
+        /** YouTube layout: how much of the row width a single wide card occupies.
+         *  The next card peeks behind it so the row is clearly swipeable. */
+        private const val WIDE_CARD_WIDTH_RATIO = 0.70f
+
+        /** YouTube layout wide card: sizes the card to ~70% of the row width
+         *  and its image area to 16:9. */
+        fun sizeWideCard(root: View, imageContainer: View?, parent: ViewGroup) {
+            val screenWidth = parent.context.resources.displayMetrics.widthPixels
+            // Full-width rows give the exact size; narrow (wrap_content, few
+            // items) rows must not shrink the cards, so fall back to the
+            // screen width. This keeps every card the same size so the shared
+            // RecycledViewPool never mixes differently sized wide cards.
+            val rowWidth =
+                if (parent.width >= screenWidth * 0.9f) parent.width else screenWidth
+            val cardWidth = (rowWidth * WIDE_CARD_WIDTH_RATIO).toInt()
+
+            root.updateLayoutParams {
+                width = cardWidth
+            }
+            imageContainer?.updateLayoutParams {
+                height = (cardWidth * 9f / 16f).toInt()
+            }
         }
     }
 
@@ -213,6 +251,29 @@ open class HomeChildItemAdapter(
             nextFocusUp,
             nextFocusDown
         )
+
+        (holder.view as? HomeResultWideBinding)?.let { wide ->
+            // The wide YouTube card always shows the title under the image,
+            // regardless of the poster title preference.
+            wide.imageText.isVisible = true
+            // Render the rating as plain "star 7.9" text instead of the
+            // poster corner pill that SearchResultBuilder applies.
+            wide.textRating.setBackgroundResource(0)
+
+            val typeRes = when (item.type) {
+                TvType.Movie, TvType.AnimeMovie -> R.string.movies_singular
+                TvType.TvSeries -> R.string.tv_series_singular
+                TvType.Anime -> R.string.anime_singular
+                TvType.Cartoon -> R.string.cartoons_singular
+                TvType.Documentary -> R.string.documentaries_singular
+                TvType.Live -> R.string.live_singular
+                TvType.OVA -> R.string.ova_singular
+                TvType.AsianDrama -> R.string.asian_drama_singular
+                else -> null
+            }
+            wide.wideTypeChip.isVisible = typeRes != null
+            typeRes?.let { wide.wideTypeChip.setText(it) }
+        }
 
         holder.itemView.tag = position
     }

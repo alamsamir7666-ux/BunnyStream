@@ -173,6 +173,44 @@
         <item name="iconTint">#FFFFFFFF</item>
     </style>
 
+    <!-- YouTube layout wide home card: translucent rounded tag chip
+         (used for the media type + quality tags under the card title) -->
+    <style name="YouTubeTagChip">
+        <item name="android:background">@drawable/yt_card_chip_bg</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">6dp</item>
+    </style>
+
+    <!-- YouTube layout wide home card: plain "star 7.9" rating text.
+         The pill background set by SearchResultBuilder is cleared at
+         runtime so this renders as inline text, not a poster badge. -->
+    <style name="YouTubeRatingChip">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="drawableTint">@color/white</item>
+        <item name="drawableSize">12sp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="drawableStartCompat">@drawable/kid_star_24px</item>
+    </style>
+
     <style name="AmoledMode">
         <item name="primaryGrayBackground">@color/black</item>
         <item name="primaryBlackBackground">@color/black</item>

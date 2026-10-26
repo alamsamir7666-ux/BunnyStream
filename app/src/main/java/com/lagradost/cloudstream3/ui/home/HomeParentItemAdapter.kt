@@ -20,9 +20,11 @@ import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.setLinearListLayout
 import com.lagradost.cloudstream3.ui.search.SearchClickCallback
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
+import com.lagradost.cloudstream3.ui.settings.Globals
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.isRecyclerScrollable
+import com.lagradost.cloudstream3.utils.UIHelper.toPx
 
 class LoadClickCallback(
     val action: Int = 0,
@@ -123,6 +125,14 @@ open class ParentItemAdapter(
                 nextLeft = startFocus,
                 nextRight = endFocus,
             )
+
+            // YouTube layout: inset the wide card rows from the screen edges
+            // like the YouTube app, while still letting cards scroll behind
+            // the padding (clipToPadding is false).
+            if (isLayout(Globals.YOUTUBE)) {
+                val pad = 12.toPx
+                homeChildRecyclerview.setPadding(pad, 0, pad, 0)
+            }
             homeChildMoreInfo.text = info.name
 
             homeChildRecyclerview.addOnScrollListener(object :

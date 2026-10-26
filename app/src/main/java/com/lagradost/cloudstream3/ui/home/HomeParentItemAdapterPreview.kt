@@ -79,6 +79,7 @@ import com.lagradost.cloudstream3.utils.SingleSelectionHelper.showOptionSelectSt
 import com.lagradost.cloudstream3.utils.UIHelper.fixPaddingStatusbarMargin
 import com.lagradost.cloudstream3.utils.UIHelper.fixPaddingStatusbarView
 import com.lagradost.cloudstream3.utils.UIHelper.populateChips
+import com.lagradost.cloudstream3.utils.UIHelper.toPx
 import androidx.core.graphics.toColorInt
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
 
@@ -519,6 +520,15 @@ class HomeParentItemAdapterPreview(
                 nextLeft = R.id.nav_rail_view,
                 nextRight = FOCUS_SELF
             )
+
+            // YouTube layout: inset the wide card rows from the screen edges
+            // like the YouTube app, while still letting cards scroll behind
+            // the padding (clipToPadding is false).
+            if (isLayout(Globals.YOUTUBE)) {
+                val pad = 12.toPx
+                resumeRecyclerView.setPadding(pad, 0, pad, 0)
+                bookmarkRecyclerView.setPadding(pad, 0, pad, 0)
+            }
 
             fixPaddingStatusbarMargin(topPadding)
 
