@@ -1114,4 +1114,10 @@
         <item name="android:layout_height">@dimen/download_header_progress_size</item>
         <item name="android:background">@color/playIconBackground</item>
     </style>
+    <!-- YouTube layout bottom nav label: 11sp Roboto Medium like the YouTube app -->
+    <style name="YouTubeNavItemText" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- YouTube nav item colors: white when selected, YouTube gray otherwise -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#FFFFFFFF" android:state_checked="true" />
+    <item android:color="#FF909090" />
+</selector>

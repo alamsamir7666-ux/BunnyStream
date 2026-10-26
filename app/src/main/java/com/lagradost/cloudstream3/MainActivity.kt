@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.AttributeSet
@@ -17,6 +18,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.view.WindowManager
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -76,6 +78,7 @@ import com.lagradost.cloudstream3.CommonActivity.updateLocale
 import com.lagradost.cloudstream3.CommonActivity.updateTheme
 import com.lagradost.cloudstream3.actions.temp.fcast.FcastManager
 import com.lagradost.cloudstream3.databinding.ActivityMainBinding
+import com.lagradost.cloudstream3.databinding.ActivityMainYoutubeBinding
 import com.lagradost.cloudstream3.databinding.BottomResultviewPreviewBinding
 import com.lagradost.cloudstream3.mvvm.Resource
 import com.lagradost.cloudstream3.mvvm.logError
@@ -110,8 +113,10 @@ import com.lagradost.cloudstream3.ui.result.SyncViewModel
 import com.lagradost.cloudstream3.ui.search.SearchFragment
 import com.lagradost.cloudstream3.ui.search.SearchResultBuilder
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
+import com.lagradost.cloudstream3.ui.settings.Globals.YOUTUBE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
+import com.lagradost.cloudstream3.ui.settings.Globals.updateLayout
 import com.lagradost.cloudstream3.ui.settings.SettingsGeneral
 import com.lagradost.cloudstream3.ui.setup.HAS_DONE_SETUP_KEY
 import com.lagradost.cloudstream3.ui.setup.SetupFragmentExtensions
@@ -167,6 +172,7 @@ import com.lagradost.cloudstream3.utils.downloader.DownloadQueueManager
 import com.lagradost.cloudstream3.utils.setText
 import com.lagradost.cloudstream3.utils.setTextHtml
 import com.lagradost.cloudstream3.utils.txt
+import androidx.compose.ui.platform.ComposeView
 import com.lagradost.cloudstream4.compose.CloudStreamThemeAppSettings
 import com.lagradost.cloudstream4.theme.CloudStreamTheme
 import com.lagradost.safefile.SafeFile
@@ -450,7 +456,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
         this.hideKeyboard()
 
         // Fucks up anime info layout since that has its own layout
-        binding?.castMiniControllerHolder?.isVisible =
+        activeCastHolder?.isVisible =
             !listOf(
                 R.id.navigation_results_phone,
                 R.id.navigation_player
@@ -458,6 +464,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
 
         val isNavVisible = listOf(
             R.id.navigation_home,
+            R.id.navigation_shorts,
             R.id.navigation_search,
             R.id.navigation_library,
             R.id.navigation_downloads,
@@ -478,41 +485,42 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
         ).contains(destination.id)
 
 
-        binding?.apply {
-            navRailView.isVisible = isNavVisible && isLandscape()
-            navView.isVisible = isNavVisible && !isLandscape()
-            /**
-             * We need to make sure if we return to a sub-fragment,
-             * the correct navigation item is selected so that it does not
-             * highlight the wrong one in UI.
-             */
-            when (destination.id) {
-                in listOf(
-                    R.id.navigation_downloads,
-                    R.id.navigation_download_child,
-                    R.id.navigation_download_queue
-                ) -> {
-                    navRailView.menu.findItem(R.id.navigation_downloads).isChecked = true
-                    navView.menu.findItem(R.id.navigation_downloads).isChecked = true
-                }
+        // The YouTube layout always keeps its bottom bar, also in landscape,
+        // exactly like the YouTube app.
+        val isYoutube = isLayout(YOUTUBE)
+        activeNavRailView?.isVisible = isNavVisible && !isYoutube && isLandscape()
+        activeNavView?.isVisible = isNavVisible && (!isLandscape() || isYoutube)
+        /**
+         * We need to make sure if we return to a sub-fragment,
+         * the correct navigation item is selected so that it does not
+         * highlight the wrong one in UI.
+         */
+        when (destination.id) {
+            in listOf(
+                R.id.navigation_downloads,
+                R.id.navigation_download_child,
+                R.id.navigation_download_queue
+            ) -> {
+                activeNavRailView?.menu?.findItem(R.id.navigation_downloads)?.isChecked = true
+                activeNavView?.menu?.findItem(R.id.navigation_downloads)?.isChecked = true
+            }
 
-                in listOf(
-                    R.id.navigation_settings,
-                    R.id.navigation_subtitles,
-                    R.id.navigation_chrome_subtitles,
-                    R.id.navigation_settings_player,
-                    R.id.navigation_settings_updates,
-                    R.id.navigation_settings_ui,
-                    R.id.navigation_settings_account,
-                    R.id.navigation_settings_providers,
-                    R.id.navigation_settings_general,
-                    R.id.navigation_settings_extensions,
-                    R.id.navigation_settings_plugins,
-                    R.id.navigation_test_providers
-                ) -> {
-                    navRailView.menu.findItem(R.id.navigation_settings).isChecked = true
-                    navView.menu.findItem(R.id.navigation_settings).isChecked = true
-                }
+            in listOf(
+                R.id.navigation_settings,
+                R.id.navigation_subtitles,
+                R.id.navigation_chrome_subtitles,
+                R.id.navigation_settings_player,
+                R.id.navigation_settings_updates,
+                R.id.navigation_settings_ui,
+                R.id.navigation_settings_account,
+                R.id.navigation_settings_providers,
+                R.id.navigation_settings_general,
+                R.id.navigation_settings_extensions,
+                R.id.navigation_settings_plugins,
+                R.id.navigation_test_providers
+            ) -> {
+                activeNavRailView?.menu?.findItem(R.id.navigation_settings)?.isChecked = true
+                activeNavView?.menu?.findItem(R.id.navigation_settings)?.isChecked = true
             }
         }
     }
@@ -790,6 +798,17 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
 
     var binding: ActivityMainBinding? = null
 
+    /** Binding for the YouTube layout shell (labeled bottom navigation). */
+    var ytBinding: ActivityMainYoutubeBinding? = null
+
+    /** Unified accessors - both layout files use identical view ids. */
+    val activeNavView: BottomNavigationView? get() = binding?.navView ?: ytBinding?.navView
+    val activeNavRailView: NavigationRailView? get() = binding?.navRailView
+    val activeNavHostFragment: View? get() = binding?.navHostFragment ?: ytBinding?.navHostFragment
+    val activeCastHolder: View? get() = binding?.castMiniControllerHolder ?: ytBinding?.castMiniControllerHolder
+    val activeComposeView: ComposeView? get() = binding?.composeView ?: ytBinding?.composeView
+    val activeRoot: FrameLayout? get() = binding?.homeRoot ?: ytBinding?.homeRoot
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         app.initClient(this, ignoreSSL = false)
@@ -821,6 +840,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
         }
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        updateLayout()
 
         // backup when we update the app, I don't trust myself to not boot lock users, might want to make this a setting?
         safe {
@@ -841,42 +861,62 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
         }
 
         // just in case, MAIN SHOULD *NEVER* BOOT LOOP CRASH
-        binding = try {
-            val newLocalBinding = ActivityMainBinding.inflate(layoutInflater, null, false)
-            setContentView(newLocalBinding.root)
-            newLocalBinding
-        } catch (t: Throwable) {
-            showToast(txt(R.string.unable_to_inflate, t.message ?: ""), Toast.LENGTH_LONG)
-            null
+        if (isLayout(YOUTUBE)) {
+            ytBinding = try {
+                ActivityMainYoutubeBinding.inflate(layoutInflater, null, false).also {
+                    setContentView(it.root)
+                }
+            } catch (t: Throwable) {
+                logError(t)
+                showToast(txt(R.string.unable_to_inflate, t.message ?: ""), Toast.LENGTH_LONG)
+                null
+            }
         }
 
-        binding?.apply {
+        if (ytBinding == null) {
+            binding = try {
+                val newLocalBinding = ActivityMainBinding.inflate(layoutInflater, null, false)
+                setContentView(newLocalBinding.root)
+                newLocalBinding
+            } catch (t: Throwable) {
+                showToast(txt(R.string.unable_to_inflate, t.message ?: ""), Toast.LENGTH_LONG)
+                null
+            }
+        }
+
+        activeNavView?.let {
             fixSystemBarsPadding(
-                navView,
-                heightResId = R.dimen.nav_view_height,
+                it,
+                heightResId = if (isLayout(YOUTUBE)) {
+                    R.dimen.nav_view_height_youtube
+                } else {
+                    R.dimen.nav_view_height
+                },
                 padTop = false,
                 overlayCutout = false
             )
+        }
 
+        binding?.navRailView?.let {
             fixSystemBarsPadding(
-                navRailView,
+                it,
                 widthResId = R.dimen.nav_rail_view_width,
                 padRight = false,
                 padTop = false
             )
+        }
 
-            composeView.apply {
-                setContent {
-                    CloudStreamThemeAppSettings {
-                        MainActivityScreen.Content()
-                    }
+        activeComposeView?.apply {
+            setContent {
+                CloudStreamThemeAppSettings {
+                    MainActivityScreen.Content()
                 }
             }
         }
 
         // overscan
         val padding = settingsManager.getInt(getString(R.string.overscan_key), 0).toPx
-        binding?.homeRoot?.setPadding(padding, padding, padding, padding)
+        activeRoot?.setPadding(padding, padding, padding, padding)
 
         /** Biometric stuff for users without accounts **/
         val noAccounts = settingsManager.getBoolean(
@@ -893,7 +933,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
                 }
 
                 // hide background while authenticating, Sorry moms & dads 🙏
-                binding?.navHostFragment?.isInvisible = true
+                activeNavHostFragment?.isInvisible = true
             }
         }
 
@@ -1217,10 +1257,8 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
                         syncAPI?.icon ?: R.drawable.library_icon_selector
                     }
 
-                    binding?.apply {
-                        navRailView.menu.findItem(R.id.navigation_library)?.setIcon(icon)
-                        navView.menu.findItem(R.id.navigation_library)?.setIcon(icon)
-                    }
+                    activeNavRailView?.menu?.findItem(R.id.navigation_library)?.setIcon(icon)
+                    activeNavView?.menu?.findItem(R.id.navigation_library)?.setIcon(icon)
                 }
             }
         }
@@ -1269,10 +1307,18 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
             .build()*/
 
         val rippleColor = ColorStateList.valueOf(getResourceColor(R.attr.colorPrimary, 0.1f))
+        // The YouTube layout uses a flat gray ripple and no active indicator pill,
+        // exactly like the YouTube app.
+        val ytRippleColor = ColorStateList.valueOf(getResourceColor(R.attr.textColor, 0.1f))
 
-        binding?.navView?.apply {
-            itemRippleColor = rippleColor
-            itemActiveIndicatorColor = rippleColor
+        activeNavView?.apply {
+            if (isLayout(YOUTUBE)) {
+                itemRippleColor = ytRippleColor
+                itemActiveIndicatorColor = ColorStateList.valueOf(Color.TRANSPARENT)
+            } else {
+                itemRippleColor = rippleColor
+                itemActiveIndicatorColor = rippleColor
+            }
             setupWithNavController(navController)
             setOnItemSelectedListener { item ->
                 onNavDestinationSelected(
@@ -1339,15 +1385,15 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
         }
 
         // Navigation button long click functionality to scroll to top
-        for (view in listOf(binding?.navView, binding?.navRailView)) {
+        for (view in listOf(activeNavView, activeNavRailView)) {
             view?.findViewById<View?>(R.id.navigation_home)?.setOnLongClickListener {
-                val recycler = binding?.root?.findViewById<RecyclerView?>(R.id.home_master_recycler)
+                val recycler = activeRoot?.findViewById<RecyclerView?>(R.id.home_master_recycler)
                 recycler?.smoothScrollToPosition(0)
                 return@setOnLongClickListener recycler != null
             }
 
             view?.findViewById<View?>(R.id.navigation_library)?.setOnLongClickListener {
-                val viewPager = binding?.root?.findViewById<ViewPager2?>(R.id.viewpager)
+                val viewPager = activeRoot?.findViewById<ViewPager2?>(R.id.viewpager)
                     ?: return@setOnLongClickListener false
                 try {
                     val children = (viewPager[0] as? RecyclerView)?.children
@@ -1369,7 +1415,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
                     R.id.search_autofit_results,
                     R.id.search_history_recycler
                 )) {
-                    val recycler = binding?.root?.findViewById<RecyclerView?>(recyclerId)
+                    val recycler = activeRoot?.findViewById<RecyclerView?>(recyclerId)
                         ?: return@setOnLongClickListener false
                     recycler.smoothScrollToPosition(0)
                 }
@@ -1377,8 +1423,8 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
             }
 
             view?.findViewById<View?>(R.id.navigation_downloads)?.setOnLongClickListener {
-                val recycler: RecyclerView? = binding?.root?.findViewById(R.id.download_list)
-                    ?: binding?.root?.findViewById(R.id.download_child_list)
+                val recycler: RecyclerView? = activeRoot?.findViewById(R.id.download_list)
+                    ?: activeRoot?.findViewById(R.id.download_child_list)
                 recycler?.smoothScrollToPosition(0)
                 return@setOnLongClickListener recycler != null
             }
@@ -1556,7 +1602,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
     /** Biometric stuff **/
     override fun onAuthenticationSuccess() {
         // make background (nav host fragment) visible again
-        binding?.navHostFragment?.isInvisible = false
+        activeNavHostFragment?.isInvisible = false
     }
 
     override fun onAuthenticationError() {

@@ -122,4 +122,7 @@
     <color name="colorTestFail">#ea596e</color>
     <color name="colorTestWarning">#FF9800</color>
     <color name="playIconBackground">#B3000000</color>
+    <!-- YouTube layout colors -->
+    <color name="yt_black">#FF0F0F0F</color>
+    <color name="yt_gray">#FF909090</color>
 </resources>

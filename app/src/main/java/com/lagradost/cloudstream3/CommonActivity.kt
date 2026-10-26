@@ -48,6 +48,7 @@ import com.lagradost.cloudstream3.ui.result.EpisodeAdapter
 import com.lagradost.cloudstream3.ui.result.ImageAdapter
 import com.lagradost.cloudstream3.ui.search.SearchAdapter
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
+import com.lagradost.cloudstream3.ui.settings.Globals.updateLayout
 import com.lagradost.cloudstream3.ui.settings.extensions.PluginAdapter
 import com.lagradost.cloudstream3.utils.AppContextUtils.isRtl
 import com.lagradost.cloudstream3.utils.BiometricAuthenticator.isAuthEnabled
@@ -246,6 +247,7 @@ object CommonActivity {
         val componentActivity = activity as? ComponentActivity ?: return
 
         componentActivity.updateLocale()
+        componentActivity.updateLayout()
         AccountManager.initMainAPI()
         NewPipe.init(DownloaderTestImpl.getInstance())
 
@@ -391,6 +393,7 @@ object CommonActivity {
         act.theme.applyStyle(currentOverlayTheme, true)
         appliedTheme = currentTheme
         appliedColor = currentOverlayTheme
+        act.updateLayout()
         act.theme.applyStyle(
             R.style.LoadedStyle,
             true

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Filled when checked, outline when unchecked - like the YouTube app -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_yt_home_filled" android:state_checked="true" />
+    <item android:drawable="@drawable/ic_yt_home_outline" />
+</selector>

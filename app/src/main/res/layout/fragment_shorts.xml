@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shorts tab placeholder - YouTube-styled empty state until the feature lands -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yt_black"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:alpha="0.4"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_yt_shorts"
+        android:tint="@color/yt_gray" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/shorts"
+        android:textColor="#FFFFFFFF"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/shorts_coming_soon"
+        android:textColor="@color/yt_gray"
+        android:textSize="14sp" />
+</LinearLayout>

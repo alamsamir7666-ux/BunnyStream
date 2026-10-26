@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.integerArrayResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
@@ -26,12 +28,14 @@ import com.lagradost.cloudstream3.ui.clear
 import com.lagradost.cloudstream3.ui.home.HomeChildItemAdapter
 import com.lagradost.cloudstream3.ui.home.ParentItemAdapter
 import com.lagradost.cloudstream3.ui.search.SearchAdapter
+import com.lagradost.cloudstream3.ui.settings.Globals.updateLayout
 import com.lagradost.cloudstream3.utils.UIHelper.toPx
 import com.lagradost.cloudstream4.rememberAppSettings
 import com.lagradost.cloudstream4.theme.CloudStreamPrimaryColor
 import com.lagradost.cloudstream4.theme.modeToTheme
 import com.lagradost.cloudstream4.theme.perfToColor
 import com.lagradost.cloudstream4.theme.perfToMode
+import com.mihon.common.preference.AndroidPreferenceStore
 import com.mihon.presentation.settings.Preference
 import com.mihon.presentation.settings.SearchableSettings
 import kotlinx.collections.immutable.mutate
@@ -75,11 +79,36 @@ object SettingsUIScreen : SearchableSettings {
     @Composable
     override fun getPreferences(): List<Preference> {
         val settings = rememberAppSettings()
+        val context = LocalContext.current
+        // App layout picker (Phone / YouTube) - stored in the classic
+        // preference store so Globals.updateLayout() can read it as well.
+        val appLayoutPref = remember(context) {
+            AndroidPreferenceStore(context).getInt(
+                context.getString(R.string.app_layout_key),
+                1 // YouTube layout is the default
+            )
+        }
 
         return persistentListOf(
             Preference.PreferenceGroup(
                 title = stringResource(R.string.pref_category_looks),
                 preferenceItems = persistentListOf(
+                    Preference.PreferenceItem.ListPreference(
+                        preference = appLayoutPref,
+                        icon = painterResource(R.drawable.baseline_grid_view_24),
+                        title = stringResource(R.string.app_layout),
+                        entries = mapOf(
+                            0 to stringResource(R.string.phone_layout),
+                            1 to stringResource(R.string.youtube_layout)
+                        ).toPersistentMap(),
+                        onValueChanged = { newValue ->
+                            appLayoutPref.set(newValue) // We need to set before we recreate
+                            context.updateLayout()
+                            safe {
+                                activity?.recreate()
+                            }
+                            return@ListPreference false
+                        }),
                     Preference.PreferenceItem.ListPreference(
                         preference = settings.ui.primaryColor,
                         icon = painterResource(R.drawable.colors_24px),
@@ -143,7 +172,7 @@ object SettingsUIScreen : SearchableSettings {
                         onValueChanged = { newValue ->
                             settings.ui.overscanDp.set(newValue)
                             val padding = newValue.toPx
-                            (activity as? MainActivity)?.binding?.homeRoot?.setPadding(
+                            (activity as? MainActivity)?.activeRoot?.setPadding(
                                 padding, padding, padding, padding
                             )
                             return@SliderPreference false
