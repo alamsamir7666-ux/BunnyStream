@@ -54,8 +54,7 @@ class SettingsFragment : BaseFragment<MainSettingsBinding>(
             }
         }
 
-         * unnecessary when the preference is disabled for the said layout thus returning null.
-
+        fun Fragment?.setUpToolbar(title: String) {
             if (this == null) return
             val settingsToolbar = view?.findViewById<MaterialToolbar>(R.id.settings_toolbar) ?: return
 

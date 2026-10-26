@@ -70,6 +70,7 @@ import com.lagradost.cloudstream3.utils.DataStoreHelper.Account
 import com.lagradost.cloudstream4.compose.ActionDialog
 import com.lagradost.cloudstream4.compose.BlackButton
 import com.lagradost.cloudstream4.compose.BlackTextField
+import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.compose.PHONE
 import com.lagradost.cloudstream4.compose.RoundedShape
 import com.lagradost.cloudstream4.compose.WhiteButton

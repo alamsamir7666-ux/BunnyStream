@@ -453,7 +453,13 @@ class SubtitlesFragment : BaseDialogFragment<SubtitleSettingsBinding>(
         state = getCurrentSavedStyle()
         context?.updateState()
 
+        fun View.setFocusableInTv() {
+            // Phone-only app: touch-mode focus was a TV-layout feature.
+            this.isFocusableInTouchMode = false
+        }
+
         fun View.setup(id: Int) {
+            setFocusableInTv()
             this.setOnClickListener {
                 activity?.let {
                     ColorPickerDialog.newBuilder()

@@ -117,6 +117,7 @@ import com.lagradost.cloudstream4.compose.LogBoxBlack
 import com.lagradost.cloudstream4.compose.LogBoxWhite
 import com.lagradost.cloudstream4.compose.LogText
 import com.lagradost.cloudstream4.compose.MultiSelectDialog
+import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.compose.PHONE
 import com.lagradost.cloudstream4.compose.RoundedShape
 import com.lagradost.cloudstream4.compose.Screen
