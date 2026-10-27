@@ -270,7 +270,8 @@ open class HomeChildItemAdapter(
             // The tag guards against the view being recycled to another
             // item before the backdrop is ready.
             wide.imageView.tag = item.url
-            HomeBackdropCache.fetch(item) { backdrop ->
+            HomeCardCache.fetch(item) { details ->
+                val backdrop = details.backdropUrl
                 if (backdrop != null && wide.imageView.tag == item.url) {
                     wide.imageView.loadImage(backdrop, item.posterHeaders)
                 }

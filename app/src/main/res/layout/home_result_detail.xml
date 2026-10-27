@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- YouTube layout expanded home list card: one full-width details-style card
+     per row (16:9 backdrop, title, meta row, plot) mirroring the movie
+     details page header. Bound by HomeDetailCardAdapter. -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="8dp"
+    android:elevation="0dp"
+    android:foreground="@drawable/outline_drawable"
+    app:cardBackgroundColor="@color/yt_card"
+    app:cardCornerRadius="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 16:9 backdrop area, the height is computed from the card width
+             at runtime by HomeDetailCardAdapter -->
+        <FrameLayout
+            android:id="@+id/detail_image_container"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/detail_poster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/search_poster_img_des"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/example_poster" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="TENZING" />
+
+            <TextView
+                android:id="@+id/detail_meta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="?attr/grayTextColor"
+                android:textSize="12sp"
+                tools:text="Movie • ★ 7.5/10 • 2026 • CineSimkl" />
+
+            <TextView
+                android:id="@+id/detail_plot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="?attr/grayTextColor"
+                android:textSize="13sp"
+                android:visibility="gone"
+                tools:text="The untold story of Edmund Hillary's trusted guide and climbing partner, Tenzing Norgay..." />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

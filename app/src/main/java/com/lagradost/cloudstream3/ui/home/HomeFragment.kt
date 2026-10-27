@@ -134,6 +134,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             deleteCallback: (() -> Unit)? = null,
             expandCallback: (suspend (String) -> HomeViewModel.ExpandableHomepageList?)? = null,
             dismissCallback: (() -> Unit),
+            /** YouTube layout: one details-style card per row instead of the
+             *  multi-column poster grid. */
+            detailCards: Boolean = false,
         ): BottomSheetDialog {
             val context = this
             val bottomSheetDialogBuilder = BottomSheetDialog(context)
@@ -209,20 +212,38 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             }
 
 
-            // Span settings
-            binding.homeExpandedRecycler.spanCount = context.getSpanCount(item.isHorizontalImages)
-            binding.homeExpandedRecycler.setRecycledViewPool(SearchAdapter.sharedPool)
-            binding.homeExpandedRecycler.adapter =
-                SearchAdapter(binding.homeExpandedRecycler,item.isHorizontalImages) { callback ->
-                    handleSearchClickCallback(callback)
-                    if (callback.action == SEARCH_ACTION_LOAD || callback.action == SEARCH_ACTION_PLAY_FILE) {
-                        bottomSheetDialogBuilder.ownHide() // we hide here because we want to resume it later
-                        //bottomSheetDialogBuilder.dismissSafe(this)
+            if (detailCards) {
+                // YouTube layout: a single column of full-width details-style
+                // cards (16:9 backdrop, title, meta row, plot) like the movie
+                // details page header. Uses its own recycled view pool since
+                // the card layout differs from the search grid.
+                binding.homeExpandedRecycler.spanCount = 1
+                binding.homeExpandedRecycler.adapter =
+                    HomeDetailCardAdapter { callback ->
+                        handleSearchClickCallback(callback)
+                        if (callback.action == SEARCH_ACTION_LOAD || callback.action == SEARCH_ACTION_PLAY_FILE) {
+                            bottomSheetDialogBuilder.ownHide() // we hide here because we want to resume it later
+                        }
+                    }.apply {
+                        submitList(item.list)
+                        hasNext = expand.hasNext
                     }
-                }.apply {
-                    submitList(item.list)
-                    hasNext = expand.hasNext
-                }
+            } else {
+                // Span settings
+                binding.homeExpandedRecycler.spanCount = context.getSpanCount(item.isHorizontalImages)
+                binding.homeExpandedRecycler.setRecycledViewPool(SearchAdapter.sharedPool)
+                binding.homeExpandedRecycler.adapter =
+                    SearchAdapter(binding.homeExpandedRecycler,item.isHorizontalImages) { callback ->
+                        handleSearchClickCallback(callback)
+                        if (callback.action == SEARCH_ACTION_LOAD || callback.action == SEARCH_ACTION_PLAY_FILE) {
+                            bottomSheetDialogBuilder.ownHide() // we hide here because we want to resume it later
+                            //bottomSheetDialogBuilder.dismissSafe(this)
+                        }
+                    }.apply {
+                        submitList(item.list)
+                        hasNext = expand.hasNext
+                    }
+            }
 
             binding.homeExpandedRecycler.addOnScrollListener(object :
                 RecyclerView.OnScrollListener() {
@@ -232,19 +253,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
+                    // Both the search grid and the YouTube detail cards
+                    // support the same load-more contract.
                     val adapter = recyclerView.adapter
-                    if (adapter !is SearchAdapter) return
+                    val currentHasNext = when (adapter) {
+                        is SearchAdapter -> adapter.hasNext
+                        is HomeDetailCardAdapter -> adapter.hasNext
+                        else -> return
+                    }
 
                     val count = adapter.itemCount
-                    val currentHasNext = adapter.hasNext
                     //!recyclerView.canScrollVertically(1)
                     if (!recyclerView.isRecyclerScrollable() && currentHasNext && expandCount != count) {
                         expandCount = count
                         ioSafe {
                             expandCallback?.invoke(name)?.let { newExpand ->
-                                (recyclerView.adapter as? SearchAdapter?)?.apply {
-                                    hasNext = newExpand.hasNext
-                                    submitList(newExpand.list.list)
+                                when (val currentAdapter = recyclerView.adapter) {
+                                    is SearchAdapter -> currentAdapter.apply {
+                                        hasNext = newExpand.hasNext
+                                        submitList(newExpand.list.list)
+                                    }
+
+                                    is HomeDetailCardAdapter -> currentAdapter.apply {
+                                        hasNext = newExpand.hasNext
+                                        submitList(newExpand.list.list)
+                                    }
                                 }
                             }
                         }
@@ -253,7 +286,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             })
 
             val spanListener = Runnable {
-                binding.homeExpandedRecycler.spanCount = context.getSpanCount(item.isHorizontalImages)
+                binding.homeExpandedRecycler.spanCount =
+                    if (detailCards) 1 else context.getSpanCount(item.isHorizontalImages)
                 // We want to rebind everything to update the UI, however we also want to avoid
                 // any animations ect, this is the easiest way to do this, and the most correct
                 @SuppressLint("NotifyDataSetChanged")
@@ -829,7 +863,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             }, dismissCallback = {
                 homeViewModel.popup(null)
                 bottomSheetDialog = null
-            }, deleteCallback = delete)
+            }, deleteCallback = delete, detailCards = isLayout(YOUTUBE))
         }
 
         homeViewModel.reloadStored()
