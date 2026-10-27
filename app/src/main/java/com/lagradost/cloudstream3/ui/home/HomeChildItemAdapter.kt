@@ -26,6 +26,7 @@ import com.lagradost.cloudstream3.ui.search.SearchClickCallback
 import com.lagradost.cloudstream3.ui.search.SearchResultBuilder
 import com.lagradost.cloudstream3.ui.settings.Globals
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
+import com.lagradost.cloudstream3.utils.ImageLoader.loadImage
 import com.lagradost.cloudstream3.utils.UIHelper.isBottomLayout
 import com.lagradost.cloudstream3.utils.UIHelper.toPx
 
@@ -194,8 +195,8 @@ open class HomeChildItemAdapter(
         private const val WIDE_CARD_WIDTH_RATIO = 0.70f
 
         /** YouTube layout wide card: sizes the card to ~70% of the row width
-         *  and its image area to a 2:3 portrait so the full poster artwork
-         *  shows uncropped, matching the result page poster. */
+         *  and its image area to 16:9, the aspect of the details page
+         *  horizontal poster (backdrop) shown in the card. */
         fun sizeWideCard(root: View, imageContainer: View?, parent: ViewGroup) {
             val screenWidth = parent.context.resources.displayMetrics.widthPixels
             // Full-width rows give the exact size; narrow (wrap_content, few
@@ -210,7 +211,7 @@ open class HomeChildItemAdapter(
                 width = cardWidth
             }
             imageContainer?.updateLayoutParams {
-                height = (cardWidth * 3f / 2f).toInt()
+                height = (cardWidth * 9f / 16f).toInt()
             }
         }
     }
@@ -260,6 +261,20 @@ open class HomeChildItemAdapter(
             // Render the rating as plain "star 7.9" text instead of the
             // poster corner pill that SearchResultBuilder applies.
             wide.textRating.setBackgroundResource(0)
+
+            // Show the same horizontal poster as the details page header
+            // (backgroundPosterUrl) instead of the portrait poster. It is
+            // not part of search results, so load the item details once per
+            // session and cache; until it arrives the portrait poster
+            // bound by SearchResultBuilder stays as a natural fallback.
+            // The tag guards against the view being recycled to another
+            // item before the backdrop is ready.
+            wide.imageView.tag = item.url
+            HomeBackdropCache.fetch(item) { backdrop ->
+                if (backdrop != null && wide.imageView.tag == item.url) {
+                    wide.imageView.loadImage(backdrop, item.posterHeaders)
+                }
+            }
 
             val typeRes = when (item.type) {
                 TvType.Movie, TvType.AnimeMovie -> R.string.movies_singular
