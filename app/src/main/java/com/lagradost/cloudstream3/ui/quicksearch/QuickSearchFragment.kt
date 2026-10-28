@@ -24,6 +24,7 @@ import com.lagradost.cloudstream3.mvvm.Resource
 import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.mvvm.observe
 import com.lagradost.cloudstream3.ui.BaseFragment
+import com.lagradost.cloudstream3.ui.home.HomeDetailCardAdapter
 import com.lagradost.cloudstream3.ui.home.HomeFragment
 import com.lagradost.cloudstream3.ui.home.HomeFragment.Companion.loadHomepageList
 import com.lagradost.cloudstream3.ui.home.HomeViewModel
@@ -34,6 +35,7 @@ import com.lagradost.cloudstream3.ui.search.SearchHelper
 import com.lagradost.cloudstream3.ui.search.SearchViewModel
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
+import com.lagradost.cloudstream3.ui.settings.Globals.YOUTUBE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterProviderByPreferredMedia
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterSearchResultByFilmQuality
@@ -96,7 +98,10 @@ class QuickSearchFragment : BaseFragment<QuickSearchBinding>(
 
         // Fix grid
         HomeFragment.currentSpan = view.context.getSpanCount()
-        binding?.quickSearchAutofitResults?.spanCount = HomeFragment.currentSpan
+        // YouTube layout shows one full-width details-style card per row
+        // instead of the multi-column poster grid.
+        binding?.quickSearchAutofitResults?.spanCount =
+            if (isLayout(YOUTUBE)) 1 else HomeFragment.currentSpan
         HomeFragment.configEvent.invoke()
     }
 
@@ -144,12 +149,24 @@ class QuickSearchFragment : BaseFragment<QuickSearchBinding>(
 
         val firstProvider = providers?.firstOrNull()
         if (isSingleProvider && firstProvider != null) {
-            binding.quickSearchAutofitResults.apply {
-                setRecycledViewPool(SearchAdapter.sharedPool)
-                adapter = SearchAdapter(
-                    this,
-                ) { callback ->
-                    SearchHelper.handleSearchClickCallback(callback)
+            if (isLayout(YOUTUBE)) {
+                // YouTube layout: a single column of full-width details-style
+                // cards (16:9 backdrop, title, meta row, plot) matching the
+                // search page and the expanded home list. No shared search
+                // pool since the card layout differs from the poster grid.
+                binding.quickSearchAutofitResults.spanCount = 1
+                binding.quickSearchAutofitResults.adapter =
+                    HomeDetailCardAdapter { callback ->
+                        SearchHelper.handleSearchClickCallback(callback)
+                    }
+            } else {
+                binding.quickSearchAutofitResults.apply {
+                    setRecycledViewPool(SearchAdapter.sharedPool)
+                    adapter = SearchAdapter(
+                        this,
+                    ) { callback ->
+                        SearchHelper.handleSearchClickCallback(callback)
+                    }
                 }
             }
 
@@ -160,11 +177,16 @@ class QuickSearchFragment : BaseFragment<QuickSearchBinding>(
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
+                    // Both the poster grid and the YouTube detail cards
+                    // support the same load-more contract.
                     val adapter = recyclerView.adapter
-                    if (adapter !is SearchAdapter) return
+                    val currentHasNext = when (adapter) {
+                        is SearchAdapter -> adapter.hasNext
+                        is HomeDetailCardAdapter -> adapter.hasNext
+                        else -> return
+                    }
 
                     val count = adapter.itemCount
-                    val currentHasNext = adapter.hasNext
 
                     if (!recyclerView.isRecyclerScrollable() && currentHasNext && expandCount != count) {
                         expandCount = count
@@ -196,9 +218,14 @@ class QuickSearchFragment : BaseFragment<QuickSearchBinding>(
                         //}
                     },
                     { item ->
-                        bottomSheetDialog = activity?.loadHomepageList(item, dismissCallback = {
-                            bottomSheetDialog = null
-                        }, expandCallback = { searchViewModel.expandAndReturn(it) })
+                        bottomSheetDialog = activity?.loadHomepageList(
+                            item,
+                            dismissCallback = {
+                                bottomSheetDialog = null
+                            },
+                            expandCallback = { searchViewModel.expandAndReturn(it) },
+                            detailCards = isLayout(YOUTUBE)
+                        )
                     },
                     expandCallback = { name ->
                         ioSafe {
@@ -266,12 +293,21 @@ class QuickSearchFragment : BaseFragment<QuickSearchBinding>(
             when (it) {
                 is Resource.Success -> {
                     it.value.let { data ->
-                        val adapter =
-                            (binding.quickSearchAutofitResults.adapter as? SearchAdapter)
-                        adapter?.submitList(
+                        // Both the poster grid and the YouTube detail cards
+                        // consume the same list.
+                        val list =
                             context?.filterSearchResultByFilmQuality(data.list) ?: data.list
-                        )
-                        adapter?.hasNext = data.hasNext
+                        when (val adapter = binding.quickSearchAutofitResults.adapter) {
+                            is SearchAdapter -> {
+                                adapter.submitList(list)
+                                adapter.hasNext = data.hasNext
+                            }
+
+                            is HomeDetailCardAdapter -> {
+                                adapter.submitList(list)
+                                adapter.hasNext = data.hasNext
+                            }
+                        }
                     }
                     searchExitIcon?.alpha = 1f
                     binding.quickSearchLoadingBar.alpha = 0f

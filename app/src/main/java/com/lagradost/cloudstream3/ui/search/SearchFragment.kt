@@ -48,6 +48,7 @@ import com.lagradost.cloudstream3.mvvm.observe
 import com.lagradost.cloudstream3.ui.APIRepository
 import com.lagradost.cloudstream3.ui.BaseAdapter
 import com.lagradost.cloudstream3.ui.BaseFragment
+import com.lagradost.cloudstream3.ui.home.HomeDetailCardAdapter
 import com.lagradost.cloudstream3.ui.home.HomeFragment
 import com.lagradost.cloudstream3.ui.home.HomeFragment.Companion.bindChips
 import com.lagradost.cloudstream3.ui.home.HomeFragment.Companion.currentSpan
@@ -59,6 +60,7 @@ import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.setLinearListLayout
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
+import com.lagradost.cloudstream3.ui.settings.Globals.YOUTUBE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLandscape
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.filterProviderByPreferredMedia
@@ -224,7 +226,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
 
         // Fix grid
         currentSpan = view.context.getSpanCount()
-        binding?.searchAutofitResults?.spanCount = currentSpan
+        // YouTube layout shows one full-width details-style card per row
+        // instead of the multi-column poster grid.
+        binding?.searchAutofitResults?.spanCount =
+            if (isLayout(YOUTUBE)) 1 else currentSpan
         HomeFragment.configEvent.invoke()
     }
 
@@ -234,17 +239,30 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     ) {
         reloadRepos()
         binding.apply {
-            val adapter =
-                SearchAdapter(
-                    searchAutofitResults,
-                ) { callback ->
-                    SearchHelper.handleSearchClickCallback(callback)
-                }
-
             searchRoot.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)?.tag =
                 "tv_no_focus_tag"
-            searchAutofitResults.setRecycledViewPool(SearchAdapter.sharedPool)
-            searchAutofitResults.adapter = adapter
+
+            if (isLayout(YOUTUBE)) {
+                // YouTube layout: a single column of full-width details-style
+                // cards (16:9 backdrop, title, meta row, plot) matching the
+                // home rows and the expanded home list. No shared search pool
+                // since the card layout differs from the poster grid.
+                searchAutofitResults.spanCount = 1
+                searchAutofitResults.adapter =
+                    HomeDetailCardAdapter { callback ->
+                        SearchHelper.handleSearchClickCallback(callback)
+                    }
+            } else {
+                val adapter =
+                    SearchAdapter(
+                        searchAutofitResults,
+                    ) { callback ->
+                        SearchHelper.handleSearchClickCallback(callback)
+                    }
+
+                searchAutofitResults.setRecycledViewPool(SearchAdapter.sharedPool)
+                searchAutofitResults.adapter = adapter
+            }
             searchLoadingBar.alpha = 0f
         }
 
@@ -467,9 +485,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                     it.value.let { data ->
                         val list = data.list
                         if (list.isNotEmpty()) {
-                            (binding.searchAutofitResults.adapter as? SearchAdapter)?.submitList(
-                                list
-                            )
+                            // Both the poster grid and the YouTube detail
+                            // cards consume the same list.
+                            when (val adapter = binding.searchAutofitResults.adapter) {
+                                is SearchAdapter -> adapter.submitList(list)
+                                is HomeDetailCardAdapter -> adapter.submitList(list)
+                            }
                         }
                     }
                     searchExitIcon?.alpha = 1f
@@ -543,9 +564,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             ParentItemAdapter(id = "masterAdapter".hashCode(), { callback ->
                 SearchHelper.handleSearchClickCallback(callback)
             }, { item ->
-                bottomSheetDialog = activity?.loadHomepageList(item, dismissCallback = {
-                    bottomSheetDialog = null
-                }, expandCallback = { name -> searchViewModel.expandAndReturn(name) })
+                bottomSheetDialog = activity?.loadHomepageList(
+                    item,
+                    dismissCallback = {
+                        bottomSheetDialog = null
+                    },
+                    expandCallback = { name -> searchViewModel.expandAndReturn(name) },
+                    detailCards = isLayout(YOUTUBE)
+                )
             }, expandCallback = { name ->
                 ioSafe {
                     searchViewModel.expandAndReturn(name)

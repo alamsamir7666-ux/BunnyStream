@@ -56,11 +56,16 @@ class HomeDetailCardAdapter(
             parent,
             false
         )
-        // The sheet spans the full screen width and the card is full width
-        // minus its 12dp margins, so the 16:9 image height can be derived
-        // up front. This also keeps every card the same size so recycled
-        // views never mix differently sized cards.
-        val cardWidth = parent.context.resources.displayMetrics.widthPixels -
+        // The card is full width minus its 12dp margins, so the 16:9 image
+        // height can be derived up front. Prefer the hosting recycler's real
+        // content width (it may have side padding, e.g. the search grids pad
+        // 8dp per side) and fall back to the screen width when the recycler
+        // has not been measured yet. This also keeps every card the same size
+        // so recycled views never mix differently sized cards.
+        val recyclerWidth = parent.width - parent.paddingLeft - parent.paddingRight
+        val fallbackWidth = parent.context.resources.displayMetrics.widthPixels -
+            parent.paddingLeft - parent.paddingRight
+        val cardWidth = (if (recyclerWidth > 0) recyclerWidth else fallbackWidth) -
             (CARD_MARGIN_DP * 2).toPx
         binding.detailImageContainer.updateLayoutParams {
             height = (cardWidth * 9f / 16f).toInt()
