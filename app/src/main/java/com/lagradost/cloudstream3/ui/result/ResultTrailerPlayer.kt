@@ -12,6 +12,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.lagradost.cloudstream3.CommonActivity.screenHeight
 import com.lagradost.cloudstream3.CommonActivity.screenWidth
+import com.lagradost.cloudstream3.CommonActivity.showToast
 import com.lagradost.cloudstream3.LoadResponse
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.databinding.FragmentResultSwipeBinding
@@ -19,6 +20,14 @@ import com.lagradost.cloudstream3.ui.player.CSPlayerEvent
 import com.lagradost.cloudstream3.ui.player.CSPlayerLoading
 import com.lagradost.cloudstream3.ui.player.PlayerEventSource
 import com.lagradost.cloudstream3.ui.player.SubtitleData
+import com.lagradost.cloudstream3.ui.player.source_priority.QualityDataHelper
+import com.lagradost.cloudstream3.ui.player.source_priority.QualityDataHelper.getLinkPriority
+import com.lagradost.cloudstream3.utils.AppContextUtils.isUsingMobileData
+import com.lagradost.cloudstream3.utils.DataStoreHelper
+import com.lagradost.cloudstream3.utils.DataStoreHelper.fixVisual
+import com.lagradost.cloudstream3.utils.DataStoreHelper.getViewPos
+import com.lagradost.cloudstream3.utils.DataStoreHelper.setViewPosAndResume
+import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.BackPressedCallbackHelper.attachBackPressedCallback
 import com.lagradost.cloudstream3.utils.BackPressedCallbackHelper.detachBackPressedCallback
 import com.lagradost.cloudstream3.utils.UIHelper.fixSystemBarsPadding
@@ -72,8 +81,148 @@ class ResultTrailerPlayer : ResultFragmentPhone() {
 
     override fun nextEpisode() {}
     override fun prevEpisode() {}
-    override fun playerPositionChanged(position: Long, duration: Long) {}
-    override fun nextMirror() {}
+
+    // ===== Inline movie playback (YouTube layout) =====
+    // Plays the selected movie/episode in the same area where the trailer
+    // and poster show, like the YouTube app embedded video. Progress is
+    // stored with the same bookkeeping as the fullscreen player.
+
+    private var inlineEpisode: ResultEpisode? = null
+    private var inlineLinks: List<ExtractorLink> = emptyList()
+    private var inlineSubtitles: Set<SubtitleData> = emptySet()
+    private var inlineIndex = 0
+
+    /** The user's active quality profile (WiFi vs mobile data based). */
+    private fun currentQualityProfileId(): Int {
+        val ctx = context ?: return 1
+        val type = if (ctx.isUsingMobileData()) {
+            QualityDataHelper.QualityProfileType.Data
+        } else {
+            QualityDataHelper.QualityProfileType.WiFi
+        }
+        return QualityDataHelper.getProfiles()
+            .firstOrNull { it.types.contains(type) }?.id
+            ?: QualityDataHelper.getProfiles().firstOrNull()?.id
+            ?: 1
+    }
+
+    override fun playMovieInline(episode: ResultEpisode) {
+        if (isInlinePlaybackActive) {
+            // Already playing inline: the button acts as play/pause
+            if (player.getIsPlaying()) {
+                player.handleEvent(CSPlayerEvent.Pause, PlayerEventSource.UI)
+            } else {
+                player.handleEvent(CSPlayerEvent.Play, PlayerEventSource.UI)
+            }
+            showControls()
+            return
+        }
+
+        isInlinePlaybackActive = true
+        inlineEpisode = episode
+        inlineLinks = emptyList()
+        inlineSubtitles = emptySet()
+        inlineIndex = 0
+
+        // Bring the player area into view while the links load
+        resultBinding?.resultScroll?.smoothScrollTo(0, 0)
+
+        viewModel.loadLinksForInlinePlayer(episode) { result ->
+            // The user may have left the page or started another episode
+            if (!isInlinePlaybackActive || inlineEpisode?.id != episode.id) {
+                return@loadLinksForInlinePlayer
+            }
+            if (playerBinding == null) {
+                isInlinePlaybackActive = false
+                return@loadLinksForInlinePlayer
+            }
+
+            val profile = currentQualityProfileId()
+            inlineSubtitles = result.subs.toSet()
+            // Best source first according to the user's quality/source priority
+            inlineLinks = result.links.sortedByDescending { getLinkPriority(profile, it) }
+
+            if (inlineLinks.isEmpty()) {
+                isInlinePlaybackActive = false
+                showToast(R.string.no_links_found_toast)
+                return@loadLinksForInlinePlayer
+            }
+
+            playInlineLink(0)
+        }
+    }
+
+    /** Starts [index]-th (best-first) link in the inline player area. */
+    private fun playInlineLink(index: Int) {
+        val ctx = context ?: return
+        val episode = inlineEpisode ?: return
+        val link = inlineLinks.getOrNull(index) ?: return
+        inlineIndex = index
+
+        // Resume from the saved position unless the movie was (almost) finished
+        val startPosition = DataStoreHelper.getViewPos(episode.id)?.fixVisual()
+            ?.takeIf { it.duration > 0 && it.position < it.duration }?.position
+
+        player.onPause()
+        player.loadPlayer(
+            ctx,
+            false,
+            link,
+            null,
+            startPosition = startPosition,
+            subtitles = inlineSubtitles,
+            subtitle = null,
+            autoPlay = true,
+            preview = false
+        )
+
+        // Enter the playback UI state: hide the intro poster + thumbnail
+        playerBinding?.playerIntroPlay?.isGone = true
+        introVisible = false
+        player.handleEvent(CSPlayerEvent.Play, PlayerEventSource.UI)
+        fixPlayerSize()
+        showControls()
+    }
+
+    override fun playerError(exception: Throwable) {
+        if (isInlinePlaybackActive) {
+            // Try the next best link, otherwise surface the error
+            if (inlineIndex + 1 < inlineLinks.size) {
+                playInlineLink(inlineIndex + 1)
+            } else {
+                playerHostView?.playerError(exception)
+            }
+            return
+        }
+        super.playerError(exception)
+    }
+
+    override fun nextMirror() {
+        if (isInlinePlaybackActive && inlineIndex + 1 < inlineLinks.size) {
+            playInlineLink(inlineIndex + 1)
+            return
+        }
+        super.nextMirror()
+    }
+
+    override fun hasNextMirror(): Boolean {
+        return if (isInlinePlaybackActive) inlineIndex + 1 < inlineLinks.size
+        else super.hasNextMirror()
+    }
+
+    override fun playerPositionChanged(position: Long, duration: Long) {
+        if (isInlinePlaybackActive) {
+            // Same progress bookkeeping as the fullscreen player so inline
+            // watching feeds resume + continue watching
+            DataStoreHelper.setViewPosAndResume(
+                inlineEpisode?.id,
+                position,
+                duration,
+                inlineEpisode,
+                null
+            )
+        }
+    }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)

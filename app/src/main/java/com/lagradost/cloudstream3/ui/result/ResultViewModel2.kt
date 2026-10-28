@@ -1217,6 +1217,24 @@ class ResultViewModel2 : ViewModel() {
     }
 
     private var currentLoadLinkJob: Job? = null
+
+    /**
+     * Loads all links (and subtitles) for [result] on a background thread and
+     * calls [callback] on the main thread when done. Used by the details page
+     * inline player (YouTube layout) which plays the video where the trailer
+     * would show instead of opening the fullscreen player.
+     */
+    fun loadLinksForInlinePlayer(
+        result: ResultEpisode,
+        callback: (LinkLoadingResult) -> Unit
+    ) {
+        loadLinks(result, isVisible = true) { links ->
+            main {
+                callback(links)
+            }
+        }
+    }
+
     private fun acquireSingleLink(
         result: ResultEpisode,
         sourceTypes: Set<ExtractorLinkType>,

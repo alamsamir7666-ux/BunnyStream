@@ -71,10 +71,13 @@ import com.lagradost.cloudstream3.ui.result.ResultFragment.updateUIEvent
 import com.lagradost.cloudstream3.ui.search.SearchAdapter
 import com.lagradost.cloudstream3.ui.search.SearchHelper
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
+import com.lagradost.cloudstream3.ui.settings.Globals.YOUTUBE
+import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.ui.settings.SettingsGeneral.Companion.pickDownloadPath
 import com.lagradost.cloudstream3.ui.settings.utils.getChooseFolderLauncher
 import com.lagradost.cloudstream3.utils.AppContextUtils.getNameFull
 import com.lagradost.cloudstream3.utils.AppContextUtils.isCastApiAvailable
+import com.lagradost.cloudstream3.utils.AppContextUtils.isConnectedToChromecast
 import com.lagradost.cloudstream3.utils.AppContextUtils.loadCache
 import com.lagradost.cloudstream3.utils.AppContextUtils.openBrowser
 import com.lagradost.cloudstream3.utils.AppContextUtils.updateHasTrailers
@@ -229,6 +232,14 @@ open class ResultFragmentPhone : BaseFragment<FragmentResultSwipeBinding>(
     var currentTrailers: List<Pair<ExtractorLink, String>> = emptyList()
     var currentTrailerIndex = 0
 
+    /** True while a movie/episode is playing inline in the trailer player
+     *  area (YouTube layout). Suspends trailer loading while active. */
+    protected var isInlinePlaybackActive: Boolean = false
+
+    /** YouTube layout: play [episode] inline in the area where the trailer
+     *  and poster show, instead of opening the fullscreen player. */
+    open fun playMovieInline(episode: ResultEpisode) {}
+
     override fun nextMirror() {
         currentTrailerIndex++
         loadTrailer()
@@ -247,6 +258,8 @@ open class ResultFragmentPhone : BaseFragment<FragmentResultSwipeBinding>(
     }
 
     private fun loadTrailer(index: Int? = null) {
+        // Inline playback (YouTube layout) owns the player area
+        if (isInlinePlaybackActive) return
 
         val isSuccess =
             currentTrailers.getOrNull(index ?: currentTrailerIndex)
@@ -876,9 +889,21 @@ open class ResultFragmentPhone : BaseFragment<FragmentResultSwipeBinding>(
                 (data as? Resource.Success)?.value?.let { (text, ep) ->
                     resultPlayMovie.setText(text)
                     resultPlayMovie.setOnClickListener {
-                        viewModel.handleAction(
-                            EpisodeClickEvent(ACTION_CLICK_DEFAULT, ep)
-                        )
+                        val ctx = context
+                        // YouTube layout: play inline in the poster/trailer
+                        // area. Falls back to the normal fullscreen player
+                        // flow when casting or when an external player is
+                        // set as the default.
+                        if (ctx != null && isLayout(YOUTUBE) &&
+                            !ctx.isConnectedToChromecast() &&
+                            EpisodeAdapter.getPlayerAction(ctx) == ACTION_PLAY_EPISODE_IN_PLAYER
+                        ) {
+                            playMovieInline(ep)
+                        } else {
+                            viewModel.handleAction(
+                                EpisodeClickEvent(ACTION_CLICK_DEFAULT, ep)
+                            )
+                        }
                     }
                     resultPlayMovie.setOnLongClickListener {
                         viewModel.handleAction(
