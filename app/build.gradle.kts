@@ -166,6 +166,12 @@ android {
     productFlavors {
         create("stable") {
             dimension = "state"
+            // Tagged stable releases (v* tags in CI) are signed with the same
+            // CI-provided keystore as the prerelease flavor. Without a
+            // signing config the release APK would be unsigned/uninstallable.
+            if (signingConfigs.names.contains("prerelease")) {
+                signingConfig = signingConfigs.getByName("prerelease")
+            }
         }
         create("prerelease") {
             dimension = "state"

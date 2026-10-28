@@ -16,9 +16,9 @@ on:
   push:
     branches: [ main, master ]
     tags: [ 'v*' ]
-    paths-ignore:
-      - '*.md'
-      - '*.json'
+    # NOTE: no paths-ignore here. Path filters can suppress workflows for
+    # tag pushes that point at already-pushed commits, which would silently
+    # skip the stable release build. Every push simply builds.
   workflow_dispatch:
     inputs:
       build_type:
@@ -93,14 +93,23 @@ jobs:
             echo "SIGNING_STORE_PASSWORD=${KEYSTORE_PW}"
           } >> "$GITHUB_ENV"
 
-      - name: Build APK (prerelease flavor)
+      - name: Build APK
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.build_type }}" = "debug" ]; then
-            echo "BUILD_TYPE=debug"  >> "$GITHUB_ENV"
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            # Tagged push -> STABLE flavor release: clean package id and the
+            # plain catalog version name (e.g. 4.8.0, no -PRE suffix).
+            echo "FLAVOR=stable"        >> "$GITHUB_ENV"
+            echo "BUILD_TYPE=release"   >> "$GITHUB_ENV"
+            ./gradlew assembleStableRelease --stacktrace
+            echo "APK_DIR=app/build/outputs/apk/stable/release" >> "$GITHUB_ENV"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.build_type }}" = "debug" ]; then
+            echo "FLAVOR=prerelease"    >> "$GITHUB_ENV"
+            echo "BUILD_TYPE=debug"     >> "$GITHUB_ENV"
             ./gradlew assemblePrereleaseDebug --stacktrace
             echo "APK_DIR=app/build/outputs/apk/prerelease/debug" >> "$GITHUB_ENV"
           else
-            echo "BUILD_TYPE=release" >> "$GITHUB_ENV"
+            echo "FLAVOR=prerelease"    >> "$GITHUB_ENV"
+            echo "BUILD_TYPE=release"   >> "$GITHUB_ENV"
             ./gradlew assemblePrereleaseRelease --stacktrace
             echo "APK_DIR=app/build/outputs/apk/prerelease/release" >> "$GITHUB_ENV"
           fi
@@ -118,7 +127,11 @@ jobs:
           VERSION_NAME="$(grep -E '^versionName' gradle/libs.versions.toml | head -1 | cut -d'"' -f2)"
           SHA="$(git rev-parse --short HEAD)"
           SRC="$(ls "${APK_DIR}"/*.apk | head -1)"
-          OUT="BunnyStream-v${VERSION_NAME}-${BUILD_TYPE}-${SHA}.apk"
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            OUT="BunnyStream-v${VERSION_NAME}-stable-${SHA}.apk"
+          else
+            OUT="BunnyStream-v${VERSION_NAME}-${BUILD_TYPE}-${SHA}.apk"
+          fi
           mv "${SRC}" "${APK_DIR}/${OUT}"
           echo "apk=${APK_DIR}/${OUT}" >> "$GITHUB_OUTPUT"
           echo "### :package: Build output" >> "$GITHUB_STEP_SUMMARY"
@@ -126,7 +139,7 @@ jobs:
           echo "| | |" >> "$GITHUB_STEP_SUMMARY"
           echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
           echo "| File | \`$(basename "${APK_DIR}/${OUT}")\` |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Flavor | prerelease / ${BUILD_TYPE} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Flavor | ${FLAVOR} / ${BUILD_TYPE} |" >> "$GITHUB_STEP_SUMMARY"
           echo "| Version | ${VERSION_NAME} |" >> "$GITHUB_STEP_SUMMARY"
           echo "| Commit | ${SHA} |" >> "$GITHUB_STEP_SUMMARY"
           echo "| Size | $(du -h "${APK_DIR}/${OUT}" | cut -f1) |" >> "$GITHUB_STEP_SUMMARY"
@@ -144,5 +157,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
+          name: BunnyStream v${{ github.ref_name }} (stable)
           generate_release_notes: true
           files: ${{ steps.rename.outputs.apk }}
