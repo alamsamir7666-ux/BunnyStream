@@ -157,6 +157,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          name: BunnyStream v${{ github.ref_name }} (stable)
+          name: BunnyStream ${{ github.ref_name }} (stable)
           generate_release_notes: true
           files: ${{ steps.rename.outputs.apk }}
