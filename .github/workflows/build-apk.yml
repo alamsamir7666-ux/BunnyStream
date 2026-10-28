@@ -11,6 +11,12 @@ name: Build APK
 # Optional API keys (empty = feature disabled, app still builds fine):
 #   SIMKL_CLIENT_ID, SIMKL_CLIENT_SECRET, TRAKT_CLIENT_ID,
 #   MDL_API_KEY, MAL_KEY, ANILIST_KEY
+#
+# EVERY run builds BOTH flavors in parallel (job matrix) and uploads one
+# APK artifact per flavor, so the Actions page always offers both:
+#   prerelease -> com.lagradost.cloudstream3.prerelease, -PRE version (beta channel)
+#   stable     -> com.lagradost.cloudstream3, plain version (release channel)
+# Pushing a v* tag additionally publishes the stable APK as a GitHub Release.
 
 on:
   push:
@@ -22,7 +28,7 @@ on:
   workflow_dispatch:
     inputs:
       build_type:
-        description: 'Build type (debug is auto-signed with the debug key)'
+        description: 'Build type (debug affects only the prerelease leg)'
         required: false
         default: 'release'
         type: choice
@@ -37,8 +43,24 @@ concurrency:
 
 jobs:
   build:
-    name: Build BunnyStream APK
+    name: Build ${{ matrix.flavor }} APK
     runs-on: ubuntu-latest
+    strategy:
+      # Let the other flavor finish when one leg fails, for easier diagnosis.
+      fail-fast: false
+      matrix:
+        include:
+          # Beta channel: .prerelease package suffix, -PRE version, timestamp versionCode.
+          - flavor: prerelease
+            release_task: assemblePrereleaseRelease
+            debug_task: assemblePrereleaseDebug
+            release_apk_dir: app/build/outputs/apk/prerelease/release
+            debug_apk_dir: app/build/outputs/apk/prerelease/debug
+          # Release channel: clean package id, plain version name (e.g. 4.8.0).
+          # Always built as release, even for debug workflow dispatches.
+          - flavor: stable
+            release_task: assembleStableRelease
+            release_apk_dir: app/build/outputs/apk/stable/release
     env:
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -95,23 +117,15 @@ jobs:
 
       - name: Build APK
         run: |
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            # Tagged push -> STABLE flavor release: clean package id and the
-            # plain catalog version name (e.g. 4.8.0, no -PRE suffix).
-            echo "FLAVOR=stable"        >> "$GITHUB_ENV"
-            echo "BUILD_TYPE=release"   >> "$GITHUB_ENV"
-            ./gradlew assembleStableRelease --stacktrace
-            echo "APK_DIR=app/build/outputs/apk/stable/release" >> "$GITHUB_ENV"
-          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.build_type }}" = "debug" ]; then
-            echo "FLAVOR=prerelease"    >> "$GITHUB_ENV"
-            echo "BUILD_TYPE=debug"     >> "$GITHUB_ENV"
-            ./gradlew assemblePrereleaseDebug --stacktrace
-            echo "APK_DIR=app/build/outputs/apk/prerelease/debug" >> "$GITHUB_ENV"
+          echo "FLAVOR=${{ matrix.flavor }}" >> "$GITHUB_ENV"
+          if [ -n "${{ matrix.debug_task }}" ] && [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.build_type }}" = "debug" ]; then
+            echo "BUILD_TYPE=debug" >> "$GITHUB_ENV"
+            ./gradlew ${{ matrix.debug_task }} --stacktrace
+            echo "APK_DIR=${{ matrix.debug_apk_dir }}" >> "$GITHUB_ENV"
           else
-            echo "FLAVOR=prerelease"    >> "$GITHUB_ENV"
-            echo "BUILD_TYPE=release"   >> "$GITHUB_ENV"
-            ./gradlew assemblePrereleaseRelease --stacktrace
-            echo "APK_DIR=app/build/outputs/apk/prerelease/release" >> "$GITHUB_ENV"
+            echo "BUILD_TYPE=release" >> "$GITHUB_ENV"
+            ./gradlew ${{ matrix.release_task }} --stacktrace
+            echo "APK_DIR=${{ matrix.release_apk_dir }}" >> "$GITHUB_ENV"
           fi
         env:
           SIMKL_CLIENT_ID: ${{ secrets.SIMKL_CLIENT_ID }}
@@ -127,14 +141,13 @@ jobs:
           VERSION_NAME="$(grep -E '^versionName' gradle/libs.versions.toml | head -1 | cut -d'"' -f2)"
           SHA="$(git rev-parse --short HEAD)"
           SRC="$(ls "${APK_DIR}"/*.apk | head -1)"
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            OUT="BunnyStream-v${VERSION_NAME}-stable-${SHA}.apk"
-          else
-            OUT="BunnyStream-v${VERSION_NAME}-${BUILD_TYPE}-${SHA}.apk"
-          fi
+          # e.g. BunnyStream-v4.8.0-stable-85b4073.apk (debug builds get a -debug part)
+          TYPE_PART=""
+          if [ "${BUILD_TYPE}" = "debug" ]; then TYPE_PART="-debug"; fi
+          OUT="BunnyStream-v${VERSION_NAME}-${FLAVOR}${TYPE_PART}-${SHA}.apk"
           mv "${SRC}" "${APK_DIR}/${OUT}"
           echo "apk=${APK_DIR}/${OUT}" >> "$GITHUB_OUTPUT"
-          echo "### :package: Build output" >> "$GITHUB_STEP_SUMMARY"
+          echo "### :package: Build output (${FLAVOR} flavor)" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "| | |" >> "$GITHUB_STEP_SUMMARY"
           echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
@@ -148,15 +161,27 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: BunnyStream-APK-r${{ github.run_number }}
+          name: BunnyStream-${{ matrix.flavor }}-APK-r${{ github.run_number }}
           path: ${{ steps.rename.outputs.apk }}
           retention-days: 30
           if-no-files-found: error
 
-      - name: Create GitHub Release (v* tags only)
-        if: startsWith(github.ref, 'refs/tags/v')
+  # On v* tags, take the stable APK built by the matrix above and publish it
+  # as a GitHub Release. Runs only when ALL matrix legs succeeded.
+  release:
+    name: Publish stable APK
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download stable APK
+        uses: actions/download-artifact@v4
+        with:
+          name: BunnyStream-stable-APK-r${{ github.run_number }}
+          path: apk
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: BunnyStream ${{ github.ref_name }} (stable)
           generate_release_notes: true
-          files: ${{ steps.rename.outputs.apk }}
+          files: apk/*.apk
